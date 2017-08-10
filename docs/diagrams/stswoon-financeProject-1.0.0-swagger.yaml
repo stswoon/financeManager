@@ -1,0 +1,290 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Finance Manager API
+  description: ""
+  
+host: www.nodomain.com
+basePath: /api/v1/
+schemes:
+ - https
+ 
+paths:
+  /financeProjects/{userId}:
+    get:
+      description: Return list of finance projects for specified user
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: userId
+        description: user id
+        required: true
+        type: string
+        format: uuid
+      responses:
+        200:
+          description: results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/financeProject'
+        400:
+          description: bad input parameter
+        500:
+          description: internal server error
+  /financeOperations/{projectId}:
+    get:
+      description: Return finance projects information
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: projectId
+        description: project id
+        required: true
+        type: string
+        format: uuid
+      - in: query
+        name: page
+        required: false
+        description: project id
+        type: int
+      - in: query
+        name: count
+        required: false
+        description: project id
+        type: int
+      responses:
+        200:
+          description: results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/financeOperation'
+        400:
+          description: bad input parameter
+        500:
+          description: internal server error
+  /financeProject/{projectId}:
+    get:
+      description: operation with finance project
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: projectId
+        description: project id
+        required: true
+        type: string
+        format: uuid
+      responses:
+        200:
+          description: results matching criteria
+          schema:
+              $ref: '#/definitions/financeProject'
+        400:
+          description: bad input parameter
+        500:
+          description: internal server error  
+    delete:
+      description: operation with finance project
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: projectId
+        description: project id
+        required: true
+        type: string
+        format: uuid
+      responses:
+        200:
+          description: ok
+        400:
+          description: bad input parameter
+        500:
+          description: internal server error  
+    put:
+      description: operation with finance project
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: projectId
+        description: project id
+        required: true
+        type: string
+        format: uuid
+      - in: formData
+        name: name
+        required: true
+        type: string
+      - in: formData
+        name: description
+        required: false
+        type: string
+      responses:
+        200:
+          description: ok
+          schema:
+              $ref: '#/definitions/financeProject'
+        400:
+          description: bad input parameter
+        500:
+          description: internal server error  
+  /financeProject:
+    post:
+      description: operation with finance project
+      produces:
+      - application/json
+      parameters:
+      - in: formData
+        name: name
+        required: true
+        type: string
+      - in: formData
+        name: description
+        required: false
+        type: string
+      responses:
+        200:
+          description: results matching criteria
+          schema:
+              $ref: '#/definitions/financeProject'
+        400:
+          description: bad input parameter
+        500:
+          description: internal server error    
+  /financeOperation/{operationId}:
+    delete:
+      description: operation with finance operations
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: operationId
+        description: operation id
+        required: true
+        type: string
+        format: uuid
+      responses:
+        200:
+          description: ok
+        400:
+          description: bad input parameter
+        500:
+          description: internal server error  
+    put:
+      description: operation with finance project
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: projectId
+        description: project id
+        required: true
+        type: string
+        format: uuid
+      - in: formData
+        name: description
+        required: true
+        type: string
+      - in: formData
+        name: type
+        required: false
+        type: string
+      - in: formData
+        name: value
+        required: false
+        type: int        
+      responses:
+        200:
+          description: ok
+          schema:
+              $ref: '#/definitions/financeOperation'
+        400:
+          description: bad input parameter
+        500:
+          description: internal server error  
+  /financeOperation:
+    post:
+      description: operation with finance project
+      produces:
+      - application/json
+      parameters:
+      - in: formData
+        name: description
+        required: true
+        type: string
+      - in: formData
+        name: type
+        required: false
+        type: string
+      - in: formData
+        name: value
+        required: false
+        type: int        
+      responses:
+        200:
+          description: ok
+          schema:
+              $ref: '#/definitions/financeOperation'
+        400:
+          description: bad input parameter
+        500:
+          description: internal server error   
+  /user:
+    post:
+  /user/{userId}:
+    get:  
+    put:
+    remove:
+  /user/login:
+    post:
+      parameters:
+      - in: formData
+        name: userName
+        required: true
+        type: string
+      - in: formData
+        name: userPassword
+        required: true
+        type: string
+
+definitions:
+  financeProject:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      name:
+        type: string
+        example: My Money
+      description:
+        type: string
+        example: My money project
+      value:
+        type: int
+        example: 106
+  financeOperation:
+    type: object
+    properties:
+      id:
+        type: int
+        format: uuid
+        example: d290f1ee-6c54-4b01-90e6-d701748f0851
+      value:
+        type: int
+        example: 10
+      type:
+        type: string
+        example: plus 
+      description:
+        type: string
+        example: salary  
+      date:
+        type: date
+        example: 12042017 12:54

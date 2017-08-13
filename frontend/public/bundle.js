@@ -8,5 +8,5 @@ fetch("https://stswoon-fm-gateway.herokuapp.com/backend/hello/me")
     })
     .then(function (data) {
         console.log(data);
-        alert("See console. Anr response is '" + data + "'");
+        alert("See console. And response is '" + data + "'");
     });

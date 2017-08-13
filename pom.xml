@@ -5,16 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>stswoon.financeProject</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>financeProject</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
     <modules>
+        <module>discovery</module>
         <module>gateway</module>
-        <module>zuulserver</module>
         <module>backend</module>
-        <module>backend-test</module>
+        <!--<module>frontend</module>-->
     </modules>
 
 </project>

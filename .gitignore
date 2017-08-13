@@ -1,3 +1,8 @@
 /.idea
 /backend/target
 /backend/backend.iml
+/backend/herokuDeploy
+/discovery/discovery.iml
+/gateway/gateway.iml
+/gateway/target
+/discovery/target

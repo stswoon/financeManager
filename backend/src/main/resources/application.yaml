@@ -1,9 +1,7 @@
-# Spring properties
 spring:
   application:
-    name: back-service
+    name: backend
 
-# Discovery Server Access
 eureka:
   instance:
       #leaseRenewalIntervalInSeconds: 10
@@ -13,15 +11,10 @@ eureka:
   client:
     #registryFetchIntervalSeconds: 5
     serviceUrl:
-      #defaultZone: http://localhost:5000/eureka/
-      defaultZone: https://stswoon-fm-discovery.herokuapp.com/eureka
-#  instance:
-#    leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
-
+      defaultZone: {$EUREKA:http://localhost:5000/eureka/}
 #ribbon.IsSecure: true
+#management.security.enabled: false
 
 server:
   port: ${PORT:5001}
-  #port: 5001
 
-#management.security.enabled: false

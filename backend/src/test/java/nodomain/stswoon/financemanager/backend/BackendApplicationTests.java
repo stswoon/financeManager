@@ -1,4 +1,4 @@
-package nodomain.stswoon.financeproject.backend;
+package nodomain.stswoon.financemanager.backend;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

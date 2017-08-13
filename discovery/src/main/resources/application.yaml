@@ -9,5 +9,3 @@ eureka:
 
 server:
     port: ${PORT:5000}
-
-#ribbon.IsSecure: true

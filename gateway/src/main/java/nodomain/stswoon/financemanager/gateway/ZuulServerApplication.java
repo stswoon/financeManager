@@ -1,4 +1,4 @@
-package zuulserver;
+package nodomain.stswoon.financemanager.gateway;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;

@@ -1,0 +1,13 @@
+eureka:
+    instance:
+        hostname: ${HOST:localhost}
+        #leaseRenewalIntervalInSeconds: 5  # DO NOT DO THIS IN PRODUCTION
+        #securePortEnabled: true
+    client:  # Not a client, don't register with yourself
+        registerWithEureka: false
+        fetchRegistry: false
+
+server:
+    port: ${PORT:5000}
+
+#ribbon.IsSecure: true

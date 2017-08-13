@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: zuulserver
+
+zuul:
+  routes:
+    #back-service:
+    #  path: /back-service/**
+    #  serviceId: BACK-SERVICE
+    test:
+      path: /back-service/**
+      url: http://stswoon-financemanager-backend.herokuapp.com/
+
+#todo https://github.com/spring-cloud/spring-cloud-netflix/issues/459
+#todo https://stackoverflow.com/questions/30622904/spring-cloud-ribbon-and-https/30869580
+eureka:
+  instance:
+      #leaseRenewalIntervalInSeconds: 10
+      #securePortEnabled: true
+  client:
+    serviceUrl:
+      #defaultZone: http://localhost:5000/eureka/
+      defaultZone: https://stswoon-fm-discovery.herokuapp.com/eureka/
+      #defaultZone: http://stswoon-fm-discovery.herokuapp.com/eureka/
+#      defaultZone: http://stswoon:qwerty12@stswoon-fm-discovery.herokuapp.com/eureka/
+      #defaultZone: ${EUREKA_URL:http://user:password@localhost:5000}/eureka/
+
+server:
+  port: ${PORT:5003}
+
+# Increase the Hystrix timeout to 60s (globally)
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+#            timeoutInMilliseconds: 60000
+
+#ribbon.IsSecure: true

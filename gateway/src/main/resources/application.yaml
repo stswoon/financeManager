@@ -1,15 +1,15 @@
 spring:
   application:
-    name: zuulserver
+    name: gateway
 
 zuul:
   routes:
-    #back-service:
-    #  path: /back-service/**
-    #  serviceId: BACK-SERVICE
+    back-service:
+      path: /backend-service/**
+      serviceId: backend
     test:
-      path: /back-service/**
-      url: http://stswoon-financemanager-backend.herokuapp.com/
+      path: /backend/**
+      url: http://stswoon-fm-backend.herokuapp.com/
 
 eureka:
   instance:
@@ -17,7 +17,7 @@ eureka:
       #securePortEnabled: true
   client:
     serviceUrl:
-      defaultZone: {$EUREKA:http://localhost:5000/eureka/}
+      defaultZone: ${EUREKA:http://localhost:5000/eureka/}
       #defaultZone: http://localhost:5000/eureka/
       #defaultZone: https://stswoon-fm-discovery.herokuapp.com/eureka/
       #defaultZone: http://stswoon-fm-discovery.herokuapp.com/eureka/

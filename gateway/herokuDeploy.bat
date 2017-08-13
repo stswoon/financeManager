@@ -6,6 +6,7 @@ xcopy pom.xml herokuDeploy
 xcopy Procfile herokuDeploy
 
 cd herokuDeploy
+heroku repo:reset -a stswoon-fm-gateway
 git init
 heroku git:remote -a stswoon-fm-gateway
 git add -A

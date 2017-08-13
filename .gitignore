@@ -6,3 +6,8 @@
 /gateway/gateway.iml
 /gateway/target
 /discovery/target
+/discovery/herokuDeploy
+/gateway/herokuDeploy
+/frontend/node_modules
+/frontend/npm-debug.log
+/frontend/herokuDeploy

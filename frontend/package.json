@@ -1,6 +1,6 @@
 {
-  "name": "node-js-getting-started",
-  "version": "0.2.6",
+  "name": "stswoon.financeManager.frontend",
+  "version": "0.0.1",
   "description": "A sample Node.js app using Express 4",
   "engines": {
     "node": "6.11.1"
@@ -20,12 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
+    "url": ""
   },
-  "keywords": [
-    "node",
-    "heroku",
-    "express"
-  ],
   "license": "MIT"
 }

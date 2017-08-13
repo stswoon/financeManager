@@ -1,6 +1,11 @@
 spring:
   application:
     name: backend
+  datasource:
+    url: ${JDBC_DATABASE_URL:}
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
 
 eureka:
   instance:
@@ -11,10 +16,9 @@ eureka:
   client:
     #registryFetchIntervalSeconds: 5
     serviceUrl:
-      defaultZone: {$EUREKA:http://localhost:5000/eureka/}
+      defaultZone: ${EUREKA:http://localhost:5000/eureka/}
 #ribbon.IsSecure: true
 #management.security.enabled: false
 
 server:
   port: ${PORT:5001}
-

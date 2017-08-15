@@ -8,6 +8,8 @@
     <artifactId>finance-manager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <name>financeManager</name>
+
     <packaging>pom</packaging>
 
     <modules>

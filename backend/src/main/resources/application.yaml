@@ -1,4 +1,14 @@
 spring:
+  profiles:
+    active:
+      - local
+#    include: common
+
+---
+spting:
+  profile: common
+
+spring:
   application:
     name: backend
   datasource:
@@ -6,6 +16,21 @@ spring:
     hikari:
       connection-timeout: 30000
       maximum-pool-size: 10
+
+server:
+  port: ${PORT:5001}
+
+logging:
+  level:
+    #ROOT: DEBUG
+    nodomain.stswoon: DEBUG
+
+createTestData: true
+spring.jpa.show-sql: true
+
+---
+spting:
+  profile: cloud
 
 eureka:
   instance:
@@ -20,13 +45,10 @@ eureka:
 #ribbon.IsSecure: true
 #management.security.enabled: false
 
-server:
-  port: ${PORT:5001}
+---
+spring:
+  profile: local
+#  include: common
 
-logging:
-  level:
-    #ROOT: DEBUG
-    nodomain.stswoon: DEBUG
-
-spring.jpa.properties.hibernate.dialect: nodomain.stswoon.financemanager.backend.SQLiteDialect
+spring.jpa.properties.hibernate.dialect: nodomain.stswoon.financemanager.backend.config.SQLiteDialect
 spring.jpa.hibernate.ddl-auto: create-drop

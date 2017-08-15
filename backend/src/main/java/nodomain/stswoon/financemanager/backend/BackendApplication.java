@@ -18,8 +18,6 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 @Configuration
-@EnableAutoConfiguration
-@EnableDiscoveryClient
 @SpringBootApplication
 @Slf4j
 public class BackendApplication {

@@ -8,9 +8,9 @@
 	},
 	"item": [
 		{
-			"name": "localhost:5001/user/register",
+			"name": "register new user",
 			"request": {
-				"url": "localhost:5001/user/register",
+				"url": "localhost:5001/user",
 				"method": "POST",
 				"header": [
 					{
@@ -21,7 +21,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"Ivan\",\n\t\"password\": \"password\"\n}"
+					"raw": "{\n\t\"name\": \"Ivan2\",\n\t\"password\": \"password\"\n}"
 				},
 				"description": ""
 			},

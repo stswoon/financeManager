@@ -1,4 +1,4 @@
-package nodomain.stswoon.financemanager.backend.users;
+package nodomain.stswoon.financemanager.backend.projects;
 
 import lombok.Data;
 import lombok.Getter;
@@ -7,19 +7,19 @@ import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
 
-@Data
 @Entity
-//@Table(name="Users")
-public class UserEntity implements Identifiable<Long> {
+//@Table(name="Projects")
+@Data
+public class ProjectEntity implements Identifiable<Long> {
     @Id
     @GeneratedValue
     private Long id = null;
 
     @Column
-    private String name;
+    private Long userId;
 
     @Column
-    private String password;
+    private String name;
 
     @Override
     public Long getId() {

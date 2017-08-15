@@ -22,3 +22,11 @@ eureka:
 
 server:
   port: ${PORT:5001}
+
+logging:
+  level:
+    #ROOT: DEBUG
+    nodomain.stswoon: DEBUG
+
+spring.jpa.properties.hibernate.dialect: nodomain.stswoon.financemanager.backend.SQLiteDialect
+spring.jpa.hibernate.ddl-auto: create-drop

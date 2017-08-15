@@ -1,0 +1,31 @@
+{
+	"variables": [],
+	"info": {
+		"name": "backend",
+		"_postman_id": "cf7d6d36-0213-aa30-1020-ffdb9f014ef7",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:5001/user/register",
+			"request": {
+				"url": "localhost:5001/user/register",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Ivan\",\n\t\"password\": \"password\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

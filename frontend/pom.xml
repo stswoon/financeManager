@@ -27,14 +27,16 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <configuration>
+                    <followSymLinks>false</followSymLinks>
                     <filesets>
                         <fileset>
-                            <directory>node_modules</directory>
+                            <directory>${basedir}/herokuDeploy</directory>
                         </fileset>
                         <fileset>
-                            <directory>target</directory>
+                            <directory>${basedir}/node_modules</directory>
                         </fileset>
                     </filesets>
                 </configuration>

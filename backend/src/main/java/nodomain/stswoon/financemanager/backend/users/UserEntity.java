@@ -9,14 +9,14 @@ import javax.persistence.*;
 
 @Data
 @Entity
-//@Table(name="Users")
+@Table(name = "Users")
 public class UserEntity implements Identifiable<Long> {
     @Id
     @GeneratedValue
     private Long id = null;
 
     @Column
-    private String name;
+    private String login;
 
     @Column
     private String password;

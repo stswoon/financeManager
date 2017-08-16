@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Application</title>
+</head>
+<body>
+<script>
+    var envData = {};
+    envData.gateway = "<%= htmlWebpackPlugin.options.envData.gateway %>";
+    console.log("envData=", envData);
+</script>
+<div id="root"></div>
+<!--<img src="startup.png"/>-->
+<!--<img src=<%= require("./startup.png") %>/>-->
+</body>
+</html>

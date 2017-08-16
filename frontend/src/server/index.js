@@ -11,7 +11,7 @@ import "isomorphic-fetch"
 
 
 app.get("/server", (req, res) => {
-    //var f = require("../index.html");
+    //var f = require("../index.ejs");
     //res.send(f); //todo file from dist
     res.send(`
         ${renderToString(<App/>)}

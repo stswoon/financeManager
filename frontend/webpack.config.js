@@ -17,11 +17,12 @@ const cssDev = ["style-loader", "css-loader", "less-loader"];
 //         loader: "less-loader" // compiles Less to CSS
 //     }]
 const cssProd = ExtractTextPlugin.extract({
-    fallback: "style-loader",
+    fallback: ["style-loader"],
     use: ["css-loader", "less-loader"]//,
     //publicPath: "./dist"
 });
 const cssConfig = prod ? cssProd : cssDev;
+console.log("anneq", cssConfig)
 
 
 //todo: pretty bundle in dev, source maps
@@ -41,28 +42,26 @@ const browserConfig = {
     devtool: "cheap-module-source-map",
     module: {
         rules: [
-            // {test: /\.css$/, use: ["style-loader", "css-loader"]},
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"]
+            },
             {
                 test: /\.less$/,
                 //exclude: /node_modules/,
-                use: cssConfig
+                use: cssConfig //loader is depreteted bu as wa
             },
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/, //exactly without quotes
-                use: "react-hot-loader"
-            },
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/, //exactly without quotes
-                use: "babel-loader"
+                use: ["react-hot-loader", "babel-loader"]
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 exclude: /node_modules/, //exactly without quotes
-                //use: "file-loader" //generates hash name
+                //use: "file-loader" //generates hash login
                 use: [
-                    "file-loader?name=[name]-[hash:6].[ext]",
+                    "file-loader?login=[login]-[hash:6].[ext]",
                     "image-webpack-loader" //compress
                 ]
                 //todo how to invalidate cache?
@@ -82,9 +81,13 @@ const browserConfig = {
     plugins: [
         new HtmlWebpackPlugin({
             filename: "index.html",
-            template: "./src/index.html",
-            excludeChunks: ["admin"]
+            template: "./src/index.ejs",
+            excludeChunks: ["admin"],
             //favicon, minify, hash, cache, showErrors
+            envData: {
+                //gateway: "//stswoon-fm-gateway.herokuapp.com"
+                gateway: "http://localhost:5001"
+            }
         }),
         new ExtractTextPlugin({
             filename: "main.css",
@@ -133,7 +136,7 @@ const serverConfig = {
                 test: [/\.svg$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
                 loader: "file-loader",
                 options: {
-                    name: "dist/[name].[ext]",
+                    name: "dist/[login].[ext]",
                     //publicPath: url => url.replace(/public/, ""),
                     emit: false
                 }
@@ -150,7 +153,7 @@ const serverConfig = {
                 test: /js$/,
                 exclude: /(node_modules)/,
                 loader: "babel-loader",
-                query: { presets: ["react-app"] }
+                query: {presets: ["react-app"]}
             }
         ]
     }

@@ -8,7 +8,7 @@ import org.springframework.hateoas.Identifiable;
 import javax.persistence.*;
 
 @Entity
-//@Table(name="Projects")
+@Table(name="Projects")
 @Data
 public class ProjectEntity implements Identifiable<Long> {
     @Id

@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-//@Table(name="Operations")
+@Table(name="Operations")
 @Data
 public class OperationEntity implements Identifiable<Long> {
     @Id

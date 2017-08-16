@@ -17,7 +17,7 @@ paths:
       - application/json
       parameters:
       - in: path
-        name: userId
+        login: userId
         description: user id
         required: true
         type: string
@@ -40,18 +40,18 @@ paths:
       - application/json
       parameters:
       - in: path
-        name: projectId
+        login: projectId
         description: project id
         required: true
         type: string
         format: uuid
       - in: query
-        name: page
+        login: page
         required: false
         description: project id
         type: int
       - in: query
-        name: count
+        login: count
         required: false
         description: project id
         type: int
@@ -73,7 +73,7 @@ paths:
       - application/json
       parameters:
       - in: path
-        name: projectId
+        login: projectId
         description: project id
         required: true
         type: string
@@ -93,7 +93,7 @@ paths:
       - application/json
       parameters:
       - in: path
-        name: projectId
+        login: projectId
         description: project id
         required: true
         type: string
@@ -111,17 +111,17 @@ paths:
       - application/json
       parameters:
       - in: path
-        name: projectId
+        login: projectId
         description: project id
         required: true
         type: string
         format: uuid
       - in: formData
-        name: name
+        login: login
         required: true
         type: string
       - in: formData
-        name: description
+        login: description
         required: false
         type: string
       responses:
@@ -140,11 +140,11 @@ paths:
       - application/json
       parameters:
       - in: formData
-        name: name
+        login: login
         required: true
         type: string
       - in: formData
-        name: description
+        login: description
         required: false
         type: string
       responses:
@@ -163,7 +163,7 @@ paths:
       - application/json
       parameters:
       - in: path
-        name: operationId
+        login: operationId
         description: operation id
         required: true
         type: string
@@ -181,21 +181,21 @@ paths:
       - application/json
       parameters:
       - in: path
-        name: projectId
+        login: projectId
         description: project id
         required: true
         type: string
         format: uuid
       - in: formData
-        name: description
+        login: description
         required: true
         type: string
       - in: formData
-        name: type
+        login: type
         required: false
         type: string
       - in: formData
-        name: value
+        login: value
         required: false
         type: int        
       responses:
@@ -214,15 +214,15 @@ paths:
       - application/json
       parameters:
       - in: formData
-        name: description
+        login: description
         required: true
         type: string
       - in: formData
-        name: type
+        login: type
         required: false
         type: string
       - in: formData
-        name: value
+        login: value
         required: false
         type: int        
       responses:
@@ -244,11 +244,11 @@ paths:
     post:
       parameters:
       - in: formData
-        name: userName
+        login: userName
         required: true
         type: string
       - in: formData
-        name: userPassword
+        login: userPassword
         required: true
         type: string
 
@@ -260,7 +260,7 @@ definitions:
         type: string
         format: uuid
         example: d290f1ee-6c54-4b01-90e6-d701748f0851
-      name:
+      login:
         type: string
         example: My Money
       description:

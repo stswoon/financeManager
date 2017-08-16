@@ -4,10 +4,10 @@ spring:
 
 zuul:
   routes:
-    back-service:
+    backend-service:
       path: /backend-service/**
       serviceId: backend
-    test:
+    backend:
       path: /backend/**
       url: http://stswoon-fm-backend.herokuapp.com/
 

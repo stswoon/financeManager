@@ -1,1 +1,4 @@
-This folder contains diagrams from draw.io
+This folder contains diagrams from :
+* https://draw.io
+* https://swagger.io
+* https://webdemo.balsamiq.com

@@ -29,9 +29,9 @@ class Login extends React.Component {
         event.preventDefault(); //cancel normal html submit
 
         var request = {
-            type: this.isRegistration() ? "POST" : "GET",
+            type: "POST",
             //url: envData.gateway + "/backend/user",
-            url: envData.gateway + "/user",
+            url: envData.gateway + (this.isRegistration() ? "/user" : "/user/login"),
             headers: {
                 'Accept': 'application/json;charset=UTF-8',
                 'Content-Type': 'application/json;charset=UTF-8'
@@ -42,9 +42,7 @@ class Login extends React.Component {
         (async () => {
             try {
                 let response = await jQuery.ajax(request);
-                // let response = await fetch(envData.gateway + "/backend/user", config);
-                let user = response.json();
-                alert("Done, userId = " + user.id);
+                alert("Done, userId = " + response.id);
             } catch (response) {
                 alert("Failed to operate with user, reason: " + response.json().error);
             }

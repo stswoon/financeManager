@@ -20,14 +20,14 @@ public class UserController {
         this.passwordHashService = passwordHashService;
     }
 
-    @RequestMapping(value = "/user", method = GET)
-    public UserDto login(@RequestParam String login, @RequestParam String password) {
-        List<UserEntity> entities = (List<UserEntity>) userRepository.findByLogin(login);
+    @RequestMapping(value = "/user/login", method = POST)
+    public UserDto login(@RequestBody UserDto userDto) {
+        List<UserEntity> entities = (List<UserEntity>) userRepository.findByLogin(userDto.getLogin());
         if (entities.isEmpty()) {
             throw new RuntimeException("no users"); //todo
         }
         UserEntity userEntity = entities.get(0);
-        if (!userEntity.getPassword().equals(passwordHashService.hash(password))) {
+        if (!userEntity.getPassword().equals(passwordHashService.hash(userDto.getPassword()))) {
             throw new RuntimeException("password not match"); //todo
         }
         //todo check capcha

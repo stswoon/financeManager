@@ -12,7 +12,7 @@ class NotificationCollector extends React.Component {
     }
 
     handleVisibleChange = (visible) => {
-        this.setState({showNotifications : visible});
+        this.setState({showNotifications: visible});
     };
 
     render() {
@@ -31,7 +31,7 @@ class NotificationCollector extends React.Component {
                 onVisibleChange={this.handleVisibleChange}
             >
                 <Badge count={this.state.messages.length}>
-                    <Icon type="message" onClick={this.toggleNotifications}/>
+                    <Icon type="message" style={{fontSize: 30}} onClick={this.toggleNotifications}/>
                 </Badge>
             </Popover>
         )

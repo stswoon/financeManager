@@ -1,162 +1,72 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const webpack = require("webpack");
-const path = require("path");
+"use strict";
+var webpack = require('webpack');
+var path = require('path');
+var loaders = require('./webpack.loaders');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var DashboardPlugin = require('webpack-dashboard/plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-let prod = process.env.NODE_ENV == "production";
-console.log("anneq::prod=", prod, "process.env.NODE_ENV=" + process.env.NODE_ENV + "|");
-//prod = true; //todo
-//todo html reloading
-//todo
-const cssDev = ["style-loader", "css-loader", "less-loader"];
-//     [{
-//         loader: "style-loader" // creates style nodes from JS strings
-//     }, {
-//         loader: "css-loader" // translates CSS into CommonJS
-//     }, {
-//         loader: "less-loader" // compiles Less to CSS
-//     }]
-const cssProd = ExtractTextPlugin.extract({
-    fallback: ["style-loader"],
-    use: ["css-loader", "less-loader"]//,
-    //publicPath: "./dist"
+const HOST = process.env.HOST || "localhost";
+const PORT = process.env.PORT || "9000";
+
+loaders.push({
+    test: /\.scss$/,
+    loaders: ['style-loader', 'css-loader?importLoaders=1', 'sass-loader'],
+    exclude: ['node_modules']
+}, {
+    test: /\.less$/,
+    loader: ['style-loader', 'css-loader?importLoaders=1', "less-loader"],
+    exclude: ['node_modules']
 });
-const cssConfig = prod ? cssProd : cssDev;
-console.log("anneq", cssConfig)
 
-
-//todo: pretty bundle in dev, source maps
-
-//https://github.com/jantimon/html-webpack-plugin#configuration
-const browserConfig = {
-    entry: {
-        app: "./src/index.js",
-        admin: "./src/admin.js" //todo: css bundle
-    },
+module.exports = {
+    entry: [
+        'react-hot-loader/patch',
+        './src/index.jsx', // your app's entry point
+    ],
+    devtool: process.env.WEBPACK_DEVTOOL || 'eval-source-map',
     output: {
-        // libraryTarget: "umd"
-        //path: __dirname + "/dist",
-        path: path.resolve(__dirname, "dist"),
-        filename: "[name].bundle.js"
+        publicPath: '/',
+        path: path.join(__dirname, 'public'),
+        filename: 'bundle.js'
     },
-    devtool: "cheap-module-source-map",
+    resolve: {
+        extensions: ['.js', '.jsx']
+    },
     module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: ["style-loader", "css-loader"]
-            },
-            {
-                test: /\.less$/,
-                //exclude: /node_modules/,
-                use: cssConfig //loader is depreteted bu as wa
-            },
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/, //exactly without quotes
-                use: ["react-hot-loader", "babel-loader"]
-            },
-            {
-                test: /\.(jpe?g|png|gif|svg)$/i,
-                exclude: /node_modules/, //exactly without quotes
-                //use: "file-loader" //generates hash login
-                use: [
-                    "file-loader?login=[login]-[hash:6].[ext]",
-                    "image-webpack-loader" //compress
-                ]
-                //todo how to invalidate cache?
-            }
-        ]
+        loaders
     },
-    //https://webpack.js.org/configuration/dev-server/#devserver
     devServer: {
-        contentBase: path.join(__dirname, "dist"),
-        compress: true,
-        port: 9000,
-        stats: "errors-only", //"normal" or "verbose"
-        hot: true
-        //https, colors, hot, overlay (for errors), proxy for backend, progress, setup (for express and backe emulation)
-        //watchContentBase to watch, watchOptions: polling
+        contentBase: "./public",
+        // do not print bundle build stats
+        noInfo: true,
+        // enable HMR
+        hot: true,
+        // embed the webpack-dev-server runtime into the bundle
+        inline: true,
+        // serve index.html in place of 404 responses to allow HTML5 history
+        historyApiFallback: true,
+        port: PORT,
+        host: HOST
     },
     plugins: [
+        new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new ExtractTextPlugin({
+            filename: 'style.css',
+            allChunks: true
+        }),
+        new DashboardPlugin(),
         new HtmlWebpackPlugin({
-            filename: "index.html",
-            template: "./src/index.ejs",
-            excludeChunks: ["admin"],
-            //favicon, minify, hash, cache, showErrors
+            template: './src/index.ejs',
+            files: {
+                css: ['style.css'],
+                js: ["bundle.js"],
+            },
             envData: {
                 //gateway: "//stswoon-fm-gateway.herokuapp.com"
                 gateway: "http://localhost:5001"
             }
         }),
-        new ExtractTextPlugin({
-            filename: "main.css",
-            disable: !prod//,
-            //excludeChunks: ["admin"] //todo
-        }),
-        new HtmlWebpackPlugin({
-            filename: "admin.html",
-            template: "./src/admin.html",
-            chunks: ["admin"]
-        }),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin()
     ]
 };
-
-// const serverConfig = JSON.parse(JSON.stringify(browserConfig));
-// serverConfig.entry = "./src/server/index.js";
-// serverConfig.target = "node";
-// serverConfig.output = {
-//     path: path.resolve(__dirname, "dist"),
-//     filename: "server.js",
-//     libraryTarget: "commonjs2"
-// };
-// //serverConfig.module.rules[3].emit = false;//for pictures
-// serverConfig.module.rules[0] = { //for css
-//     test: /\.css$/,
-//     use: [
-//         {
-//             loader: "css-loader/locals"
-//         }
-//     ]
-// };
-const serverConfig = {
-    entry: "./src/server/index.js",
-    target: "node",
-    output: {
-        path: path.resolve(__dirname, "dist"),
-        filename: "server.js",
-        libraryTarget: "commonjs2"
-    },
-    devtool: "cheap-module-source-map",
-    module: {
-        rules: [
-            {
-                test: [/\.svg$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-                loader: "file-loader",
-                options: {
-                    name: "dist/[login].[ext]",
-                    //publicPath: url => url.replace(/public/, ""),
-                    emit: false
-                }
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    {
-                        loader: "css-loader/locals"
-                    }
-                ]
-            },
-            {
-                test: /js$/,
-                exclude: /(node_modules)/,
-                loader: "babel-loader",
-                query: {presets: ["react-app"]}
-            }
-        ]
-    }
-};
-
-module.exports = [browserConfig, serverConfig];

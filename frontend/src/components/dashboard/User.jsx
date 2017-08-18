@@ -1,11 +1,12 @@
 import React from "react";
 import {Avatar} from "antd";
+import "./user.less"
 
 const User = ({userName, onLogout}) => {
     return (
-        <div>
+        <div className="user-nav">
             <Avatar>{userName}</Avatar>
-            <a href="#" onClick={onLogout}>log out</a>
+            <a className="user-nav_logout" href="#" onClick={onLogout}>log out</a>
         </div>
     )
 };

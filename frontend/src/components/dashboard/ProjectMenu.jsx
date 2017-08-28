@@ -11,24 +11,25 @@ class ProjectMenu extends React.Component {
     handleMenuItemClick = (menuItem) => {
         console.log(menuItem);
         if (menuItem.key === "new") {
-            this.setState({editProjectMode: true});
+            //this.setState({editProjectMode: true});
         } else {
             this.props.changeProject(menuItem.key);
         }
     };
 
     handleVisibleChange = (visibility) => {
-        if (!this.state.editProjectMode) {
+        //if (!this.state.editProjectMode) {
             this.setState({visibility});
-        }
+        //}
     };
 
     render() {
-        let menuItems = this.props.projects.map(project => <Menu.Item key={project.id}>{project.name}</Menu.Item>);
-        menuItems.push((<Menu.Divider />));
+        let menuItems = this.props.projects.map(project =>
+            <Menu.Item key={project.id}>{project.name}</Menu.Item>);
+        //menuItems.push((<Menu.Divider />));
         menuItems.push((
             <Menu.Item key="new">
-                <NewProject edit={this.state.editProjectMode} onNewProject={this.props.handleNewProject}/>
+                <NewProject onProjectCreate={this.props.onProjectCreate} />
             </Menu.Item>
         ));
         let menu = (

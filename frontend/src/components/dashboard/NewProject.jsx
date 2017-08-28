@@ -13,15 +13,23 @@ class NewProject extends React.Component {
         this.setState({projectName: value});
     };
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({})
-    }
+    showEdit = () => {
+        this.setState({edit: true});
+    };
+
+    hideEdit = () => {
+        this.setState({edit: false});
+    };
+
+    onProjectCreate = () => {
+        this.props.onProjectCreate(this.state.projectName);
+    };
 
     render() {
         let result;
-        if (!this.props.edit) {
+        if (!this.state.edit) {
             result = (
-                <span>New Project...</span>
+                <span onClick={this.showEdit}>New Project...</span>
             );
         } else {
             result = (
@@ -31,10 +39,10 @@ class NewProject extends React.Component {
                            onChange={this.handleInputChange}
                     />
                     <Button type="primary" shape="circle" icon="plus"
-                            onClick={this.props.onProjectCreate}
+                            onClick={this.onProjectCreate}
                     />
-                    <Button type="primary" shape="circle" icon="plus"
-                            onClick={this.setState({edit: false})}
+                    <Button shape="circle" icon="close"
+                            onClick={this.hideEdit}
                     />
                 </div>
             );

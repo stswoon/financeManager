@@ -29,11 +29,15 @@ public class ProjectController {
         return dtos;
     }
 
-    @RequestMapping(value = "/project", method = PUT)
-    public void create(@RequestBody ProjectDto projectDto) {
+    @RequestMapping(value = "/project/{userId}", method = PUT)
+    public ProjectDto create(@PathVariable long userId, @RequestBody ProjectDto projectDto) {
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setName(projectDto.getName());
+        projectEntity.setUserId(userId);
         projectRepository.save(projectEntity);
+
+        projectEntity = projectRepository.findByName(projectDto.getName()).get(0);
+        return new ProjectDto(projectEntity.getId(), projectEntity.getName());
     }
 
     @RequestMapping(value = "/project/{id}", method = DELETE)

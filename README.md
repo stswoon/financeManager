@@ -1,12 +1,13 @@
 # financeManager
 Pet project to test skils in ReactJs and Microservices
-
-
-
-
-
-
 ssh-keygen -t rsa -b 4096 -C "stswoon@yandex.ru"
+
+
+
+
+heroku plugins:install heroku-repo
+https://stackoverflow.com/questions/27810419/git-push-heroku-master-is-still-asking-for-authentication
+
 
 
 https://www.ssh.com/ssh/putty/windows/puttygen

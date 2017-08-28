@@ -64,9 +64,9 @@ module.exports = {
                 js: ["bundle.js"],
             },
             envData: {
-                //gateway: "//stswoon-fm-gateway.herokuapp.com"
-                gateway: "http://localhost:5001"
+                gateway: "//stswoon-fm-gateway.herokuapp.com"
+                //gateway: "http://localhost:5001"
             }
-        }),
+        })
     ]
 };

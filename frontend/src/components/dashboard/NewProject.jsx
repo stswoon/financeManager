@@ -23,6 +23,7 @@ class NewProject extends React.Component {
 
     onProjectCreate = () => {
         this.props.onProjectCreate(this.state.projectName);
+        this.hideEdit();
     };
 
     render() {

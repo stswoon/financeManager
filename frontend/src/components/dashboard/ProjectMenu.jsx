@@ -28,7 +28,7 @@ class ProjectMenu extends React.Component {
             <Menu.Item key={project.id}>
                 <span>{project.name}</span>
                 <Button type="danger" shape="circle" icon="delete"
-                        onClick={this.onProjectCreate}
+                        onClick={this.onProjectRemove}
                 />
             </Menu.Item>)
         );

@@ -1,10 +1,12 @@
 import React from "react";
 import NotificationCollector from "./NotificationCollector";
 import ProjectMenu from "./ProjectMenu";
+import OperationTable from "./OperationTable";
 import User from "./User";
 import "./dashboard.less";
 import jQuery from "jQuery"
 import { Redirect, Route } from 'react-router-dom';
+import {withRouter} from "react-router-dom";
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -51,11 +53,20 @@ class Dashboard extends React.Component {
             .catch(alert);
     };
 
+    handleChangeProject = (projectId) => {
+        //https://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
+        //context.history.push('/dashboard/' + projectId);
+        this.props.history.push('/dashboard/' + projectId);
+    };
+
     render() {
         //todo https://stackoverflow.com/questions/43164554/how-to-implement-authenticated-routes-in-react-router-4
         if (!window.userId) {
             return <Redirect to="/" />
         }
+
+        console.log("projectId="+this.props.match.params.projectId);
+        const projectId = parseInt(this.props.match.params.projectId);
 
         return (
             <div>
@@ -63,6 +74,7 @@ class Dashboard extends React.Component {
                     <div className="navigation_item">
                         <ProjectMenu projects={this.state.projects}
                                      onProjectCreate={this.handleNewProject}
+                                     changeProject={this.handleChangeProject}
                         />
                     </div>
                     <div className="navigation_right-block">
@@ -77,11 +89,18 @@ class Dashboard extends React.Component {
                 <div className="content">
                     {/*<MoneySummary/>*/}
                     {/*<Diagram/>*/}
-                    {/*<OperationTable/>*/}
+                    {projectId && <OperationTable projectId={projectId}/>}
                 </div>
             </div>
         )
     }
 }
 
-export default Dashboard;
+// https://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
+// Dashboard.contextTypes = {
+//     history: React.PropTypes.shape({
+//         push: React.PropTypes.func.isRequired
+//     })
+// }
+
+export default withRouter(Dashboard); //https://stackoverflow.com/questions/42701129/how-to-push-to-history-in-react-router-v4

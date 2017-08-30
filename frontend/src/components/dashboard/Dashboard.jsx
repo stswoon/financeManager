@@ -4,6 +4,7 @@ import ProjectMenu from "./ProjectMenu";
 import User from "./User";
 import "./dashboard.less";
 import jQuery from "jQuery"
+import { Redirect, Route } from 'react-router-dom';
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -13,7 +14,7 @@ class Dashboard extends React.Component {
         };
     }
 
-    userId = 1; //todo
+    userId = window.userId; //todo
 
     componentDidMount() {
 
@@ -51,6 +52,11 @@ class Dashboard extends React.Component {
     };
 
     render() {
+        //todo https://stackoverflow.com/questions/43164554/how-to-implement-authenticated-routes-in-react-router-4
+        if (!window.userId) {
+            return <Redirect to="/" />
+        }
+
         return (
             <div>
                 <div className="navigation">

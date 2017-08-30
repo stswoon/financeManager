@@ -5,6 +5,9 @@ import jQuery from "jQuery"
 require("antd/dist/antd.css");
 require("./login-form.less");
 const FormItem = Form.Item;
+import { Redirect, Route } from 'react-router-dom';
+
+const isAuthenticated = () => window.userId; //todo cookies
 
 class Login extends React.Component {
     constructor(props) {
@@ -31,7 +34,7 @@ class Login extends React.Component {
         var request = {
             type: "POST",
             //url: envData.gateway + "/backend/user",
-            url: envData.gateway + (this.isRegistration() ? "/user" : "/user/login"),
+            url: envData.gateway + (this.isRegistration() ? "/backend/user" : "/backend/user/login"),
             headers: {
                 'Accept': 'application/json;charset=UTF-8',
                 'Content-Type': 'application/json;charset=UTF-8'
@@ -43,6 +46,8 @@ class Login extends React.Component {
             try {
                 let response = await jQuery.ajax(request);
                 alert("Done, userId = " + response.id);
+                window.userId = response.id;
+                this.setState({auth: true});
             } catch (response) {
                 alert("Failed to operate with user, reason: " + response.json().error);
             }
@@ -83,6 +88,12 @@ class Login extends React.Component {
     }
 
     render() {
+        if (isAuthenticated()) {
+            // return <span>qqq</span>
+            return <Redirect to="/dashboard" />
+        }
+
+
         const formItems = [];
         formItems.push(
             <FormItem>
@@ -121,7 +132,7 @@ class Login extends React.Component {
         formItems.push(
             <FormItem>
                 <Checkbox>Remember me</Checkbox>
-                <Button type="primary" htmlType="submit" className="login-form-button">
+                <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.login}>
                     {this.isRegistration() ? "Register" : "Log in"}
                 </Button>
                 <span className="login-form_register-link">

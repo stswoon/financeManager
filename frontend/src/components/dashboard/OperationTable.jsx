@@ -2,11 +2,14 @@ import React from "react";
 import {Input, Button, Icon, Menu, Dropdown} from 'antd';
 import {Table} from 'antd';
 import jQuery from "jQuery";
+import NewOperation from "./NewOperation";
 
 class OperationTable extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            operations: []
+        };
     }
 
     componentDidMount() {
@@ -16,7 +19,7 @@ class OperationTable extends React.Component {
             headers: {
                 'Accept': 'application/json;charset=UTF-8',
                 'Content-Type': 'application/json;charset=UTF-8'
-            },
+            }
         };
         jQuery.ajax(request)
             .then(response => {
@@ -26,24 +29,54 @@ class OperationTable extends React.Component {
             .catch(alert);
     }
 
+    handleNewOperation = () => {
+      this.setState({newOperation: true});
+    };
+
     render() {
         //this.state.operations //todo: make map to data
         //[{id: 1, comment: "Breakfast", operationType: "MINUS", value: 150, date: 1506643200000}]
 
+        const data = this.state.operations.map((item) => {
+            return {
+                comment: item.comment,
+                value: {type: item.operationType, value: item.value},
+                date: item.date
+            }
+        });
+
+        const formatDate = function (date) {
+            //todo: https://learn.javascript.ru/datetime or https://stackoverflow.com/questions/3552461/how-to-format-a-javascript-date
+            var day = date.getDate();
+            var monthIndex = date.getMonth();
+            var year = date.getFullYear();
+
+            return day + '.' + monthIndex + '.' + year;
+        };
 
         const columns = [{
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            render: (text) => (<a href="#">{text}</a>)
+            title: 'Comment',
+            dataIndex: 'comment',
+            key: 'comment',
         }, {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age'
+            title: 'Value',
+            dataIndex: 'value',
+            key: 'value',
+            render: (data) => {
+                //todo element
+                return (
+                    <span>
+                        {(data.type === "MINUS" ? "-" : "+") + data.value} &#8381;
+                    </span>    //rubles
+                )
+            }
         }, {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address'
+            title: 'Date',
+            dataIndex: 'date',
+            key: 'date',
+            render: data => (
+                <span>{formatDate(new Date(data))}</span> //todo: element
+            )
         }, {
             title: 'Action',
             key: 'action',
@@ -56,24 +89,13 @@ class OperationTable extends React.Component {
             )
         }];
 
-        const data = [{
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-        }, {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-        }, {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-        }];
-
-        return (<Table columns={columns} dataSource={data}/>);
+        return (
+            <opeartion-table>
+                <Button onClick={this.handleNewOperation}>New operation</Button>
+                <Table columns={columns} dataSource={data}/>
+                {this.state.newOperation && <NewOperation visible={this.state.newOperation}/>} //todo
+            </opeartion-table>
+        );
     }
 }
 

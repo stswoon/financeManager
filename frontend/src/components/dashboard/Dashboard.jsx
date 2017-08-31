@@ -59,6 +59,10 @@ class Dashboard extends React.Component {
         this.props.history.push('/dashboard/' + projectId);
     };
 
+    handleNewOpeartion = () => {
+        this.setState({newOpeartion: true});
+    };
+
     render() {
         //todo https://stackoverflow.com/questions/43164554/how-to-implement-authenticated-routes-in-react-router-4
         if (!window.userId) {
@@ -89,7 +93,7 @@ class Dashboard extends React.Component {
                 <div className="content">
                     {/*<MoneySummary/>*/}
                     {/*<Diagram/>*/}
-                    {projectId && <OperationTable projectId={projectId}/>}
+                    {projectId && <OperationTable projectId={projectId} onNewOpertion={this.handleNewOpeartion}/>}
                 </div>
             </div>
         )

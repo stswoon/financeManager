@@ -29,8 +29,15 @@ class OperationTable extends React.Component {
             .catch(alert);
     }
 
+
+
     handleNewOperation = () => {
       this.setState({newOperation: true});
+    };
+
+    handleCreate = () => {
+        this.componentDidMount();
+        //this.setState({newOperation: false});
     };
 
     render() {
@@ -89,11 +96,16 @@ class OperationTable extends React.Component {
             )
         }];
 
+        //todo insert 'New operation' button in first data row
         return (
             <opeartion-table>
                 <Button onClick={this.handleNewOperation}>New operation</Button>
                 <Table columns={columns} dataSource={data}/>
-                {this.state.newOperation && <NewOperation visible={this.state.newOperation}/>} //todo
+                {this.state.newOperation && <NewOperation
+                    visible={this.state.newOperation}
+                    projectId={this.props.projectId}
+                    onCreate={this.handleCreate}
+                />} //todo
             </opeartion-table>
         );
     }

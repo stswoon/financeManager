@@ -31,7 +31,7 @@ class Login extends React.Component {
     handleSubmit(event) {
         event.preventDefault(); //cancel normal html submit
 
-        var request = {
+        var request = { //todo in separate class
             type: "POST",
             //url: envData.gateway + "/backend/user",
             url: envData.gateway + (this.isRegistration() ? "/backend/user" : "/backend/user/login"),

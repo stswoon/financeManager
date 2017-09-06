@@ -27,3 +27,15 @@ git commit -m "deploy"
 git push heroku master
 
 heroku logs --tail
+
+
+
+oath
+https://habrahabr.ru/post/280786/
+https://spring.io/blog/2015/02/03/sso-with-oauth2-angular-js-and-spring-security-part-v
+https://cloud.spring.io/spring-cloud-security/#quick-start
+http://stytex.de/blog/2016/02/01/spring-cloud-security-with-oauth2/
+https://github.com/xetys/spring-cloud-oauth2-example/tree/master/OAuth2ResourceServer/src/main/java/com/example/config
+https://jmnarloch.wordpress.com/2015/10/21/spring-cloud-eureka-zuul-and-oauth2-scaling-out-authorization-server/
+https://blog.jdriven.com/2016/09/securing-application-landscape-spring-cloud-security-part-1/
+https://bitbucket.org/rlippolis/cloud-security-example/src

@@ -10,7 +10,7 @@ spting:
 
 spring:
   application:
-    name: backend
+    name: auth
   datasource:
     url: ${JDBC_DATABASE_URL:}
     hikari:
@@ -18,21 +18,12 @@ spring:
       maximum-pool-size: 10
 
 server:
-  port: ${PORT:5001}
-
-security:
-  oauth2:
-    client:
-      clientId: account-service
-      clientSecret: ${ACCOUNT_SERVICE_PASSWORD:qqq}
-      #accessTokenUri: http://auth-service:5000/uaa/oauth/token
-      accessTokenUri: http://localhost:5004/uaa/oauth/token
-      grant-type: client_credentials
-      scope: server
+  port: ${PORT:5004}
+#  context-path: /uaa
 
 logging:
   level:
-    #ROOT: DEBUG
+    ROOT: DEBUG
     nodomain.stswoon: DEBUG
 
 createTestData: true
@@ -60,5 +51,5 @@ spring:
   profile: local
 #  include: common
 
-spring.jpa.properties.hibernate.dialect: nodomain.stswoon.financemanager.backend.config.SQLiteDialect
+spring.jpa.properties.hibernate.dialect: nodomain.stswoon.financemanager.auth.config.SQLiteDialect
 spring.jpa.hibernate.ddl-auto: create-drop

@@ -15,6 +15,7 @@
     <modules>
         <module>discovery</module>
         <module>gateway</module>
+        <module>auth</module>
         <module>backend</module>
         <module>frontend</module>
     </modules>

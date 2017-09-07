@@ -22,17 +22,20 @@ server:
 
 security:
   oauth2:
-    client:
-      clientId: account-service
-      clientSecret: ${ACCOUNT_SERVICE_PASSWORD:qqq}
-      #accessTokenUri: http://auth-service:5000/uaa/oauth/token
-      accessTokenUri: http://localhost:5004/uaa/oauth/token
-      grant-type: client_credentials
-      scope: server
+    resource:
+      userInfoUri: http://localhost:5004/me
+      preferTokenInfo: false
+#    client:
+#      clientId: backend
+#      clientSecret: ${ACCOUNT_SERVICE_PASSWORD:qqq}
+#      #accessTokenUri: http://auth-service:5000/uaa/oauth/token
+#      accessTokenUri: http://localhost:5004/oauth/token
+#      grant-type: client_credentials
+#      scope: server
 
 logging:
   level:
-    #ROOT: DEBUG
+    ROOT: DEBUG
     nodomain.stswoon: DEBUG
 
 createTestData: true

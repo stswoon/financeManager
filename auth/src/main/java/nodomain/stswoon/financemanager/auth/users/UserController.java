@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,9 +24,15 @@ public class UserController {
         this.passwordHashService = passwordHashService;
     }
 
-    @RequestMapping(value = "/current", method = RequestMethod.GET)
-    public Principal getUser(Principal principal) {
-        return principal;
+    @RequestMapping(value = "/users", method = GET)
+    public List<UserDto> users() {
+        List<UserDto> dtos = new ArrayList<>();
+        Iterator<UserEntity> it = userRepository.findAll().iterator();
+        for (;it.hasNext();) {
+            UserEntity entity = it.next();
+            dtos.add(new UserDto(entity.getId(), entity.getLogin(), null));
+        }
+        return dtos;
     }
 
     @RequestMapping(value = "/user/login", method = POST)

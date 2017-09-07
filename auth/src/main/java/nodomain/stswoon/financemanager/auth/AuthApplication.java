@@ -42,7 +42,7 @@ public class AuthApplication {
             springApplication.setDefaultProperties(properties);
             DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
             dataSourceBuilder.driverClassName("org.sqlite.JDBC");
-            dataSourceBuilder.url("jdbc:sqlite:backend/target/localDb.db");
+            dataSourceBuilder.url("jdbc:sqlite:auth/target/localDb.db");
             return dataSourceBuilder.build();
         } else {
             HikariConfig config = new HikariConfig();

@@ -1,4 +1,4 @@
-package nodomain.stswoon.financemanager.auth.config;
+package nodomain.stswoon.financemanager.auth.security;
 
 import nodomain.stswoon.financemanager.auth.users.UserEntity;
 import nodomain.stswoon.financemanager.auth.users.UserRepository;
@@ -27,7 +27,7 @@ public class MyUserDetailsService implements UserDetailsService {
         }
 
         Collection<SimpleGrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority("ALL"));
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         User user = new User(userEntity.getLogin(), userEntity.getPassword(), authorities);
 
         return user;

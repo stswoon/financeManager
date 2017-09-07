@@ -39,3 +39,5 @@ https://github.com/xetys/spring-cloud-oauth2-example/tree/master/OAuth2ResourceS
 https://jmnarloch.wordpress.com/2015/10/21/spring-cloud-eureka-zuul-and-oauth2-scaling-out-authorization-server/
 https://blog.jdriven.com/2016/09/securing-application-landscape-spring-cloud-security-part-1/
 https://bitbucket.org/rlippolis/cloud-security-example/src
+!https://github.com/rohitghatol/spring-boot-microservices.git
+!!!!https://stackoverflow.com/questions/45928583/simple-auth-in-spring-boot-microservices

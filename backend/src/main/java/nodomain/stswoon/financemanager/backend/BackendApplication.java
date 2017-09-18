@@ -21,7 +21,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -70,19 +72,10 @@ public class BackendApplication extends ResourceServerConfigurerAdapter {
         }
     }
 
-
-    @Override
-    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources.resourceId("apis");
-    }
-
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
-        http.authorizeRequests()
-                //.antMatchers("/" , "/demo").permitAll()
-                .anyRequest().authenticated();
-        // @formatter:on
+    //used in com.juanzero.service.impl.NoteServiceImpl
+    @Bean
+    OAuth2RestTemplate oAuth2RestTemplate(OAuth2ClientContext clientContext, OAuth2ProtectedResourceDetails details){
+        return new OAuth2RestTemplate(details, clientContext);
     }
 
 }

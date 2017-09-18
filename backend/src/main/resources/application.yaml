@@ -22,16 +22,12 @@ server:
 
 security:
   oauth2:
+    client:
+      client-id: oauth2_client
+      client-secret: oauth2_client_secret
     resource:
-      userInfoUri: http://localhost:5004/me
-      preferTokenInfo: false
-#    client:
-#      clientId: backend
-#      clientSecret: ${ACCOUNT_SERVICE_PASSWORD:qqq}
-#      #accessTokenUri: http://auth-service:5000/uaa/oauth/token
-#      accessTokenUri: http://localhost:5004/oauth/token
-#      grant-type: client_credentials
-#      scope: server
+      token-info-uri: http://localhost:5004/oauth/check_token
+
 
 logging:
   level:

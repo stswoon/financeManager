@@ -41,3 +41,9 @@ https://blog.jdriven.com/2016/09/securing-application-landscape-spring-cloud-sec
 https://bitbucket.org/rlippolis/cloud-security-example/src
 !https://github.com/rohitghatol/spring-boot-microservices.git
 !!!!https://stackoverflow.com/questions/45928583/simple-auth-in-spring-boot-microservices
+
+
+
+http://projects.spring.io/spring-security-oauth/docs/oauth2.html
+http://www.baeldung.com/rest-api-spring-oauth2-angularjs
+https://spring.io/guides/tutorials/spring-boot-oauth2/

@@ -22,20 +22,20 @@ server:
 #  context-path: /uaa
 
 
-security:
-  user:
-    password: 12345678
+#security:
+#  user:
+#    password: 12345678
 #  basic:
 #    enabled: false
-  oauth2:
-    client:
-      client-id: oauth2_client
-      client-secret: oauth2_client_secret
-      scope: read, write
-      auto-approve-scopes: .*
-      authorized-grant-types: authorization_code
-    authorization:
-      check-token-access: permitAll()
+#  oauth2:
+#    setclient:
+#      client-id: oauth2_client
+#      client-secret: oauth2_client_secret
+#      scope: read, write
+#      auto-approve-scopes: .*
+#      authorized-grant-types: authorization_code
+#    authorization:
+#      check-token-access: permitAll()
 
 logging:
   level:

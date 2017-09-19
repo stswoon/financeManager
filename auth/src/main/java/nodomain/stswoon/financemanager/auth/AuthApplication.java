@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ import java.util.Properties;
 @Configuration
 @SpringBootApplication
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableAuthorizationServer
 @Slf4j
 public class AuthApplication {
     private static SpringApplication springApplication;

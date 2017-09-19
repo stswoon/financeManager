@@ -20,8 +20,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .and()
                 .logout().permitAll()
                 .and()
+                .requestMatchers()
+                .antMatchers("/", "/login", "/oauth/authorize", "/oauth/confirm_access", "/exit")
+                .and()
                 .authorizeRequests()
+                .antMatchers("/webjars/**").permitAll()
                 .anyRequest().authenticated();
+                //.authorizeRequests()
+                //.anyRequest().authenticated();
     }
 
     @Override

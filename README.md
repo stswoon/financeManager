@@ -47,3 +47,7 @@ https://bitbucket.org/rlippolis/cloud-security-example/src
 http://projects.spring.io/spring-security-oauth/docs/oauth2.html
 http://www.baeldung.com/rest-api-spring-oauth2-angularjs
 https://spring.io/guides/tutorials/spring-boot-oauth2/
+
+
+https://github.com/sqshq/PiggyMetrics.git
+https://github.com/juanzero000/spring-boot-oauth2-sso.git

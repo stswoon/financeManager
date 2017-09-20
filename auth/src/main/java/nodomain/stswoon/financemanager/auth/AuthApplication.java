@@ -19,7 +19,7 @@ import java.util.Properties;
 
 @Configuration
 @SpringBootApplication
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableAuthorizationServer
 @Slf4j
 public class AuthApplication {

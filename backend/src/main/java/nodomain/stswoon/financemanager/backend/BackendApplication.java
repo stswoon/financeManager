@@ -36,18 +36,25 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 //@EnableOAuth2Resource
-@EnableResourceServer //https://spring.io/blog/2015/11/30/migrating-oauth2-apps-from-spring-boot-1-2-to-1-3
+//@EnableResourceServer //https://spring.io/blog/2015/11/30/migrating-oauth2-apps-from-spring-boot-1-2-to-1-3
 
 @Configuration
 @SpringBootApplication
 @Slf4j
-public class BackendApplication extends ResourceServerConfigurerAdapter {
+public class BackendApplication /*extends ResourceServerConfigurerAdapter*/ {
     private static SpringApplication springApplication;
 
     public static void main(String[] args) {
         springApplication = new SpringApplication(BackendApplication.class);
         springApplication.run(args);
     }
+
+//    @Override
+//    public void configure(HttpSecurity http) throws Exception {
+//        http
+//                .antMatcher("/me")
+//                .authorizeRequests().anyRequest().authenticated();
+//    }
 
     @Value("${spring.datasource.url}")
     private String dbUrl;
@@ -72,7 +79,7 @@ public class BackendApplication extends ResourceServerConfigurerAdapter {
         }
     }
 
-    //used in com.juanzero.service.impl.NoteServiceImpl
+//    //used in com.juanzero.service.impl.NoteServiceImpl
     @Bean
     OAuth2RestTemplate oAuth2RestTemplate(OAuth2ClientContext clientContext, OAuth2ProtectedResourceDetails details){
         return new OAuth2RestTemplate(details, clientContext);

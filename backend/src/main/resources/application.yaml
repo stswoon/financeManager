@@ -19,19 +19,38 @@ spring:
 
 server:
   port: ${PORT:5001}
+  context-path: /back
+  session:
+    cookie:
+      name: OAUTH2SESSION # This is to prevent cookie clash with other service as they run on the same host and context path
 
+#auth-server: http://localhost:5004
+#security:
+#  oauth2:
+#    client:
+#      client-id: oauth2_client
+#      client-secret: oauth2_client_secret
+#    resource:
+#      token-info-uri: ${auth-server}/oauth/check_token
+auth-server: http://localhost:5004/auth
 security:
+  basic:
+    enabled: false
   oauth2:
     client:
       client-id: oauth2_client
       client-secret: oauth2_client_secret
+      access-token-uri: ${auth-server}/oauth/token
+      user-authorization-uri: ${auth-server}/oauth/authorize
+      scope: read, write
+      authorized-grant-types: authorization_code
     resource:
-      token-info-uri: http://localhost:5004/oauth/check_token
-
+      token-info-uri: ${auth-server}/oauth/check_token
 
 logging:
   level:
-    ROOT: DEBUG
+    #ROOT: DEBUG
+    org.springframework.security: DEBUG
     nodomain.stswoon: DEBUG
 
 createTestData: true

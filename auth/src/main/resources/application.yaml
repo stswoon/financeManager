@@ -19,7 +19,23 @@ spring:
 
 server:
   port: ${PORT:5004}
-#  context-path: /uaa
+  context-path: /auth
+  session:
+    cookie:
+      name: OAUTH2SESSION # This is to prevent cookie clash with other service as they run on the same host and context path
+
+security:
+  user:
+    password: 12345678
+  oauth2:
+    client:
+      client-id: oauth2_client
+      client-secret: oauth2_client_secret
+      scope: read, write
+      auto-approve-scopes: .*
+      authorized-grant-types: authorization_code
+    authorization:
+      check-token-access: permitAll()
 
 
 #security:

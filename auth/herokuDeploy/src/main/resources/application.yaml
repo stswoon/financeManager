@@ -10,7 +10,7 @@ spting:
 
 spring:
   application:
-    name: backend
+    name: auth
   datasource:
     url: ${JDBC_DATABASE_URL:}
     hikari:
@@ -18,38 +18,43 @@ spring:
       maximum-pool-size: 10
 
 server:
-  port: ${PORT:5001}
-  #context-path: /back
+  port: ${PORT:5004}
+  context-path: /auth
   session:
     cookie:
       name: OAUTH2SESSION # This is to prevent cookie clash with other service as they run on the same host and context path
 
-#auth-server: http://localhost:5004
-#security:
-#  oauth2:
-#    client:
-#      client-id: oauth2_client
-#      client-secret: oauth2_client_secret
-#    resource:
-#      token-info-uri: ${auth-server}/oauth/check_token
-auth-server: http://localhost:5004/auth
 security:
-  basic:
-    enabled: false
+  user:
+    password: 12345678
   oauth2:
     client:
       client-id: oauth2_client
       client-secret: oauth2_client_secret
-      access-token-uri: ${auth-server}/oauth/token
-      user-authorization-uri: ${auth-server}/oauth/authorize
       scope: read, write
+      auto-approve-scopes: .*
       authorized-grant-types: authorization_code
-    resource:
-      token-info-uri: ${auth-server}/oauth/check_token
+    authorization:
+      check-token-access: permitAll()
+
+
+#security:
+#  user:
+#    password: 12345678
+#  basic:
+#    enabled: false
+#  oauth2:
+#    setclient:
+#      client-id: oauth2_client
+#      client-secret: oauth2_client_secret
+#      scope: read, write
+#      auto-approve-scopes: .*
+#      authorized-grant-types: authorization_code
+#    authorization:
+#      check-token-access: permitAll()
 
 logging:
   level:
-    #ROOT: DEBUG
     org.springframework.security: DEBUG
     nodomain.stswoon: DEBUG
 
@@ -73,12 +78,10 @@ eureka:
 #ribbon.IsSecure: true
 #management.security.enabled: false
 
-auth-server: https://stswoon-fm-gateway.herokuapp.com/authorization
-
 ---
 spring:
   profile: local
 #  include: common
 
-spring.jpa.properties.hibernate.dialect: nodomain.stswoon.financemanager.backend.config.SQLiteDialect
+spring.jpa.properties.hibernate.dialect: nodomain.stswoon.financemanager.auth.config.SQLiteDialect
 spring.jpa.hibernate.ddl-auto: create-drop

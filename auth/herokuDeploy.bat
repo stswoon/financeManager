@@ -6,9 +6,9 @@ xcopy pom.xml herokuDeploy
 xcopy Procfile herokuDeploy
 
 cd herokuDeploy
-heroku repo:reset -a stswoon-fm-backend
+heroku repo:reset -a stswoon-fm-auth
 git init
-heroku git:remote -a stswoon-fm-backend
+heroku git:remote -a stswoon-fm-auth
 git add -A
 git commit -m "deploy"
 git push heroku master

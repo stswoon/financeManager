@@ -10,6 +10,9 @@ zuul:
     backend:
       path: /backend/**
       url: http://stswoon-fm-backend.herokuapp.com/
+    authorization:
+      path: /authorization/**
+      url: http://stswoon-fm-authorization.herokuapp.com/auth
 
 eureka:
   instance:

@@ -1,0 +1,52 @@
+{
+  "name": "stswoon.financeManager.frontend",
+  "version": "0.0.1",
+  "description": "A sample Node.js app using Express 4",
+  "author": "Ali Al Dallal",
+  "main": "''",
+  "scripts": {
+    "build": "webpack --config webpack.production.config.js --progress --profile --colors",
+    "serve": "webpack-dev-server --progress --profile --colors",
+    "clean": "rimraf ./dist/*",
+    "start": "npm run build && node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/alicoding/react-webpack-babel#readme",
+  "dependencies": {
+    "antd": "^2.10.4",
+    "react": "15.4.2",
+    "react-dom": "15.4.2",
+    "react-router": "^4.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-plugin-import": "^1.2.1",
+    "babel-plugin-transform-class-properties": "^6.22.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-es2015": "6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-runtime": "^6.22.0",
+    "css-loader": "0.26.1",
+    "ejs": "2.5.6",
+    "extract-text-webpack-plugin": "^v2.0.0-rc.1",
+    "file-loader": "^0.10.0",
+    "html-webpack-plugin": "^2.26.0",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.4",
+    "node-sass": "^4.3.0",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "sass-loader": "^6.0.2",
+    "style-loader": "0.13.1",
+    "url-loader": "0.5.7",
+    "webpack": "^3.1.0",
+    "webpack-cleanup-plugin": "^0.4.2",
+    "webpack-dashboard": "^0.3.0",
+    "webpack-dev-server": "^2.6.1"
+  }
+}

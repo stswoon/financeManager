@@ -46,8 +46,11 @@ security:
       user-authorization-uri: ${auth-server}/oauth/authorize
       scope: read, write
       authorized-grant-types: authorization_code,refresh_token,password,client_credentials,implicit
+      authenticationScheme: header
     resource:
       token-info-uri: ${auth-server}/oauth/check_token
+      filter-order: 3 #magic
+
 
 logging:
   level:

@@ -8,7 +8,7 @@
 	},
 	"item": [
 		{
-			"name": "register new user",
+			"name": "registr new user",
 			"request": {
 				"url": "localhost:5001/user",
 				"method": "POST",
@@ -23,6 +23,79 @@
 					"mode": "raw",
 					"raw": "{\n\t\"name\": \"Ivan2\",\n\t\"password\": \"password\"\n}"
 				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get projects",
+			"request": {
+				"url": "https://stswoon-fm-backend.herokuapp.com/project/4",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer 85c66d73-9a71-4977-9a85-63a9ae950ff2",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "gwt token",
+			"request": {
+				"url": {
+					"raw": "https://stswoon-fm-auth.herokuapp.com/auth/oauth/token?grant_type=password&username=alex&password=123456",
+					"protocol": "https",
+					"host": [
+						"stswoon-fm-auth",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"auth",
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "username",
+							"value": "alex",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA==",
+						"description": ""
+					}
+				],
+				"body": {},
 				"description": ""
 			},
 			"response": []

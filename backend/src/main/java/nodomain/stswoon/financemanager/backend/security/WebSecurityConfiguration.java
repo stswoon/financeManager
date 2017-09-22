@@ -15,20 +15,20 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @Configuration
 @EnableOAuth2Sso
 //@EnableWebSecurity
-//@EnableResourceServer
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+@EnableResourceServer
+public class WebSecurityConfiguration extends ResourceServerConfigurerAdapter {
 
 //    @Value("${auth-server}/logout")
 //    private String logoutUrl;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+//        http.csrf().disable();
         http
                 //.logout()
                 //.logoutSuccessUrl(logoutUrl)
                 //.and()
-                .authorizeRequests().anyRequest().authenticated();
+                .authorizeRequests().anyRequest().authenticated().and().csrf().disable();
                 //.antMatchers("/**").access("#oauth2.hasScope('read')")
                 //.and().csrf().ignoringAntMatchers("/**");
 //                .authorizeRequests().anyRequest().hasRole("USER");

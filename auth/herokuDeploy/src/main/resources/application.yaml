@@ -34,6 +34,7 @@ security:
       scope: read, write
       auto-approve-scopes: .*
       authorized-grant-types: authorization_code,refresh_token,password,client_credentials,implicit
+      authenticationScheme: header
     authorization:
       check-token-access: permitAll()
 

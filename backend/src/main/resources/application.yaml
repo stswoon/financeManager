@@ -49,7 +49,7 @@ security:
       authenticationScheme: header
     resource:
       token-info-uri: ${auth-server}/oauth/check_token
-      filter-order: 3 #magic
+      filter-order: 3 #magic https://stackoverflow.com/questions/43308625/spring-security-oauth2-always-redirects-to-login-page-having-a-valid-bearer-hea
 
 
 logging:

@@ -16,7 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @EnableOAuth2Sso
 //@EnableWebSecurity
 @EnableResourceServer
-public class WebSecurityConfiguration extends ResourceServerConfigurerAdapter {
+public class WebSecurityConfiguration extends ResourceServerConfigurerAdapter { //https://stackoverflow.com/questions/44977972/how-to-enable-bearer-authentication-on-spring-boot-application
 
 //    @Value("${auth-server}/logout")
 //    private String logoutUrl;

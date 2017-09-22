@@ -33,6 +33,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                 .antMatchers("/webjars/**").permitAll()
                 .anyRequest().authenticated();
+                //.and().csrf().ignoringAntMatchers("/**");
                 //.authorizeRequests()
                 //.anyRequest().authenticated();
     }

@@ -1,0 +1,36 @@
+var script = document.createElement('script');
+script.src = "https://code.jquery.com/jquery-3.2.1.js";
+document.head.appendChild(script);
+
+
+var data = {
+	grant_type:"authorization_code",
+	username: "",
+	password: "",
+	client_id: "oauth2_client"
+};
+var encoded = btoa("oauth2_client:oauth2_client_secret");
+
+var req = {
+	method: 'POST',
+	url: "https://stswoon-fm-auth.herokuapp.com/auth/oauth/token",
+	headers: {
+		"Authorization": "Basic " + encoded//,
+		//"Content-type": "application/x-www-form-urlencoded"
+	},
+	//data: jQuery.param(data)
+}
+
+jQuery.ajax(req)
+	.then(function(res) {
+		console.log("res:", res);
+		console.log(res.access_token);
+	})
+	.catch(function(res) {
+		console.log("error res:", res)
+	});
+
+//            $http.defaults.headers.common.Authorization =
+//              'Bearer ' + data.data.access_token;
+//            $cookies.put("access_token", data.data.access_token);
+//            window.location.href="index";

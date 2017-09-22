@@ -33,7 +33,7 @@ security:
       client-secret: oauth2_client_secret
       scope: read, write
       auto-approve-scopes: .*
-      authorized-grant-types: authorization_code
+      authorized-grant-types: authorization_code,refresh_token,password,client_credentials,implicit
     authorization:
       check-token-access: permitAll()
 

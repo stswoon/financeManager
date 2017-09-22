@@ -32,7 +32,9 @@ server:
 #      client-secret: oauth2_client_secret
 #    resource:
 #      token-info-uri: ${auth-server}/oauth/check_token
-auth-server: http://localhost:5004/auth
+
+#auth-server: http://localhost:5004/auth
+auth-server: https://stswoon-fm-gateway.herokuapp.com/auth
 security:
   basic:
     enabled: false
@@ -43,7 +45,7 @@ security:
       access-token-uri: ${auth-server}/oauth/token
       user-authorization-uri: ${auth-server}/oauth/authorize
       scope: read, write
-      authorized-grant-types: authorization_code
+      authorized-grant-types: authorization_code,refresh_token,password,client_credentials,implicit
     resource:
       token-info-uri: ${auth-server}/oauth/check_token
 
@@ -73,7 +75,7 @@ eureka:
 #ribbon.IsSecure: true
 #management.security.enabled: false
 
-auth-server: https://stswoon-fm-gateway.herokuapp.com/authorization
+auth-server: https://stswoon-fm-gateway.herokuapp.com/auth
 
 ---
 spring:

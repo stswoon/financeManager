@@ -7,6 +7,7 @@ import "./dashboard.less";
 import jQuery from "jQuery"
 import { Redirect, Route } from 'react-router-dom';
 import {withRouter} from "react-router-dom";
+import Request from "../../../src/utils/ajax";
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -22,15 +23,10 @@ class Dashboard extends React.Component {
 
         //use axios - https://daveceddia.com/ajax-requests-in-react/
 
-        var request = {
-            type: "GET",
+        var request = new Request({
             url: envData.gateway + "/backend/project/" + this.userId,
-            headers: {
-                'Accept': 'application/json;charset=UTF-8',
-                'Content-Type': 'application/json;charset=UTF-8'
-            },
-        };
-        jQuery.ajax(request)
+        });
+        request.send()
             .then(response => {
                 const projects = response;
                 this.setState({projects})

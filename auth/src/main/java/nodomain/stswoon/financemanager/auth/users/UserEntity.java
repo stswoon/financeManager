@@ -1,8 +1,6 @@
-package nodomain.stswoon.financemanager.backend.users;
+package nodomain.stswoon.financemanager.auth.users;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
@@ -21,8 +19,14 @@ public class UserEntity implements Identifiable<Long> {
     @Column
     private String password;
 
-    @Override
-    public Long getId() {
-        return id;
+    @Column
+    private int enabled = 1;
+
+    public UserEntity() {
+    }
+
+    public UserEntity(String login, String password) {
+        this.login = login;
+        this.password = password;
     }
 }

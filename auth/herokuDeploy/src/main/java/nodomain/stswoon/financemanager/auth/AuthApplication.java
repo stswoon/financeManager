@@ -29,28 +29,4 @@ public class AuthApplication {
         springApplication = new SpringApplication(AuthApplication.class);
         springApplication.run(args);
     }
-
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
-
-    @Bean
-    public DataSource dataSource() throws SQLException {
-        System.out.println("q dbUrl=" + dbUrl);
-        log.debug("dbUrl={}", dbUrl);
-        if (StringUtils.isEmpty(dbUrl)) {
-            Properties properties = new Properties();
-            properties.put("hibernate.dialect", "org.hibernate.dialect.SQLiteDialect");
-            properties.put("spring.jpa.properties.hibernate.dialect", "org.hibernate.dialect.SQLiteDialect");
-            springApplication.setDefaultProperties(properties);
-            DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-            dataSourceBuilder.driverClassName("org.sqlite.JDBC");
-            dataSourceBuilder.url("jdbc:sqlite:auth/target/localDb.db");
-            return dataSourceBuilder.build();
-        } else {
-            HikariConfig config = new HikariConfig();
-            config.setJdbcUrl(dbUrl);
-            return new HikariDataSource(config);
-        }
-    }
-
 }

@@ -1,11 +1,10 @@
-package nodomain.stswoon.financemanager.backend.users;
+package nodomain.stswoon.financemanager.auth.users;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -20,18 +19,28 @@ public class UserController {
         this.passwordHashService = passwordHashService;
     }
 
-    @RequestMapping(value = "/user/login", method = POST)
-    public UserDto login(@RequestBody UserDto userDto) {
-        List<UserEntity> entities = (List<UserEntity>) userRepository.findByLogin(userDto.getLogin());
+//    @RequestMapping(value = "/user/login", method = POST)
+//    public UserDto login(@RequestBody UserDto userDto) {
+//        List<UserEntity> entities = (List<UserEntity>) userRepository.findByLogin(userDto.getLogin());
+//        if (entities.isEmpty()) {
+//            throw new RuntimeException("no users"); //todo
+//        }
+//        UserEntity userEntity = entities.get(0);
+//        if (!userEntity.getPassword().equals(passwordHashService.hash(userDto.getPassword()))) {
+//            throw new RuntimeException("password not match"); //todo
+//        }
+//        //todo check capcha
+//
+//        return new UserDto(userEntity.getId(), userEntity.getLogin(), null);
+//    }
+
+    @RequestMapping(value = "/user/{login}", method = GET)
+    public UserDto login(@PathVariable String login) {
+        List<UserEntity> entities = (List<UserEntity>) userRepository.findByLogin(login);
         if (entities.isEmpty()) {
             throw new RuntimeException("no users"); //todo
         }
         UserEntity userEntity = entities.get(0);
-        if (!userEntity.getPassword().equals(passwordHashService.hash(userDto.getPassword()))) {
-            throw new RuntimeException("password not match"); //todo
-        }
-        //todo check capcha
-
         return new UserDto(userEntity.getId(), userEntity.getLogin(), null);
     }
 

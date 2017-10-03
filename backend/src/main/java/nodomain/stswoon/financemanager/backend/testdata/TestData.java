@@ -2,17 +2,14 @@ package nodomain.stswoon.financemanager.backend.testdata;
 
 import lombok.extern.slf4j.Slf4j;
 import nodomain.stswoon.financemanager.backend.operations.OperationType;
-import nodomain.stswoon.financemanager.backend.users.PasswordHashService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -23,12 +20,10 @@ public class TestData {
     private boolean createTestData;
 
     private final DataSource dataSource;
-    private final PasswordHashService passwordHashService;
 
     @Autowired
-    public TestData(DataSource dataSource, PasswordHashService passwordHashService) {
+    public TestData(@Qualifier("dataSource") DataSource dataSource) {
         this.dataSource = dataSource;
-        this.passwordHashService = passwordHashService;
     }
 
 //    @PostConstruct
@@ -63,15 +58,10 @@ public class TestData {
 
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
-
-            statement.executeUpdate("INSERT INTO Users (id, login, password) VALUES (1, 'Johnson', 'qwerty')");
-            statement.executeUpdate("INSERT INTO Users (id, login, password) VALUES (2, 'Smith', 'password')");
-            statement.executeUpdate("INSERT INTO Users (id, login, password) VALUES (3, 'Ivan', 'qwerty12')");
-            statement.executeUpdate("INSERT INTO Users (id, login, password) VALUES (4, 'Ivan2', '"+passwordHashService.hash("password") + "')");
-
-            statement.executeUpdate("INSERT INTO Projects (id, name, user_id) VALUES (1, 'Test Project', 1)");
-            statement.executeUpdate("INSERT INTO Projects (id, name, user_id) VALUES (2, 'My Project', 4)");
-            statement.executeUpdate("INSERT INTO Projects (id, name, user_id) VALUES (3, 'My Second Project', 4)");
+            //user_id = 2 is alex from nodomain.stswoon.financemanager.auth.users.UserTestData
+            statement.executeUpdate("INSERT INTO Projects (id, name, user_id) VALUES (1, 'Test Project', 2)");
+            statement.executeUpdate("INSERT INTO Projects (id, name, user_id) VALUES (2, 'My Project', 2)");
+            statement.executeUpdate("INSERT INTO Projects (id, name, user_id) VALUES (3, 'My Second Project', 2)");
 
             String operationInsertSql = "INSERT INTO Operations (id, comment, date, operation_type_id, project_id, value) " +
                     "VALUES (?, ?, ?, ?, ?, ?)";
@@ -83,7 +73,6 @@ public class TestData {
             insertOperation(operationInsert, 5, "Additional money", OperationType.PLUS, 30);
             insertOperation(operationInsert, 6, "Online gaming", OperationType.MINUS, 80);
             insertOperation(operationInsert, 7, "Dinner", OperationType.MINUS, 20);
-
         } catch (SQLException e) {
             log.error("Failed to init test DB data", e);
         }
@@ -100,7 +89,7 @@ public class TestData {
         statement.execute();
     }
 
-    private java.sql.Date createDate(int dayInMonth, int month, int year) {
+    private Date createDate(int dayInMonth, int month, int year) {
         //https://habrahabr.ru/post/274811/
         //TimeZone tz = TimeZone.getTimeZone("UTC");
         //TimeZone tz = TimeZone.getTimeZone("Europe/Moscow");
@@ -111,7 +100,7 @@ public class TestData {
         calendar.set(year, month, dayInMonth, 0, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 
-        return new java.sql.Date(calendar.getTime().getTime());
+        return new Date(calendar.getTime().getTime());
 
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        dateFormat.setLenient(false);

@@ -1,4 +1,4 @@
-package nodomain.stswoon.financemanager.backend.users;
+package nodomain.stswoon.financemanager.auth.users;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;

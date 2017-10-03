@@ -1,14 +1,10 @@
 spring:
-  profiles:
-    active:
-      - local
-#    include: common
+  profiles.active: local
 
 ---
-spting:
+spring:
   profile: common
 
-spring:
   application:
     name: auth
   datasource:
@@ -38,51 +34,40 @@ security:
     authorization:
       check-token-access: permitAll()
 
-
-#security:
-#  user:
-#    password: 12345678
-#  basic:
-#    enabled: false
-#  oauth2:
-#    setclient:
-#      client-id: oauth2_client
-#      client-secret: oauth2_client_secret
-#      scope: read, write
-#      auto-approve-scopes: .*
-#      authorized-grant-types: authorization_code
-#    authorization:
-#      check-token-access: permitAll()
-
-logging:
-  level:
-    org.springframework.security: DEBUG
-    nodomain.stswoon: DEBUG
+#logging:
+#  level:
+#    org.springframework.security: DEBUG
+#    nodomain.stswoon: DEBUG
 
 createTestData: true
 spring.jpa.show-sql: true
 
----
-spting:
-  profile: cloud
+spring.jpa.hibernate.ddl-auto: create-drop #todo remove in production
 
-eureka:
-  instance:
-      #leaseRenewalIntervalInSeconds: 10
-      #securePortEnabled: true
-      #metadataMap:
-      #    instanceId: ${spring.application.login}:${spring.application.instance_id:${server.port}}
-  client:
-    #registryFetchIntervalSeconds: 5
-    serviceUrl:
-      defaultZone: ${EUREKA:http://localhost:5000/eureka/}
-#ribbon.IsSecure: true
-#management.security.enabled: false
+---
+spring:
+  profile: cloud
+  include:
+      - common
+
+#eureka:
+#  instance:
+#      #leaseRenewalIntervalInSeconds: 10
+#      #securePortEnabled: true
+#      #metadataMap:
+#      #    instanceId: ${spring.application.login}:${spring.application.instance_id:${server.port}}
+#  client:
+#    #registryFetchIntervalSeconds: 5
+#    serviceUrl:
+#      defaultZone: ${EUREKA:http://localhost:5000/eureka/}
+##ribbon.IsSecure: true
+##management.security.enabled: false
 
 ---
 spring:
   profile: local
-#  include: common
+  include:
+    - common
 
-spring.jpa.properties.hibernate.dialect: nodomain.stswoon.financemanager.auth.config.SQLiteDialect
-spring.jpa.hibernate.ddl-auto: create-drop
+  datasource.url: jdbc:sqlite:./auth/target/localDb.db
+  jpa.properties.hibernate.dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect

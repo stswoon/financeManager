@@ -26,16 +26,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .logout().logoutUrl("/logout").permitAll()
                 .and()
                 .requestMatchers()
-                .antMatchers("/", "/login", "/oauth/authorize",
-                        "/oauth/confirm_access", "/exit", "/oauth/**",
-                        "/oauth/token", "/oauth/check_token")
+                .antMatchers(
+                        "/", "/login", "/oauth/**", "/exit",
+                        "/oauth/authorize",
+                        "/oauth/confirm_access",
+                        "/oauth/token",
+                        "/oauth/check_token"
+                )
                 .and()
                 .authorizeRequests()
                 .antMatchers("/webjars/**").permitAll()
                 .anyRequest().authenticated();
-                //.and().csrf().ignoringAntMatchers("/**");
-                //.authorizeRequests()
-                //.anyRequest().authenticated();
     }
 
     @Override
@@ -55,13 +56,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("john").password("123").roles("USER");
+        //auth.inMemoryAuthentication()
+        //        .withUser("john").password("123").roles("USER");
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery(
-                        "select username,password, enabled from users where username=?")
-                .authoritiesByUsernameQuery(
-                        "select username, role from user_roles where username=?");
+                .usersByUsernameQuery("SELECT login AS username, password, enabled FROM users WHERE login=?")
+                .authoritiesByUsernameQuery("SELECT login AS username, role FROM user_roles WHERE login=?");
     }
 
 }

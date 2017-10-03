@@ -6,6 +6,7 @@ require("antd/dist/antd.css");
 require("./login-form.less");
 const FormItem = Form.Item;
 import { Redirect, Route } from 'react-router-dom';
+import Request from "../../../src/utils/ajax";
 
 const isAuthenticated = () => window.userId; //todo cookies
 
@@ -31,27 +32,68 @@ class Login extends React.Component {
     handleSubmit(event) {
         event.preventDefault(); //cancel normal html submit
 
-        var request = { //todo in separate class
+        Request.setApplicationProps({urlPrefix: envData.gateway});
+
+        //let loginUrl = "https://stswoon-fm-auth.herokuapp.com" + "/auth/oauth/token?grant_type=password&username={login}&password={password}";
+        let loginUrl = "/auth/oauth/token?grant_type=password&username={login}&password={password}";
+        loginUrl = loginUrl.replace("{login}", this.state.login).replace("{password}", this.state.password);
+        let request = new Request({
             type: "POST",
-            //url: envData.gateway + "/backend/user",
-            url: envData.gateway + (this.isRegistration() ? "/backend/user" : "/backend/user/login"),
+            url: loginUrl,
             headers: {
-                'Accept': 'application/json;charset=UTF-8',
-                'Content-Type': 'application/json;charset=UTF-8'
-            },
-            // body: JSON.stringify({...this.state, name: this.state.login})
-            data: JSON.stringify({login: this.state.login, password: this.state.password})
-        };
-        (async () => {
-            try {
-                let response = await jQuery.ajax(request);
-                alert("Done, userId = " + response.id);
-                window.userId = response.id;
-                this.setState({auth: true});
-            } catch (response) {
-                alert("Failed to operate with user, reason: " + response.json().error);
+                'Authorization':  'Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA=='
             }
+        });
+
+        (async () => {
+            let response = await request.send();
+            let bearerToken =  response.access_token;
+            console.debug("bearerToken = " + bearerToken);
+            Request.setApplicationProps({headers: {Authorization : "Bearer " + bearerToken}});
+
+            response = await (new Request({
+                url: "/auth/user/" + this.state.login
+            })).send();
+            console.debug("Done, userId = " + response.id);
+
+            window.userId = response.id;
+            this.setState({auth: true});
         })();
+
+
+
+        // var request = { //todo in separate class
+        //     type: "POST",
+        //     //url: envData.gateway + "/backend/user",
+        //     url: envData.gateway + (this.isRegistration() ? "/backend/user" : loginUrl),
+        //     headers: {
+        //         'Accept': 'application/json;charset=UTF-8',
+        //         'Content-Type': 'application/json;charset=UTF-8',
+        //         'Authorization':  'Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA=='
+        //     }
+        //     // body: JSON.stringify({...this.state, name: this.state.login})
+        //     //data: JSON.stringify({login: this.state.login, password: this.state.password})
+        // };
+        // (async () => {
+        //     try {
+        //         let response = await jQuery.ajax(request);
+        //         alert("Done, userId = " + response.id);
+        //         window.userId = response.id;
+        //         this.setState({auth: true});
+        //     } catch (response) {
+        //         alert("Failed to operate with user, reason: " + response.json().error);
+        //     }
+        // })();
+        //
+
+
+
+
+
+
+
+
+
 
         //https://stackoverflow.com/questions/38156239/how-to-set-the-content-type-of-request-header-when-using-fetch-api
         //https://developer.mozilla.org/en-US/docs/Web/API/Request/mode

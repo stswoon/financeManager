@@ -1,7 +1,8 @@
 package nodomain.stswoon.financemanager.backend.health;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,13 +15,14 @@ import java.util.ArrayList;
 @Slf4j
 @RestController
 public class DbHelloWorldController {
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
+    private final DataSource dataSource;
 
-//    @Autowired
-    private DataSource dataSource;
+    @Autowired
+    public DbHelloWorldController(@Qualifier("dataSource") DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
-    @RequestMapping("/db")
+    @RequestMapping("/health/db")
     public String db() {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
@@ -32,7 +34,7 @@ public class DbHelloWorldController {
             while (rs.next()) {
                 output.add("Read from DB: " + rs.getTimestamp("tick"));
             }
-            return "db:test="+ output;
+            return "db:test=" + output;
         } catch (Exception e) {
             e.printStackTrace();
             return "db:error";

@@ -34,3 +34,26 @@ jQuery.ajax(req)
 //              'Bearer ' + data.data.access_token;
 //            $cookies.put("access_token", data.data.access_token);
 //            window.location.href="index";
+
+
+
+
+
+
+
+
+var req = {
+	method: 'POST',
+	url: "https://stswoon-fm-auth.herokuapp.com/auth/oauth/token?grant_type=password&username=alex&password=123456",
+	headers: {
+		"Authorization": "Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA==",
+	}
+}
+jQuery.ajax(req)
+	.then(function(res) {
+		console.log("res:", res);
+		console.log(res.access_token);
+	})
+	.catch(function(res) {
+		console.log("error res:", res)
+	});

@@ -1,4 +1,4 @@
-package nodomain.stswoon.financemanager.backend.users;
+package nodomain.stswoon.financemanager.auth.users;
 
 import lombok.Data;
 

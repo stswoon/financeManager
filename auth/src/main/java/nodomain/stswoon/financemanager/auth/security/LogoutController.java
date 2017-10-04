@@ -12,16 +12,15 @@ import java.io.IOException;
 /**
  * Created by jjmendoza on 14/7/2017.
  */
-@Controller
+//@Controller
 public class LogoutController {
-
-    @RequestMapping("/exit")
-    public void exit(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        new SecurityContextLogoutHandler().logout(request, response, authentication);
-        try {
-            response.sendRedirect(request.getHeader("referer"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    @RequestMapping("/exit")
+//    public void exit(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+//        new SecurityContextLogoutHandler().logout(request, response, authentication);
+//        try {
+//            response.sendRedirect(request.getHeader("referer"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

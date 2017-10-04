@@ -2,8 +2,14 @@ import React from "react";
 import Dashboard from "./components/dashboard/Dashboard";
 import LoginForm from "./components/login/LoginForm";
 import {Switch, Route} from 'react-router'
+import Request from "./utils/ajax";
 
 export default class App extends React.Component {
+    constructor(props) {
+        super(props);
+        Request.setApplicationProps({urlPrefix: envData.gateway});
+    }
+
     render() {
         return (
             <app>

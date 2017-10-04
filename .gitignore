@@ -17,3 +17,5 @@
 /finance-manager.iml
 /auth/backend (1).iml
 /auth/target
+/auth/auth.iml
+/auth/herokuDeploy

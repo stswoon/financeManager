@@ -1,14 +1,51 @@
 import React from "react";
 import {Form, Icon, Input, Button, Checkbox} from "antd";
 import jQuery from "jQuery"
-// import * from "antd/dist/antd.css"; //todo
-require("antd/dist/antd.css");
-require("./login-form.less");
-const FormItem = Form.Item;
-import { Redirect, Route } from 'react-router-dom';
+import {Redirect, Route} from 'react-router-dom';
 import Request from "../../../src/utils/ajax";
+import constants from "../../../src/utils/constants";
+
+require("antd/dist/antd.css"); //todo: import
+import "./login-form.less";
+
+const FormItem = Form.Item;
 
 const isAuthenticated = () => window.userId; //todo cookies
+
+function register() { //todo
+    const userDto = {login: this.state.login, password: this.state.password};
+    var request = new Request("POST", "/auth/user", userDto).send()
+        .then((res) => alert(res))
+        .catch((res) => alert("Error" + res));
+}
+
+function login() {
+    let loginUrl = constants.loginUrl.replace("{login}", this.state.login).replace("{password}", this.state.password);
+    let request = new Request({
+        type: "POST",
+        url: loginUrl,
+        headers: {
+            'Authorization':  'Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA=='
+        }
+    });
+
+    (async () => {
+        try {
+            let response = await request.send();
+            const bearerToken =  response.access_token;
+            console.info("bearerToken = " + bearerToken);
+            Request.setApplicationProps({headers: {Authorization : "Bearer " + bearerToken}});
+
+            response = await (new Request("GET", "/auth/user/" + this.state.login)).send();
+            console.info("Login is sucessful, userId = " + response.id);
+
+            window.userId = response.id; //todo cookie
+            this.setState({auth: true});
+        } catch (response) {
+            alert("Failed to operate with user, reason: " + response.json().error);
+        }
+    })();
+}
 
 class Login extends React.Component {
     constructor(props) {
@@ -17,114 +54,30 @@ class Login extends React.Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleOrLinkClick = this.handleOrLinkClick.bind(this);
+        this.handleChangeLoginType = this.handleChangeLoginType.bind(this);
     }
 
     handleInputChange(event) {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-        this.setState({
-            [name]: value
-        });
+        const value = event.target.value;
+        const name = event.target.name;
+        this.setState({[name]: value});
     };
 
     handleSubmit(event) {
         event.preventDefault(); //cancel normal html submit
 
-        Request.setApplicationProps({urlPrefix: envData.gateway});
-
-        //let loginUrl = "https://stswoon-fm-auth.herokuapp.com" + "/auth/oauth/token?grant_type=password&username={login}&password={password}";
-        let loginUrl = "/auth/oauth/token?grant_type=password&username={login}&password={password}";
-        loginUrl = loginUrl.replace("{login}", this.state.login).replace("{password}", this.state.password);
-        let request = new Request({
-            type: "POST",
-            url: loginUrl,
-            headers: {
-                'Authorization':  'Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA=='
-            }
-        });
-
-        (async () => {
-            let response = await request.send();
-            let bearerToken =  response.access_token;
-            console.debug("bearerToken = " + bearerToken);
-            Request.setApplicationProps({headers: {Authorization : "Bearer " + bearerToken}});
-
-            response = await (new Request({
-                url: "/auth/user/" + this.state.login
-            })).send();
-            console.debug("Done, userId = " + response.id);
-
-            window.userId = response.id;
-            this.setState({auth: true});
-        })();
-
-
-
-        // var request = { //todo in separate class
-        //     type: "POST",
-        //     //url: envData.gateway + "/backend/user",
-        //     url: envData.gateway + (this.isRegistration() ? "/backend/user" : loginUrl),
-        //     headers: {
-        //         'Accept': 'application/json;charset=UTF-8',
-        //         'Content-Type': 'application/json;charset=UTF-8',
-        //         'Authorization':  'Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA=='
-        //     }
-        //     // body: JSON.stringify({...this.state, name: this.state.login})
-        //     //data: JSON.stringify({login: this.state.login, password: this.state.password})
-        // };
-        // (async () => {
-        //     try {
-        //         let response = await jQuery.ajax(request);
-        //         alert("Done, userId = " + response.id);
-        //         window.userId = response.id;
-        //         this.setState({auth: true});
-        //     } catch (response) {
-        //         alert("Failed to operate with user, reason: " + response.json().error);
-        //     }
-        // })();
-        //
-
-
-
-
-
-
-
-
-
-
-        //https://stackoverflow.com/questions/38156239/how-to-set-the-content-type-of-request-header-when-using-fetch-api
-        //https://developer.mozilla.org/en-US/docs/Web/API/Request/mode
-        // var config = {
-        //     method: this.isRegistration() ? "POST" : "GET",
-        //     headers: new Headers({
-        //         'Accept': 'application/json;charset=UTF-8',
-        //         'Content-Type': 'application/json;charset=UTF-8'
-        //     }),
-        //     // mode: "cors",
-        //     mode: "no-cors",
-        //     // body: JSON.stringify({...this.state, name: this.state.login})
-        //     body: JSON.stringify({login: this.state.login, password: this.state.password})
-        // };
-        // (async () => {
-        //     try {
-        //         let response = await fetch(envData.gateway + "/user", config);
-        //         // let response = await fetch(envData.gateway + "/backend/user", config);
-        //         let user = response.json();
-        //         alert("Done, userId = " + user.id);
-        //     } catch (response) {
-        //         alert("Failed to operate with user, reason: " + response.json().error);
-        //     }
-        // })();
+        if (this.isRegistration()) {
+            register.call(this);
+        } else {
+            login.call(this);
+        }
     }
 
     isRegistration() {
         return this.state.type === "registration";
     }
 
-    handleOrLinkClick() {
+    handleChangeLoginType() {
         const type = this.isRegistration() ? "login" : "registration";
         this.setState({type});
     }
@@ -179,7 +132,7 @@ class Login extends React.Component {
                 </Button>
                 <span className="login-form_register-link">
                     or&nbsp;
-                    <a href="#" onClick={this.handleOrLinkClick}>
+                    <a href="#" onClick={this.handleChangeLoginType}>
                         {this.isRegistration() ? "back to log in" : "register"}
                     </a>
                 </span>

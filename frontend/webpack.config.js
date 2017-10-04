@@ -8,6 +8,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const HOST = process.env.HOST || "localhost";
 const PORT = process.env.PORT || "9000";
+const GATEWAY = process.env.GATEWAY || "https://stswoon-fm-gateway.herokuapp.com";
 
 loaders.push({
     test: /\.scss$/,
@@ -65,7 +66,7 @@ module.exports = {
                 js: ["bundle.js"],
             },
             envData: {
-                gateway: "https://stswoon-fm-gateway.herokuapp.com"
+                gateway: GATEWAY
                 //gateway: "//stswoon-fm-gateway.herokuapp.com"
                 //gateway: "http://localhost:5001"
             }

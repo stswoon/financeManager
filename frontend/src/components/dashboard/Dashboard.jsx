@@ -4,10 +4,14 @@ import ProjectMenu from "./ProjectMenu";
 import OperationTable from "./OperationTable";
 import User from "./User";
 import "./dashboard.less";
-import jQuery from "jQuery"
+import jQuery from "jquery"
 import { Redirect, Route } from 'react-router-dom';
 import {withRouter} from "react-router-dom";
+import Cookie from "js-cookie";
 import Request from "../../../src/utils/ajax";
+import constants from "../../../src/utils/constants";
+
+const isAuthenticated = () => (Cookie.getJSON(constants.authenticationCookieName) || {}).bearerToken;
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -17,7 +21,7 @@ class Dashboard extends React.Component {
         };
     }
 
-    userId = window.userId; //todo
+    userId = Cookie.get(constants.authenticationCookieName).userId; //todo
 
     componentDidMount() {
 
@@ -61,7 +65,7 @@ class Dashboard extends React.Component {
 
     render() {
         //todo https://stackoverflow.com/questions/43164554/how-to-implement-authenticated-routes-in-react-router-4
-        if (!window.userId) {
+        if (!isAuthenticated()) {
             return <Redirect to="/" />
         }
 

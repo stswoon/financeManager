@@ -1,16 +1,18 @@
 import React from "react";
-import {Form, Icon, Input, Button, Checkbox} from "antd";
-import jQuery from "jQuery"
+import {Form, Icon, Input, Button, Checkbox, message} from "antd";
+import jQuery from "jquery"
 import {Redirect, Route} from 'react-router-dom';
+import Cookie from "js-cookie";
+
 import Request from "../../../src/utils/ajax";
 import constants from "../../../src/utils/constants";
 
-require("antd/dist/antd.css"); //todo: import
+import "antd/dist/antd.css";
 import "./login-form.less";
 
 const FormItem = Form.Item;
 
-const isAuthenticated = () => window.userId; //todo cookies
+const isAuthenticated = () => (Cookie.getJSON(constants.authenticationCookieName) || {}).bearerToken; //todo check valid before redirect //todo direct link to login should logout
 
 function register() { //todo
     const userDto = {login: this.state.login, password: this.state.password};
@@ -19,32 +21,40 @@ function register() { //todo
         .catch((res) => alert("Error" + res));
 }
 
-function login() {
+async function login() {
+    console.debug("Starting login");
+
     let loginUrl = constants.loginUrl.replace("{login}", this.state.login).replace("{password}", this.state.password);
     let request = new Request({
         type: "POST",
         url: loginUrl,
         headers: {
-            'Authorization':  'Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA=='
+            'Authorization': 'Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA==' //todo hide in node internal request
         }
     });
 
-    (async () => {
-        try {
-            let response = await request.send();
-            const bearerToken =  response.access_token;
-            console.info("bearerToken = " + bearerToken);
-            Request.setApplicationProps({headers: {Authorization : "Bearer " + bearerToken}});
+    try {
+        let response = await request.send();
+        const bearerToken = response.access_token;
+        console.info("Bearer token = " + bearerToken);
 
-            response = await (new Request("GET", "/auth/user/" + this.state.login)).send();
-            console.info("Login is sucessful, userId = " + response.id);
+        response = await (new Request("GET", "/auth/user/" + this.state.login)).send();
+        console.info("Login is sucessful, userId = " + response.id);
 
-            window.userId = response.id; //todo cookie
-            this.setState({auth: true});
-        } catch (response) {
-            alert("Failed to operate with user, reason: " + response.json().error);
+        Cookie.set(constants.authenticationCookieName, {
+            userId: response.id,
+            bearerToken: bearerToken
+        });
+        this.setState({auth: true}) //just to rerender
+    } catch (response) {
+        if (response.status == 400) {
+            message.warning("Login or password are incorrect");
+            console.debug("Login or password are incorrect");
+        } else {
+            message.error(constants.unexpectedErrorMessage);
+            console.error("Failed to login user, response: ", response);
         }
-    })();
+    }
 }
 
 class Login extends React.Component {
@@ -84,10 +94,8 @@ class Login extends React.Component {
 
     render() {
         if (isAuthenticated()) {
-            // return <span>qqq</span>
-            return <Redirect to="/dashboard" />
+            return <Redirect to="/dashboard"/>
         }
-
 
         const formItems = [];
         formItems.push(

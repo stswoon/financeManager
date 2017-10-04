@@ -1,7 +1,7 @@
 import React from "react";
 import {Input, Button, Icon, Menu, Select, DatePicker, Form, InputNumber,LocaleProvider } from 'antd';
 import {Table} from 'antd';
-import jQuery from "jQuery";
+import jQuery from "jquery";
 import {Modal} from 'antd';
 const FormItem = Form.Item;
 import moment from 'moment';

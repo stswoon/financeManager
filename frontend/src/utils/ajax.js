@@ -1,5 +1,8 @@
-import jQuery from "jQuery";
-import lodash from "lodash"
+import jQuery from "jquery";
+import lodash from "lodash";
+import Cookie from "js-cookie";
+
+import constants from "./constants";
 
 const defaultRequest = {
     type: "GET",
@@ -47,13 +50,17 @@ class Request {
     }
 
     send() {
-        let request = lodash.merge({}, defaultRequest, applicationProps, this.requestProps);
+        const bearerToken = Cookie.get(constants.authenticationCookieName);
+        const cookieProps = {headers: {Authorization: "Bearer " + bearerToken}};
+
+        let request = lodash.merge({}, defaultRequest, cookieProps, applicationProps, this.requestProps);
         if (request.url.startsWith("http") == false) {
             request.url = applicationProps.urlPrefix + request.url;
         }
+
         return jQuery.ajax(request);
     }
-};
+}
 
 //https://stackoverflow.com/questions/38156239/how-to-set-the-content-type-of-request-header-when-using-fetch-api
 //https://developer.mozilla.org/en-US/docs/Web/API/Request/mode

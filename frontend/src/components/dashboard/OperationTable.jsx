@@ -1,7 +1,7 @@
 import React from "react";
 import {Input, Button, Icon, Menu, Dropdown} from 'antd';
 import {Table} from 'antd';
-import jQuery from "jQuery";
+import jQuery from "jquery";
 import NewOperation from "./NewOperation";
 
 class OperationTable extends React.Component {

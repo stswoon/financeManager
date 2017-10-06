@@ -3,7 +3,7 @@ spring:
 
 ---
 spring:
-  profile: common
+  profiles: common
 
   application:
     name: auth
@@ -44,16 +44,14 @@ spring.jpa.show-sql: true
 spring.jpa.hibernate.ddl-auto: create-drop #todo remove in production
 
 ---
-spring:
-  profile: cloud
-  include:
-      - common
+spring.profiles: cloud
+spring.profiles.include:
+  - common
 
 ---
-spring:
-  profile: local
-  include:
-    - common
+spring.profiles: local
+spring.profiles.include:
+  - common
 
-  datasource.url: jdbc:sqlite:./auth/target/localDb.db
-  jpa.properties.hibernate.dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect
+spring.datasource.url: jdbc:sqlite:./auth/target/localDb.db
+spring.jpa.properties.hibernate.dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect

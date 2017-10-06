@@ -1,10 +1,8 @@
-spring:
-  profiles:
-    active: local
+spring.profiles.active: local
 
 ---
 spring:
-  profile: common
+  profiles: common
 
   application:
     name: backend
@@ -37,35 +35,33 @@ security:
       token-info-uri: ${auth-server}/oauth/check_token
       filter-order: 3 #https://stackoverflow.com/questions/43308625/spring-security-oauth2-always-redirects-to-login-page-having-a-valid-bearer-hea
 
-
+disableOAuth2: false
 createTestData: true
 spring.jpa.show-sql: true
 spring.jpa.hibernate.ddl-auto: create-drop #todo remove in production
 
 ---
-spring:
-  profile: cloud
+spring.profile: cloud
+spring.profiles.include:
+  - common
 
 ---
-spring:
-  profile: test
-  include:
-    - common
+spring.profiles: test
+spring.profiles.include:
+  - common
 
-  datasource.url: jdbc:sqlite:./target/localDb.db #todo bug all profiles are used
-  jpa.properties.hibernate.dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect
+spring.datasource.url: jdbc:sqlite:./target/localDb.db
+spring.jpa.properties.hibernate.dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect
 
 createTestData: false #because manual insert don't increase autoindex
 disableOAuth2: true
 
 ---
-spring:
-  profile: local
-  include:
-    - common
+spring.profiles: local
+spring.profiles.include:
+  - common
 
-  datasource.url: jdbc:sqlite:./backend/target/localDb.db
-  jpa.properties.hibernate.dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect
+spring.datasource.url: jdbc:sqlite:./backend/target/localDb.db
+spring.jpa.properties.hibernate.dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect
 
-createTestData: true #todo bug all profiles are used
-disableOAuth2: false #todo bug all profiles are used
+#disableOAuth2: true

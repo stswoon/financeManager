@@ -62,5 +62,4 @@ public class OperationController {
         operationEntity.setValue(operationDto.getValue());
         operationRepository.save(operationEntity);
     }
-
 }

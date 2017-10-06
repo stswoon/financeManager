@@ -4,6 +4,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,9 +25,8 @@ public class ProjectController {
     @RequestMapping(value = "/project/{userId}", method = GET)
     public List<ProjectDto> getList(@PathVariable long userId) {
         List<ProjectEntity> entities = projectRepository.findByUserId(userId);
-        List<ProjectDto> dtos = entities.stream()
-                .map(projectEntity -> new ProjectDto(projectEntity.getId(), projectEntity.getName()))
-                .collect(Collectors.toList());
+        List<ProjectDto> dtos = new ArrayList<>();
+        entities.forEach(projectEntity -> dtos.add(new ProjectDto(projectEntity.getId(), projectEntity.getName())));
         return dtos;
     }
 

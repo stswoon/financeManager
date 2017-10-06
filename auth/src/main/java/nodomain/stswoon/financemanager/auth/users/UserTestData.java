@@ -1,18 +1,16 @@
 package nodomain.stswoon.financemanager.auth.users;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-@Slf4j
 @Component
 public class UserTestData {
+    @Value("${createTestData}")
+    private boolean createTestData;
+
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
 
@@ -24,6 +22,10 @@ public class UserTestData {
 
     @PostConstruct
     public void initTestData() {
+        if (!createTestData) {
+            return;
+        }
+
         userRepository.save(new UserEntity("mkyong", "123456"));
         userRepository.save(new UserEntity("alex", "123456"));
         userRoleRepository.save(new UserRoleEntity("mkyong", "ROLE_ADMIN"));

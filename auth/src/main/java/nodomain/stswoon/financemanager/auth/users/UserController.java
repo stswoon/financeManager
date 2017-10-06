@@ -19,26 +19,11 @@ public class UserController {
         this.passwordHashService = passwordHashService;
     }
 
-//    @RequestMapping(value = "/user/login", method = POST)
-//    public UserDto login(@RequestBody UserDto userDto) {
-//        List<UserEntity> entities = (List<UserEntity>) userRepository.findByLogin(userDto.getLogin());
-//        if (entities.isEmpty()) {
-//            throw new RuntimeException("no users"); //todo
-//        }
-//        UserEntity userEntity = entities.get(0);
-//        if (!userEntity.getPassword().equals(passwordHashService.hash(userDto.getPassword()))) {
-//            throw new RuntimeException("password not match"); //todo
-//        }
-//        //todo check capcha
-//
-//        return new UserDto(userEntity.getId(), userEntity.getLogin(), null);
-//    }
-
     @RequestMapping(value = "/user/{login}", method = GET)
     public UserDto login(@PathVariable String login) {
-        List<UserEntity> entities = (List<UserEntity>) userRepository.findByLogin(login);
+        List<UserEntity> entities = userRepository.findByLogin(login);
         if (entities.isEmpty()) {
-            throw new RuntimeException("no users"); //todo
+            throw new RuntimeException("no users");
         }
         UserEntity userEntity = entities.get(0);
         return new UserDto(userEntity.getId(), userEntity.getLogin(), null);
@@ -46,31 +31,30 @@ public class UserController {
 
     @RequestMapping(value = "/user", method = POST)
     public UserDto create(@RequestBody UserDto userDto) {
-        List<UserEntity> entities = (List<UserEntity>) userRepository.findByLogin(userDto.getLogin());
+        List<UserEntity> entities = userRepository.findByLogin(userDto.getLogin());
         if (!entities.isEmpty()) {
-            throw new RuntimeException("already exist"); //todo
+            throw new RuntimeException("already exist");
         }
 
+        //todo check captcha
         UserEntity userEntity = new UserEntity();
         userEntity.setLogin(userDto.getLogin());
         String hash = passwordHashService.hash(userDto.getPassword());
         userEntity.setPassword(hash);
-        //todo check capcha
         userRepository.save(userEntity);
 
-        entities = (List<UserEntity>) userRepository.findByLogin(userDto.getLogin());
-        userEntity = entities.get(0);
-        return new UserDto(userEntity.getId(), userEntity.getLogin(), null);
+        return login(userDto.getLogin());
     }
 
     @RequestMapping(value = "/user/{id}", method = DELETE)
     public void remove(@PathVariable Long id, @RequestParam String password) {
-        //todo chck passord
+        //todo check password
         userRepository.delete(id);
     }
 
     @RequestMapping(value = "/user/{id}", method = PUT)
     public void update(@PathVariable Long id, @RequestBody UserDto userDto, @RequestParam String oldPassword) {
+        //todo check password
         UserEntity userEntity = userRepository.findOne(id);
         if (userEntity.getPassword().equals(DigestUtils.md5Hex(oldPassword))) {
             userEntity.setPassword(passwordHashService.hash(userDto.getPassword()));

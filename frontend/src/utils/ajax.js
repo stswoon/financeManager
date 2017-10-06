@@ -12,14 +12,6 @@ const defaultRequest = {
     }
 };
 
-/**
- * {
- *   urlPrefix : "",
- *   headers: {
- *       Authorization: ""
- *   }
- * }
- */
 let applicationProps = {};
 
 class Request {
@@ -41,6 +33,12 @@ class Request {
         }
     }
 
+    /**
+     * @param props
+     * {
+     *   urlPrefix : string
+     * }
+     */
     static setApplicationProps(props) {
         lodash.merge(applicationProps, props);
     }
@@ -49,7 +47,7 @@ class Request {
         applicationProps = {};
     }
 
-    send() {
+    send(disableDefaultAuthCatch = false) {
         const bearerToken = Cookie.get(constants.authenticationCookieName);
         const cookieProps = {headers: {Authorization: "Bearer " + bearerToken}};
 
@@ -58,7 +56,19 @@ class Request {
             request.url = applicationProps.urlPrefix + request.url;
         }
 
-        return jQuery.ajax(request);
+        const promise = new Promise((resolve, reject) => {
+            jQuery.ajax(request)
+                .then(resolve)
+                .catch((response) => {
+                    if (!disableDefaultAuthCatch) {
+                       if (response.status === 401) {
+                           alert("401"); //todo redirect on login page
+                       }
+                    }
+                    reject(response);
+                })
+        });
+        return promise;
     }
 }
 

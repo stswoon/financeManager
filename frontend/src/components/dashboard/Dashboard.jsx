@@ -66,7 +66,7 @@ class Dashboard extends React.Component {
     render() {
         //todo https://stackoverflow.com/questions/43164554/how-to-implement-authenticated-routes-in-react-router-4
         if (!isAuthenticated()) {
-            return <Redirect to="/" />
+            return <Redirect to="/login" />
         }
 
         console.log("projectId="+this.props.match.params.projectId);

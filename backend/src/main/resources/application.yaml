@@ -1,13 +1,10 @@
 spring:
   profiles:
-    active:
-      - local
+    active: local
 
 ---
 spring:
   profile: common
-  include:
-    - common
 
   application:
     name: backend
@@ -41,35 +38,25 @@ security:
       filter-order: 3 #https://stackoverflow.com/questions/43308625/spring-security-oauth2-always-redirects-to-login-page-having-a-valid-bearer-hea
 
 
-logging:
-  level:
-    #ROOT: DEBUG
-    org.springframework.security: DEBUG
-    nodomain.stswoon: DEBUG
-
 createTestData: true
 spring.jpa.show-sql: true
-
 spring.jpa.hibernate.ddl-auto: create-drop #todo remove in production
 
 ---
 spring:
   profile: cloud
 
-#eureka:
-#  instance:
-#      #leaseRenewalIntervalInSeconds: 10
-#      #securePortEnabled: true
-#      #metadataMap:
-#      #    instanceId: ${spring.application.login}:${spring.application.instance_id:${server.port}}
-#  client:
-#    #registryFetchIntervalSeconds: 5
-#    serviceUrl:
-#      defaultZone: ${EUREKA:http://localhost:5000/eureka/}
-##ribbon.IsSecure: true
-##management.security.enabled: false
-#
-#auth-server: https://stswoon-fm-gateway.herokuapp.com/auth
+---
+spring:
+  profile: test
+  include:
+    - common
+
+  datasource.url: jdbc:sqlite:./target/localDb.db #todo bug all profiles are used
+  jpa.properties.hibernate.dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect
+
+createTestData: false #because manual insert don't increase autoindex
+disableOAuth2: true
 
 ---
 spring:
@@ -79,4 +66,6 @@ spring:
 
   datasource.url: jdbc:sqlite:./backend/target/localDb.db
   jpa.properties.hibernate.dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect
-  #jpa.hibernate.ddl-auto: create-drop
+
+createTestData: true #todo bug all profiles are used
+disableOAuth2: false #todo bug all profiles are used

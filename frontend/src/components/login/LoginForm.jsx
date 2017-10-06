@@ -3,16 +3,16 @@ import {Form, Icon, Input, Button, Checkbox, message} from "antd";
 import jQuery from "jquery"
 import {Redirect, Route} from 'react-router-dom';
 import Cookie from "js-cookie";
+import {withRouter} from "react-router-dom";
 
 import Request from "../../../src/utils/ajax";
 import constants from "../../../src/utils/constants";
+import authUtils from "../../../src/utils/authentication";
 
 import "antd/dist/antd.css";
 import "./login-form.less";
 
 const FormItem = Form.Item;
-
-const isAuthenticated = () => (Cookie.getJSON(constants.authenticationCookieName) || {}).bearerToken; //todo check valid before redirect //todo direct link to login should logout
 
 function register() { //todo
     const userDto = {login: this.state.login, password: this.state.password};
@@ -45,7 +45,8 @@ async function login() {
             userId: response.id,
             bearerToken: bearerToken
         });
-        this.setState({auth: true}) //just to rerender
+
+        this.props.history.push('/dashboard/');
     } catch (response) {
         if (response.status == 400) {
             message.warning("Login or password are incorrect");
@@ -65,6 +66,10 @@ class Login extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangeLoginType = this.handleChangeLoginType.bind(this);
+    }
+
+    componentWillMount() {
+        Cookie.set(constants.authenticationCookieName, {});
     }
 
     handleInputChange(event) {
@@ -93,10 +98,6 @@ class Login extends React.Component {
     }
 
     render() {
-        if (isAuthenticated()) {
-            return <Redirect to="/dashboard"/>
-        }
-
         const formItems = [];
         formItems.push(
             <FormItem>
@@ -157,4 +158,4 @@ class Login extends React.Component {
 
 }
 
-export default Login;
+export default withRouter(Login); //https://stackoverflow.com/questions/42701129/how-to-push-to-history-in-react-router-v4

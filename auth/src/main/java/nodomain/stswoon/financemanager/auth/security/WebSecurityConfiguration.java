@@ -11,16 +11,22 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import javax.sql.DataSource;
 
-/**
- * Created by jjmendoza on 14/7/2017.
- */
+//https://github.com/spring-guides/tut-spring-security-and-angular-js.git
+//https://github.com/sqshq/PiggyMetrics.git
+//https://github.com/rohitghatol/spring-boot-microservices.git
+//https://github.com/juanzero000/spring-boot-oauth2-sso.git
+//https://github.com/Baeldung/spring-security-oauth.git
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Autowired
+    DataSource dataSource;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //todo check captcha
         http
-                .csrf().disable()
+                .csrf().disable() //todo enable
                 .formLogin().permitAll()
                 .and()
                 .logout().logoutUrl("/logout").permitAll()
@@ -51,13 +57,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
         //https://stackoverflow.com/questions/20958166/what-are-the-steps-to-implement-springs-token-store-as-a-mysql-file
     }
 
-    @Autowired
-    DataSource dataSource;
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //auth.inMemoryAuthentication()
-        //        .withUser("john").password("123").roles("USER");
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery("SELECT login AS username, password, enabled FROM users WHERE login=?")
                 .authoritiesByUsernameQuery("SELECT login AS username, role FROM user_roles WHERE login=?");

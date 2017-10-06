@@ -3,6 +3,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import LoginForm from "./components/login/LoginForm";
 import {Switch, Route} from 'react-router'
 import Request from "./utils/ajax";
+import WelcomeRedirect from "./components/welcome/WelcomeRedirect";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -14,7 +15,8 @@ export default class App extends React.Component {
         return (
             <app>
                 <Switch>
-                    <Route exact path='/' component={LoginForm}/>
+                    <Route exact path='/' component={WelcomeRedirect}/>
+                    <Route exact path='/login' component={LoginForm}/>
                     <Route exact path='/dashboard' component={Dashboard}/>
                     <Route path='/dashboard/:projectId' component={Dashboard}/>
                 </Switch>

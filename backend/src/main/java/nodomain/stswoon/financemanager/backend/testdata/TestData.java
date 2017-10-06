@@ -40,8 +40,6 @@ public class TestData {
 //
 //            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Projects (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, userId INTEGER NOT NULL, login text)");
 //
-////            statement.executeUpdate("CREATE TABLE IF NOT EXISTS ProjectOperationBindings (oerationId INTEGER NOT NULL, projectId INTEGER NOT NULL)");
-//
 //            if (createTestData) {
 //                createTestData(statement);
 //            }
@@ -91,9 +89,7 @@ public class TestData {
 
     private Date createDate(int dayInMonth, int month, int year) {
         //https://habrahabr.ru/post/274811/
-        //TimeZone tz = TimeZone.getTimeZone("UTC");
-        //TimeZone tz = TimeZone.getTimeZone("Europe/Moscow");
-        TimeZone tz = TimeZone.getTimeZone("Europe/Samara"); //todo
+        TimeZone tz = TimeZone.getTimeZone("UTC");
 
         Calendar calendar = Calendar.getInstance(tz);
         calendar.setLenient(false);
@@ -101,11 +97,5 @@ public class TestData {
         calendar.set(Calendar.MILLISECOND, 0);
 
         return new Date(calendar.getTime().getTime());
-
-//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        dateFormat.setLenient(false);
-//        dateFormat.setTimeZone(tz);
-//
-//        return dateFormat.format(calendar.getTime());
     }
 }

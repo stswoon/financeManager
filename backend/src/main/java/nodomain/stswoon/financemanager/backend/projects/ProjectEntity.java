@@ -12,17 +12,13 @@ import javax.persistence.*;
 @Data
 public class ProjectEntity implements Identifiable<Long> {
     @Id
+    @Column(unique = true, nullable = false)
     @GeneratedValue
-    private Long id = null;
+    private Long id;
 
     @Column
     private Long userId;
 
     @Column
     private String name;
-
-    @Override
-    public Long getId() {
-        return id;
-    }
 }

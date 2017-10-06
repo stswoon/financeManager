@@ -8,9 +8,6 @@ server:
 zuul:
   ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin #https://github.com/spring-cloud/spring-cloud-netflix/issues/1250
   routes:
-#    backend-service:
-#      path: /backend-service/**
-#      serviceId: backend
     backend:
       path: /backend/**
       url: https://stswoon-fm-backend.herokuapp.com/
@@ -20,40 +17,6 @@ zuul:
       url: https://stswoon-fm-auth.herokuapp.com/auth/
       sensitiveHeaders: #https://piotrminkowski.wordpress.com/2017/02/22/microservices-security-with-oauth2/
 
-#https://github.com/spring-cloud/spring-cloud-netflix/issues/2090
-#management.security.enabled: false
-#endpoints.routes.sensitive: false
-
 eureka:
   client:
     enabled: false
-#eureka:
-#  instance:
-#      #leaseRenewalIntervalInSeconds: 10
-#      #securePortEnabled: true
-#  client:
-#    serviceUrl:
-#      defaultZone: ${EUREKA:http://localhost:5000/eureka/}
-#      #defaultZone: http://localhost:5000/eureka/
-#      #defaultZone: https://stswoon-fm-discovery.herokuapp.com/eureka/
-#      #defaultZone: http://stswoon-fm-discovery.herokuapp.com/eureka/
-#      #defaultZone: http://stswoon:qwerty12@stswoon-fm-discovery.herokuapp.com/eureka/
-#      #defaultZone: ${EUREKA_URL:http://user:password@localhost:5000}/eureka/
-#      #todo https://github.com/spring-cloud/spring-cloud-netflix/issues/459
-#      #todo https://stackoverflow.com/questions/30622904/spring-cloud-ribbon-and-https/30869580
-
-
-# Increase the Hystrix timeout to 60s (globally)
-#hystrix:
-#  command:
-#    default:
-#      execution:
-#        isolation:
-#          thread:
-#            timeoutInMilliseconds: 60000
-
-#logging:
-#  level:
-#    ROOT: DEBUG
-#    org.springframework.security: DEBUG
-#    nodomain.stswoon: DEBUG

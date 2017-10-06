@@ -41,7 +41,6 @@ security:
 
 createTestData: true
 spring.jpa.show-sql: true
-
 spring.jpa.hibernate.ddl-auto: create-drop #todo remove in production
 
 ---
@@ -49,19 +48,6 @@ spring:
   profile: cloud
   include:
       - common
-
-#eureka:
-#  instance:
-#      #leaseRenewalIntervalInSeconds: 10
-#      #securePortEnabled: true
-#      #metadataMap:
-#      #    instanceId: ${spring.application.login}:${spring.application.instance_id:${server.port}}
-#  client:
-#    #registryFetchIntervalSeconds: 5
-#    serviceUrl:
-#      defaultZone: ${EUREKA:http://localhost:5000/eureka/}
-##ribbon.IsSecure: true
-##management.security.enabled: false
 
 ---
 spring:

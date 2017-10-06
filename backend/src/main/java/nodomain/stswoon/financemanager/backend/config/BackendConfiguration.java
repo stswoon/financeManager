@@ -15,7 +15,6 @@ import java.sql.SQLException;
 @Profile("cloud")
 @Configuration
 @EnableAutoConfiguration
-//@EnableDiscoveryClient
 @Slf4j
 public class BackendConfiguration {
     @Value("${spring.datasource.url}")
@@ -23,8 +22,6 @@ public class BackendConfiguration {
 
     @Bean
     public DataSource dataSource() throws SQLException {
-        System.out.println("q dbUrl=" + dbUrl);
-        log.debug("dbUrl={}", dbUrl);
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(dbUrl);
         return new HikariDataSource(config);

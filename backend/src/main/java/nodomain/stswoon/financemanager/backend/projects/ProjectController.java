@@ -1,5 +1,6 @@
 package nodomain.stswoon.financemanager.backend.projects;
 
+import nodomain.stswoon.financemanager.backend.authorization.Authorization;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

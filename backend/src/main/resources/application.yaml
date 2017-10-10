@@ -64,4 +64,6 @@ spring.profiles.include:
 spring.datasource.url: jdbc:sqlite:./backend/target/localDb.db
 spring.jpa.properties.hibernate.dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect
 
+
+auth-server: http://localhost:5004/auth
 #disableOAuth2: true

@@ -27,5 +27,4 @@ public class AuthConfiguration {
         config.setJdbcUrl(dbUrl);
         return new HikariDataSource(config);
     }
-
 }

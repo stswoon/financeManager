@@ -60,6 +60,7 @@ public class TestData {
             statement.executeUpdate("INSERT INTO Projects (id, name, user_id) VALUES (1, 'Test Project', 2)");
             statement.executeUpdate("INSERT INTO Projects (id, name, user_id) VALUES (2, 'My Project', 2)");
             statement.executeUpdate("INSERT INTO Projects (id, name, user_id) VALUES (3, 'My Second Project', 2)");
+            statement.executeUpdate("INSERT INTO Projects (id, name, user_id) VALUES (4, 'My Second Project', 1)");
 
             String operationInsertSql = "INSERT INTO Operations (id, comment, date, operation_type_id, project_id, value) " +
                     "VALUES (?, ?, ?, ?, ?, ?)";

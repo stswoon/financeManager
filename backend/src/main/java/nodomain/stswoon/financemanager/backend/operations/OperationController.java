@@ -1,6 +1,7 @@
 package nodomain.stswoon.financemanager.backend.operations;
 
 import nodomain.stswoon.financemanager.backend.authorization.Authorization;
+import nodomain.stswoon.financemanager.backend.authorization.AuthorizationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,12 +23,13 @@ public class OperationController {
     }
 
 
-    @Autowired
-    Authorization authorization;
+//    @Autowired
+//    AuthorizationManager authorizationManager;
 
+    @Authorization(entityType = AuthorizationManager.EntityType.PROJECT)
     @RequestMapping(value = "/operation/{projectId}", method = GET)
     public List<OperationDto> getList(@PathVariable long projectId) {
-        authorization.hasAccess(Authorization.EntityType.PROJECT, projectId);
+        //authorization.hasAccess(Authorization.EntityType.PROJECT, projectId);
 
 
         List<OperationEntity> entities = operationRepository.findByProjectId(projectId);

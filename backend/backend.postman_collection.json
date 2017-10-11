@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "backend",
-		"_postman_id": "cf7d6d36-0213-aa30-1020-ffdb9f014ef7",
+		"_postman_id": "2e4cb1e6-0df0-31ef-4c4c-0e45de080bcb",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -44,7 +44,10 @@
 						"description": ""
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"description": ""
 			},
 			"response": []
@@ -92,6 +95,26 @@
 					{
 						"key": "Authorization",
 						"value": "Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA==",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "test authorization",
+			"request": {
+				"url": "http://localhost:5001/operation/4",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer e4619177-b98e-4c48-8f88-675d4761551e",
 						"description": ""
 					}
 				],

@@ -51,7 +51,7 @@ public class TestData {
 
     @PostConstruct
     public void initTestData() {
-        if (!ApplicationProperties.createTestData) {
+        if (!ApplicationProperties.isCreateTestData()) {
             return;
         }
 

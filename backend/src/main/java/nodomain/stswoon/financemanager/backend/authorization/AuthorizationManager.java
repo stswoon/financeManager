@@ -1,66 +1,56 @@
 package nodomain.stswoon.financemanager.backend.authorization;
 
-import nodomain.stswoon.financemanager.backend.projects.ProjectEntity;
-import nodomain.stswoon.financemanager.backend.projects.ProjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import lombok.extern.slf4j.Slf4j;
+import nodomain.stswoon.financemanager.backend.security.UserService;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+
+/**
+ * Check entity against user rights
+ */
 @Service
-public class AuthorizationManager { //todo rename auth module to authentification
+@Slf4j
+public class AuthorizationManager {
     public enum EntityType {PROJECT, OPERATION, USER}
 
-    @Autowired
-    ProjectRepository projectRepository;
+    final private UserService userService;
+    final private List<AuthorizationChecker> authorizationCheckers; //sorted by order (http://javapapers.com/spring/spring-order-annotation/)
 
-    @Autowired
-    OAuth2RestTemplate restTemplate;
+    @Inject
+    public AuthorizationManager(UserService userService, List<AuthorizationChecker> authorizationCheckers) {
+        this.userService = userService;
+        this.authorizationCheckers = authorizationCheckers;
+    }
 
-    @Value("${auth-server}")
-    String authUrl;
-
-    //todo not null
-    public boolean hasAccess(EntityType entityType, Long id) { //todo spring post bean
-        //todo guard code
-        if (entityType == EntityType.PROJECT) { //todo stategy
-            ProjectEntity projectEntity = projectRepository.findOne(id);
-            Long userId = projectEntity.getUserId();
-
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String login = (String) auth.getPrincipal();
-            User user = restTemplate.getForObject(authUrl + "/user/" + login, User.class);
-            Long realUserId = user.getId();
-
-            //return realUserId.equals(userId); //avoid autoboxing
-            if (!realUserId.equals(userId)) {
-                throw new RuntimeException("unaothrize"); //todo 403
-            }
+    /**
+     * Check entity against user rights
+     * @param entityType type
+     * @param entityId id
+     * @return true if user has ro\rw right else false
+     */
+    public boolean hasAccess(@NotNull EntityType entityType, @NotNull Long entityId) {
+        if (entityType == null) {
+            throw new IllegalArgumentException("Parameter 'entityType' should not be null");
+        }
+        if (entityId == null) {
+            throw new IllegalArgumentException("Parameter 'entityId' should not be null");
         }
 
+        UserService.User user = userService.getUser();
+        log.info("Check rights of '{}' entity with entityId = {} for user '{}' (userId = {})",
+                entityType, entityId, user.getLogin(), user.getId());
+
+        for (AuthorizationChecker authorizationChecker : authorizationCheckers) {
+            if (authorizationChecker.getEntityType() == entityType) {
+                boolean result = authorizationChecker.check(entityId, user.getId());
+                if (result == false) {
+                    return false;
+                }
+            }
+        }
         return true;
-    }
-}
-
-class User {
-    String login;
-    Long Id;
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
     }
 }

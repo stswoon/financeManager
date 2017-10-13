@@ -1,6 +1,7 @@
 package nodomain.stswoon.financemanager.backend.testdata;
 
 import lombok.extern.slf4j.Slf4j;
+import nodomain.stswoon.financemanager.backend.config.ApplicationProperties;
 import nodomain.stswoon.financemanager.backend.operations.OperationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -50,7 +51,7 @@ public class TestData {
 
     @PostConstruct
     public void initTestData() {
-        if (!createTestData) {
+        if (!ApplicationProperties.createTestData) {
             return;
         }
 

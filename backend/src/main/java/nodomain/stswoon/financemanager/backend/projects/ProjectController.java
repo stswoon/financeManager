@@ -1,5 +1,7 @@
 package nodomain.stswoon.financemanager.backend.projects;
 
+import nodomain.stswoon.financemanager.backend.authorization.Authorization;
+import nodomain.stswoon.financemanager.backend.authorization.AuthorizationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,7 @@ public class ProjectController {
         this.projectRepository = projectRepository;
     }
 
+    @Authorization(entityType = AuthorizationManager.EntityType.USER)
     @RequestMapping(value = "/project/{userId}", method = GET)
     public List<ProjectDto> getList(@PathVariable long userId) {
         List<ProjectEntity> entities = projectRepository.findByUserId(userId);
@@ -26,6 +29,7 @@ public class ProjectController {
         return dtos;
     }
 
+    @Authorization(entityType = AuthorizationManager.EntityType.USER)
     @RequestMapping(value = "/project/{userId}", method = PUT)
     public ProjectDto create(@PathVariable long userId, @RequestBody ProjectDto projectDto) {
         ProjectEntity projectEntity = new ProjectEntity();
@@ -37,11 +41,13 @@ public class ProjectController {
         return new ProjectDto(projectEntity.getId(), projectEntity.getName());
     }
 
+    @Authorization(entityType = AuthorizationManager.EntityType.PROJECT)
     @RequestMapping(value = "/project/{id}", method = DELETE)
     public void remove(@PathVariable long id) {
         projectRepository.delete(id);
     }
 
+    @Authorization(entityType = AuthorizationManager.EntityType.PROJECT)
     @RequestMapping(value = "/project/{id}", method = POST)
     public void update(@PathVariable long id, @RequestBody ProjectDto projectDto) {
         ProjectEntity projectEntity = projectRepository.findOne(id);

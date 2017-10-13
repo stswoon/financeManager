@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
-@Profile("cloud")
+//@Profile("cloud")
 @Configuration
 @EnableAutoConfiguration
 @Slf4j
@@ -23,6 +23,7 @@ public class BackendConfiguration {
     @Bean
     public DataSource dataSource() throws SQLException {
         HikariConfig config = new HikariConfig();
+        //config.setJdbcUrl(ApplicationProperties.dbUrl);
         config.setJdbcUrl(dbUrl);
         return new HikariDataSource(config);
     }

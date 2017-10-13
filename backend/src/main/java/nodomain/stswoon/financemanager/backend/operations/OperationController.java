@@ -22,16 +22,9 @@ public class OperationController {
         this.operationRepository = operationRepository;
     }
 
-
-//    @Autowired
-//    AuthorizationManager authorizationManager;
-
     @Authorization(entityType = AuthorizationManager.EntityType.PROJECT)
     @RequestMapping(value = "/operation/{projectId}", method = GET)
     public List<OperationDto> getList(@PathVariable long projectId) {
-        //authorization.hasAccess(Authorization.EntityType.PROJECT, projectId);
-
-
         List<OperationEntity> entities = operationRepository.findByProjectId(projectId);
         List<OperationDto> dtos = entities.stream()
                 .map(operationEntity -> {
@@ -47,6 +40,7 @@ public class OperationController {
         return dtos;
     }
 
+    @Authorization(entityType = AuthorizationManager.EntityType.PROJECT)
     @RequestMapping(value = "/operation/{projectId}", method = PUT)
     public void create(@PathVariable Long projectId, @RequestBody OperationDto operationDto) {
         OperationEntity operationEntity = new OperationEntity();
@@ -58,11 +52,13 @@ public class OperationController {
         operationRepository.save(operationEntity);
     }
 
+    @Authorization(entityType = AuthorizationManager.EntityType.OPERATION)
     @RequestMapping(value = "/operation/{id}", method = DELETE)
     public void remove(@PathVariable long id) {
         operationRepository.delete(id);
     }
 
+    @Authorization(entityType = AuthorizationManager.EntityType.OPERATION)
     @RequestMapping(value = "/operation/{id}", method = POST)
     public void update(@PathVariable long id, @RequestBody OperationDto operationDto) {
         OperationEntity operationEntity = operationRepository.findOne(id);

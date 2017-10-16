@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>heroku-deploy-plugin</module>
         <module>gateway</module>
         <module>auth</module>
         <module>backend</module>

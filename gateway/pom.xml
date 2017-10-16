@@ -73,6 +73,20 @@
                     </filesets>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>nodomain.stswoon.finance-manager</groupId>
+                <artifactId>heroku-deploy-plugin</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>deployToHeroku</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

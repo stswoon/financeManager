@@ -20,3 +20,6 @@
 /auth/auth.iml
 /auth/herokuDeploy
 /frontend/public
+/heroku-deploy-plugin/target
+/heroku-deploy-plugin/utils.iml
+/heroku-deploy-plugin/heroku-deploy-plugin.iml

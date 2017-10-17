@@ -21,7 +21,7 @@ class Dashboard extends React.Component {
         };
     }
 
-    userId = Cookie.get(constants.authenticationCookieName).userId; //todo
+    userId = Cookie.getJSON(constants.authenticationCookieName).userId; //todo
 
     componentDidMount() {
 

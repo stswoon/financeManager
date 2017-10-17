@@ -20,6 +20,12 @@ loaders.push({
     exclude: ['node_modules']
 });
 
+//redux https://habrahabr.ru/post/269831/
+var devFlagPlugin = new webpack.DefinePlugin({
+    __DEV__: JSON.stringify(JSON.parse('true'))
+});
+
+
 module.exports = {
     entry: [
         'react-hot-loader/patch',

@@ -14,6 +14,7 @@ const defaultRequest = {
 
 let applicationProps = {};
 
+//todo axios
 class Request {
     /**
      * Set jQuery props or just type+url+data
@@ -48,7 +49,7 @@ class Request {
     }
 
     send(disableDefaultAuthCatch = false) {
-        const bearerToken = Cookie.get(constants.authenticationCookieName);
+        const bearerToken = Cookie.getJSON(constants.authenticationCookieName).bearerToken;
         const cookieProps = {headers: {Authorization: "Bearer " + bearerToken}};
 
         let request = lodash.merge({}, defaultRequest, cookieProps, applicationProps, this.requestProps);

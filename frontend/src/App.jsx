@@ -5,6 +5,12 @@ import {Switch, Route} from 'react-router'
 import Request from "./utils/ajax";
 import WelcomeRedirect from "./components/welcome/WelcomeRedirect";
 
+import {combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+//import {createStore, renderDevTools} from './utils/devTools';
+//import * as reducers from 'redux/reducers';
+
+
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -14,12 +20,16 @@ export default class App extends React.Component {
     render() {
         return (
             <app>
-                <Switch>
-                    <Route exact path='/' component={WelcomeRedirect}/>
-                    <Route exact path='/login' component={LoginForm}/>
-                    <Route exact path='/dashboard' component={Dashboard}/>
-                    <Route path='/dashboard/:projectId' component={Dashboard}/>
-                </Switch>
+                {/*<Provider store={store}>*/}
+                <Provider store={{}}>
+                    <Switch>
+                        <Route exact path='/' component={WelcomeRedirect}/>
+                        <Route exact path='/login' component={LoginForm}/>
+                        <Route exact path='/dashboard' component={Dashboard}/>
+                        <Route path='/dashboard/:projectId' component={Dashboard}/>
+                    </Switch>
+                </Provider>
+                {/*{renderDevTools(store)}*/}
             </app>
         )
     }

@@ -11,17 +11,17 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @Configuration
 @EnableOAuth2Sso
 @EnableResourceServer
-//@Profile(value = {"cloud", "local"})
+@Profile(value = {"cloud", "local"})
 public class WebSecurityConfiguration extends ResourceServerConfigurerAdapter { //https://stackoverflow.com/questions/44977972/how-to-enable-bearer-authentication-on-spring-boot-application
-    @Value("${disableOAuth2}")
-    private boolean disableOAuth2;
+    //@Value("${disableOAuth2}")
+    //private boolean disableOAuth2;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        if (disableOAuth2) {
-            http.authorizeRequests().antMatchers("/**").permitAll().and().csrf().disable();
-            return;
-        }
+        //if (disableOAuth2) {
+        //    http.authorizeRequests().antMatchers("/**").permitAll().and().csrf().disable();
+        //    return;
+        //}
         http.authorizeRequests().anyRequest().authenticated().and().csrf().disable();
     }
 }

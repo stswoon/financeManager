@@ -1,6 +1,7 @@
 package nodomain.stswoon.financemanager.backend.authorization;
 
 import lombok.extern.slf4j.Slf4j;
+import nodomain.stswoon.financemanager.backend.config.ApplicationProperties;
 import nodomain.stswoon.financemanager.backend.security.UserService;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,11 @@ public class AuthorizationManager {
      * @return true if user has ro\rw right else false
      */
     public boolean hasAccess(@NotNull EntityType entityType, @NotNull Long entityId) {
+        if (ApplicationProperties.isDisableOAuth2()) {
+            log.info("Authorization was skipped because disableOAuth2=true");
+            return true;
+        }
+
         if (entityType == null) {
             throw new IllegalArgumentException("Parameter 'entityType' should not be null");
         }

@@ -9,7 +9,10 @@ import {combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 //import {createStore, renderDevTools} from './utils/devTools';
 //import * as reducers from 'redux/reducers';
+import { createStore } from 'redux';
+import appStore from './redux/reducers';
 
+let store = createStore(appStore);
 
 export default class App extends React.Component {
     constructor(props) {
@@ -20,8 +23,7 @@ export default class App extends React.Component {
     render() {
         return (
             <app>
-                {/*<Provider store={store}>*/}
-                <Provider store={{}}>
+                <Provider store={store}>
                     <Switch>
                         <Route exact path='/' component={WelcomeRedirect}/>
                         <Route exact path='/login' component={LoginForm}/>

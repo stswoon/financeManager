@@ -33,11 +33,6 @@ public class AuthorizationManager {
      * @return true if user has ro\rw right else false
      */
     public boolean hasAccess(@NotNull EntityType entityType, @NotNull Long entityId) {
-        if (ApplicationProperties.isDisableOAuth2()) {
-            log.info("Authorization was skipped because disableOAuth2=true");
-            return true;
-        }
-
         if (entityType == null) {
             throw new IllegalArgumentException("Parameter 'entityType' should not be null");
         }

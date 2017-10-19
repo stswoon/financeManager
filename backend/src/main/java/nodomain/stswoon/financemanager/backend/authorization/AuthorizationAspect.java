@@ -1,6 +1,7 @@
 package nodomain.stswoon.financemanager.backend.authorization;
 
 import lombok.extern.slf4j.Slf4j;
+import nodomain.stswoon.financemanager.backend.config.ApplicationProperties;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -24,6 +25,11 @@ class AuthorizationAspect {
 
     @Before("@annotation(nodomain.stswoon.financemanager.backend.authorization.Authorization)")
     public void checkAuthorization(JoinPoint joinPoint) {
+        if (ApplicationProperties.isDisableOAuth2()) {
+            log.debug("Authorization was skipped because disableOAuth2=true");
+            return;
+        }
+
         log.info("Check rights for {}", joinPoint);
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         Authorization authorization = method.getAnnotation(Authorization.class);

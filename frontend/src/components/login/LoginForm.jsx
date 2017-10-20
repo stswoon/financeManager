@@ -16,50 +16,6 @@ const FormItem = Form.Item;
 
 //http://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example
 
-function register() { //todo
-    const userDto = {login: this.state.login, password: this.state.password};
-    var request = new Request("POST", "/auth/user", userDto).send()
-        .then((res) => alert(res))
-        .catch((res) => alert("Error" + res));
-}
-
-async function login() {
-    console.debug("Starting login");
-
-    let loginUrl = constants.loginUrl.replace("{login}", this.state.login).replace("{password}", this.state.password);
-    let request = new Request({
-        type: "POST",
-        url: loginUrl,
-        headers: {
-            'Authorization': 'Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA==' //todo hide in node internal request
-        }
-    });
-
-    try {
-        let response = await request.send();
-        const bearerToken = response.access_token;
-        console.info("Bearer token = " + bearerToken);
-
-        response = await (new Request("GET", "/auth/user/" + this.state.login)).send();
-        console.info("Login is sucessful, userId = " + response.id);
-
-        Cookie.set(constants.authenticationCookieName, {
-            userId: response.id,
-            bearerToken: bearerToken
-        });
-
-        this.props.history.push('/dashboard/');
-    } catch (response) {
-        if (response.status == 400) {
-            message.warning("Login or password are incorrect");
-            console.debug("Login or password are incorrect");
-        } else {
-            message.error(constants.unexpectedErrorMessage);
-            console.error("Failed to login user, response: ", response);
-        }
-    }
-}
-
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -68,10 +24,6 @@ class Login extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangeLoginType = this.handleChangeLoginType.bind(this);
-    }
-
-    componentWillMount() {
-        Cookie.set(constants.authenticationCookieName, {});
     }
 
     handleInputChange(event) {
@@ -86,7 +38,7 @@ class Login extends React.Component {
         if (this.isRegistration()) {
             register.call(this);
         } else {
-            login.call(this);
+            this.props.handleSubmit(this.state.login, this.state.password);
         }
     }
 

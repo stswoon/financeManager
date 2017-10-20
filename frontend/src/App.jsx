@@ -7,12 +7,10 @@ import WelcomeRedirect from "./components/welcome/WelcomeRedirect";
 
 import {combineReducers} from 'redux';
 import {Provider} from 'react-redux';
-//import {createStore, renderDevTools} from './utils/devTools';
-//import * as reducers from 'redux/reducers';
-import { createStore } from 'redux';
-import appStore from './redux/reducers';
+//import {renderDevTools} from './utils/devTools';
+import {store} from './redux/store';
+import {LoginPage} from "./pages/LoginPage";
 
-let store = createStore(appStore);
 
 export default class App extends React.Component {
     constructor(props) {
@@ -26,7 +24,7 @@ export default class App extends React.Component {
                 <Provider store={store}>
                     <Switch>
                         <Route exact path='/' component={WelcomeRedirect}/>
-                        <Route exact path='/login' component={LoginForm}/>
+                        <Route exact path='/login' component={LoginPage}/>
                         <Route exact path='/dashboard' component={Dashboard}/>
                         <Route path='/dashboard/:projectId' component={Dashboard}/>
                     </Switch>

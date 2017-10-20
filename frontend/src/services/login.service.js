@@ -3,12 +3,6 @@ import Request from "../../src/utils/ajax";
 
 //import { authHeader } from '../_helpers';
 
-export const loginService = {
-    login,
-    logout,
-    loginResultTypes
-};
-
 // function login(username, password) {
 // const requestOptions = {
 //     method: 'POST',
@@ -34,30 +28,29 @@ export const loginService = {
 //         return user;
 //     });
 // }
-
 const loginResultTypes = {
     SUCCESS: "SUCCESS",
     FAILED: "FAILED"
 };
 
+
 async function login(username, password) {
     console.debug("Starting login");
 
-    let loginUrl = constants.loginUrl.replace("{login}", username).replace("{password}", password);
-    let request = new Request({
-        type: "POST",
-        url: loginUrl,
-        headers: {
-            'Authorization': 'Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA==' //todo hide in node internal request
-        }
-    });
-
     try {
+        let loginUrl = constants.loginUrl.replace("{login}", username).replace("{password}", password);
+        let request = new Request({
+            type: "POST",
+            url: loginUrl,
+            headers: {
+                'Authorization': 'Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA==' //todo hide in node internal request
+            }
+        });
         let response = await request.send();
         const bearerToken = response.access_token;
         console.info("Bearer token = " + bearerToken);
 
-        response = await (new Request("GET", "/auth/user/" + this.state.login)).send();
+        response = await (new Request("GET", "/auth/user/" + username)).send();
         console.info("Login is sucessful, userId = " + response.id);
 
         let authData = {
@@ -74,10 +67,14 @@ async function login(username, password) {
         if (response.status == 400) {
             console.debug("Incorrect credentials");
             return {type: loginResultTypes.FAILED};
-        } else {
-            console.debug("Unexpected fail to login user, response: ", response);
-            let error = new Error("Unexpected fail to login user");
+        } else if (response.status) {
+            console.debug("Unexpected response on login user, response: ", response);
+            let error = new Error("Unexpected response on login user");
             error.response = response;
+            throw error;
+        } else {
+            error = response;
+            console.error("Unexpected flow during login user, error: ", error);
             throw error;
         }
     }
@@ -142,3 +139,10 @@ function logout() {
 //
 //     return response.json();
 // }
+
+
+export const loginService = {
+    login,
+    logout,
+    loginResultTypes
+};

@@ -6,7 +6,7 @@ const constants = {
     incorrectCredentialsMessage: "Login or password are incorrect",
     unexpectedErrorMessage: "Unexpected error, please contact your administrator",
 
-    authenticationCookieName: "authentication"
+    authenticationCookieName: "authentication",
 
     actionTypes: {
             LOGIN_LOADING: 'LOGIN_LOADING',

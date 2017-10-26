@@ -2,7 +2,7 @@ import jQuery from "jquery";
 import lodash from "lodash";
 import Cookie from "js-cookie";
 
-import constants from "./constants";
+import constants from "../utils/constants";
 
 const defaultRequest = {
     type: "GET",
@@ -14,7 +14,6 @@ const defaultRequest = {
 
 let applicationProps = {};
 
-//todo axios
 class Request {
     /**
      * Set jQuery props or just type+url+data
@@ -37,6 +36,7 @@ class Request {
     /**
      * @param props
      * {
+     *   authToken : string
      *   urlPrefix : string
      * }
      */
@@ -48,12 +48,11 @@ class Request {
         applicationProps = {};
     }
 
-    send(disableDefaultAuthCatch = false) {
-        const bearerToken = Cookie.getJSON(constants.authenticationCookieName).bearerToken;
-        const cookieProps = {headers: {Authorization: "Bearer " + bearerToken}};
-
-        let request = lodash.merge({}, defaultRequest, cookieProps, applicationProps, this.requestProps);
-        if (request.url.startsWith("http") == false) {
+    send(disableDefaultAuthCatch = false, disablePrefix = false) {
+        const authorizationHeader = applicationProps.authToken ?
+            {headers: {Authorization: "Bearer " + applicationProps.authToken}} : {};
+        let request = lodash.merge({}, defaultRequest, authorizationHeader, this.requestProps);
+        if (disablePrefix == false && request.url.startsWith("http") == false) {
             request.url = applicationProps.urlPrefix + request.url;
         }
 
@@ -63,7 +62,7 @@ class Request {
                 .catch((response) => {
                     if (!disableDefaultAuthCatch) {
                        if (response.status === 401) {
-                           alert("401"); //todo redirect on login page
+                           alert("401"); //todo show login popup
                        }
                     }
                     reject(response);
@@ -73,6 +72,7 @@ class Request {
     }
 }
 
+//todo axios (https://daveceddia.com/ajax-requests-in-react/) or fetch
 //https://stackoverflow.com/questions/38156239/how-to-set-the-content-type-of-request-header-when-using-fetch-api
 //https://developer.mozilla.org/en-US/docs/Web/API/Request/mode
 // var config = {

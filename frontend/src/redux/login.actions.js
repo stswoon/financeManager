@@ -3,6 +3,7 @@
 import {loginService} from "../services/login.service";
 import constants from "../utils/constants";
 import {message} from "antd";
+import Request from "../services/request.service";
 
 // export const LOGIN_CHANGE_MODE = 'LOGIN_CHANGE_MODE';
 // export const changeMode = (mode) => {
@@ -29,6 +30,7 @@ function login(username, password) {
             switch (result.type) {
                 case loginService.loginResultTypes.SUCCESS:
                     console.info("Logged success");
+                    Request.setApplicationProps({authToken: result.authData.bearerToken});
                     dispatch(success(result.authData));
                     break;
                 case loginService.loginResultTypes.FAILED:
@@ -52,6 +54,7 @@ function logout() {
 
 function restoreLogin() {
     let authData = loginService.restoreLogin();
+    Request.setApplicationProps({authToken: authData.bearerToken});
     return {type: constants.actionTypes.LOGIN_CHECK, authData};
 }
 

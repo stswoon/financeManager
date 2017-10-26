@@ -34,7 +34,7 @@ function mapStateToProps(state) {
     const {loginReducer} = state;
     return loginReducer;
 }
-const connectedLoginPage = connect(mapStateToProps)(LoginPage);
-export {connectedLoginPage as LoginPage};
+const connected = connect(mapStateToProps)(LoginPage);
+export {connected as LoginPage};
 
 //export default withRouter(Login); //https://stackoverflow.com/questions/42701129/how-to-push-to-history-in-react-router-v4

@@ -1,19 +1,16 @@
 import React from "react";
-import NotificationCollector from "./NotificationCollector";
-import ProjectMenu from "./ProjectMenu";
-import OperationTable from "./OperationTable";
-import User from "./User";
-import "./dashboard.less";
-import jQuery from "jquery"
-import { Redirect, Route } from 'react-router-dom';
-import {withRouter} from "react-router-dom";
-import Cookie from "js-cookie";
-import Request from "../../../src/utils/ajax";
+import {connect} from "react-redux";
+
+import NotificationCollector from "../../components/dashboard/NotificationCollector";
+import ProjectMenu from "../../components/dashboard/ProjectMenu";
+import OperationTable from "../../components/dashboard/OperationTable";
+import User from "../../components/dashboard/User";
+import Request from "../../services/request.service";
 import constants from "../../../src/utils/constants";
 
-const isAuthenticated = () => (Cookie.getJSON(constants.authenticationCookieName) || {}).bearerToken;
+import "./dashboardPage.less";
 
-class Dashboard extends React.Component {
+class DashboardPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,15 +18,8 @@ class Dashboard extends React.Component {
         };
     }
 
-    userId = Cookie.getJSON(constants.authenticationCookieName).userId; //todo
-
     componentDidMount() {
-
-        //use axios - https://daveceddia.com/ajax-requests-in-react/
-
-        var request = new Request({
-            url: envData.gateway + "/backend/project/" + this.userId,
-        });
+        var request = new Request("GET", envData.gateway + "/backend/project/" + this.props.userId);
         request.send()
             .then(response => {
                 const projects = response;
@@ -39,16 +29,7 @@ class Dashboard extends React.Component {
     }
 
     handleNewProject = (name) => {
-        var request = {
-            type: "PUT",
-            url: envData.gateway + "/backend/project/" + this.userId,
-            headers: {
-                'Accept': 'application/json;charset=UTF-8',
-                'Content-Type': 'application/json;charset=UTF-8'
-            },
-            data: JSON.stringify({name: name})
-        };
-        jQuery.ajax(request)
+        new Request("PUT", envData.gateway + "/backend/project/" + this.props.userId, {name: name}).send()
             .then(response => this.setState({projects: [...this.state.projects, response]}))
             .catch(alert);
     };
@@ -64,12 +45,7 @@ class Dashboard extends React.Component {
     };
 
     render() {
-        //todo https://stackoverflow.com/questions/43164554/how-to-implement-authenticated-routes-in-react-router-4
-        if (!isAuthenticated()) {
-            return <Redirect to="/login" />
-        }
-
-        console.log("projectId="+this.props.match.params.projectId);
+        console.log("projectId=" + this.props.match.params.projectId);
         const projectId = parseInt(this.props.match.params.projectId);
 
         return (
@@ -99,12 +75,22 @@ class Dashboard extends React.Component {
         )
     }
 }
+
 //todo get last project from local storage
+
+
+function mapStateToProps(state) {
+    const {loginReducer} = state;
+    return {userId: loginReducer.authData.userId, username: loginReducer.authData.username};
+}
+
+const connected = connect(mapStateToProps)(DashboardPage);
+export {connected as DashboardPage};
+
 // https://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
 // Dashboard.contextTypes = {
 //     history: React.PropTypes.shape({
 //         push: React.PropTypes.func.isRequired
 //     })
 // }
-
-export default withRouter(Dashboard); //https://stackoverflow.com/questions/42701129/how-to-push-to-history-in-react-router-v4
+//export default withRouter(Dashboard); //https://stackoverflow.com/questions/42701129/how-to-push-to-history-in-react-router-v4

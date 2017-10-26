@@ -1,7 +1,7 @@
 {
   "presets": [
-    "es2015",
-    "react"
+    "react",
+    ["es2015", { "modules": false }] //https://github.com/webpack/webpack/issues/4961 and https://babeljs.io/docs/plugins/transform-runtime or https://github.com/webpack/webpack/issues/3974
   ],
   "plugins": [
     "transform-runtime",

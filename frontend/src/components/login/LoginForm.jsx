@@ -1,13 +1,10 @@
 import React from "react";
 import {Form, Icon, Input, Button, Checkbox, message} from "antd";
-import jQuery from "jquery"
 import {Redirect, Route} from 'react-router-dom';
-import Cookie from "js-cookie";
 import {withRouter} from "react-router-dom";
 
-import Request from "../../../src/utils/ajax";
+import Request from "../../services/request.service";
 import constants from "../../../src/utils/constants";
-import authUtils from "../../../src/utils/authentication";
 
 import "antd/dist/antd.css";
 import "./login-form.less";

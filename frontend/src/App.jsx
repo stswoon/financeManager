@@ -1,14 +1,14 @@
 import React from "react";
-import Dashboard from "./components/dashboard/Dashboard";
 import {Switch, Route} from 'react-router'
-import Request from "./utils/ajax";
-
 import {Provider} from 'react-redux';
-//import {renderDevTools} from './utils/devTools';
+
+import Request from "./services/request.service";
 import {store} from './redux/store';
 import {LoginPage} from "./pages/LoginPage";
 import {PrivateRoute} from "./pages/utils/PrivateRoute";
 import {WelcomePage} from "./pages/WelcomePage";
+import {DashboardPage} from "./pages/dasboard";
+//import {renderDevTools} from './utils/devTools';
 
 
 export default class App extends React.Component {
@@ -24,8 +24,8 @@ export default class App extends React.Component {
                     <Switch>
                         <Route exact path='/' component={WelcomePage}/>
                         <Route exact path='/login' component={LoginPage}/>
-                        <PrivateRoute exact path='/dashboard' component={Dashboard}/>
-                        <PrivateRoute path='/dashboard/:projectId' component={Dashboard}/>
+                        <PrivateRoute exact path='/dashboard' component={DashboardPage}/>
+                        <PrivateRoute path='/dashboard/:projectId' component={DashboardPage}/>
                         {/*todo 404*/}
                     </Switch>
                 </Provider>

@@ -1,33 +1,6 @@
 import constants from "../../src/utils/constants";
-import Request from "../../src/utils/ajax";
+import Request from "./request.service";
 
-//import { authHeader } from '../_helpers';
-
-// function login(username, password) {
-// const requestOptions = {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ username, password })
-// };
-//
-// return fetch('/users/authenticate', requestOptions)
-//     .then(response => {
-//         if (!response.ok) {
-//             return Promise.reject(response.statusText);
-//         }
-//
-//         return response.json();
-//     })
-//     .then(user => {
-//         // login successful if there's a jwt token in the response
-//         if (user && user.token) {
-//             // store user details and jwt token in local storage to keep user logged in between page refreshes
-//             localStorage.setItem('user', JSON.stringify(user));
-//         }
-//
-//         return user;
-//     });
-// }
 const loginResultTypes = {
     SUCCESS: "SUCCESS",
     FAILED: "FAILED"
@@ -60,8 +33,8 @@ async function login(username, password) {
         };
         localStorage.setItem(constants.authenticationCookieName, JSON.stringify(authData));
 
-        //this.props.history.push('/dashboard/');
         console.debug("Login success, authData = ", authData);
+        //this.props.history.push('/dashboard/');
         return {type: loginResultTypes.SUCCESS, authData};
     } catch (response) {
         if (response.status == 400) {

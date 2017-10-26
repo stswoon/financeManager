@@ -74,6 +74,7 @@
                 </configuration>
             </plugin>
 
+            <!-- can't build into heroku because can't find plugin
             <plugin>
                 <groupId>nodomain.stswoon.finance-manager</groupId>
                 <artifactId>heroku-deploy-plugin</artifactId>
@@ -87,6 +88,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
         </plugins>
     </build>
 </project>

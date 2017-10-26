@@ -99,7 +99,7 @@ class Dashboard extends React.Component {
         )
     }
 }
-
+//todo get last project from local storage
 // https://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
 // Dashboard.contextTypes = {
 //     history: React.PropTypes.shape({

@@ -9,10 +9,20 @@ const loginReducer = (state = {}, action) => {
         case constants.actionTypes.LOGIN_ERROR:
             return {error: action.error};
         case constants.actionTypes.LOGIN_SUCCESS:
-            return {authData: action.authData};
+            return success(action.authData);
+        case constants.actionTypes.LOGIN_CHECK:
+            if (action.authData) {
+                return success(action.authData)
+            } else {
+                return {restoreAuthAttempt: true};
+            }
         default:
             return state
     }
 };
+
+function success(authData) {
+    return {authData}
+}
 
 export default loginReducer;

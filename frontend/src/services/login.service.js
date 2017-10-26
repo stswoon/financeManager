@@ -80,6 +80,14 @@ async function login(username, password) {
     }
 }
 
+function restoreLogin() {
+    let authData = localStorage.getItem(constants.authenticationCookieName);
+    if (authData) {
+        authData = JSON.parse(authData);
+    }
+    return authData;
+}
+
 function logout() {
     localStorage.removeItem(constants.authenticationCookieName);
 }
@@ -144,5 +152,6 @@ function logout() {
 export const loginService = {
     login,
     logout,
+    restoreLogin,
     loginResultTypes
 };

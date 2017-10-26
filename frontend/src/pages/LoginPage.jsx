@@ -3,6 +3,7 @@ import React from "react";
 import {loginActions} from '../redux/login.actions';
 import {connect} from "react-redux";
 import LoginForm from "../components/login/LoginForm";
+import Redirect from "react-router-dom/es/Redirect";
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -19,15 +20,19 @@ class LoginPage extends React.Component {
     };
 
     render() {
+        let result = this.props.authData ?
+            <Redirect to={"/"}></Redirect> : <LoginForm handleSubmit={this.handleSubmit}></LoginForm>;
         return (
-            <LoginForm handleSubmit={this.handleSubmit}></LoginForm>
-        )
+            <login-page>
+                {result}
+            </login-page>
+        );
     }
 }
 
 function mapStateToProps(state) {
-    const {loginState} = state.loginReducer;
-    return {}
+    const {loginReducer} = state;
+    return loginReducer;
 }
 const connectedLoginPage = connect(mapStateToProps)(LoginPage);
 export {connectedLoginPage as LoginPage};

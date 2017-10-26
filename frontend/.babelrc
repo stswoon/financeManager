@@ -9,6 +9,7 @@
     "transform-class-properties",
     "transform-async-to-generator",
     "react-hot-loader/babel",
+    "transform-object-rest-spread",
     [
       "import",
       [

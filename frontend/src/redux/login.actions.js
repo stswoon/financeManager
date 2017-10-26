@@ -14,6 +14,7 @@ import {message} from "antd";
 //
 
 export const loginActions = {
+    restoreLogin,
     login,
     logout//,
     //register
@@ -48,6 +49,13 @@ function logout() {
     loginService.logout();
     return {type: constants.actionTypes.LOGIN_LOGOUT};
 }
+
+function restoreLogin() {
+    let authData = loginService.restoreLogin();
+    return {type: constants.actionTypes.LOGIN_CHECK, authData};
+}
+
+//private api below
 
 function loading(loading) {
     return {type: constants.actionTypes.LOGIN_LOADING, loading}

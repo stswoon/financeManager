@@ -12,7 +12,8 @@ const constants = {
             LOGIN_LOADING: 'LOGIN_LOADING',
             LOGIN_SUCCESS: 'LOGIN_SUCCESS',
             LOGIN_ERROR: 'LOGIN_ERROR',
-            LOGIN_LOGOUT: 'LOGIN_LOGOUT'
+            LOGIN_LOGOUT: 'LOGIN_LOGOUT',
+            LOGIN_CHECK: 'LOGIN_CHECK'
     }
 };
 

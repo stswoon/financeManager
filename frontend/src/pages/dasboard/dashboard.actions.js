@@ -1,23 +1,22 @@
 import {message} from "antd";
 
 import constants from "../../utils/constants";
-import Request from "../../services/request.service";
-import {dashbboardService} from "./dashboard.service";
+import {dashboardService} from "./dashboard.service";
 
 export const dashboardActions = {
     loadProjects,
     setCurrentProject,
-    restoreCurrentProject
+    restoreCurrentProject,
+    loadOperations
 };
 
 function loadProjects(userId) {
     console.info("Getting projects for userId = " + userId);
     return async (dispatch) => {
         dispatch(loading(true));
-        let request = new Request("GET", constants.getProjectsUrl.replace("{userId}", userId));
         try {
-            let response = await request.send();
-            dispatch(storeProjects(response));
+            let projects = await dashboardService.loadProjects(userId);
+            dispatch(storeProjects(projects));
         } catch (response) {
             message.error(response);
         }
@@ -26,16 +25,33 @@ function loadProjects(userId) {
 }
 
 function setCurrentProject(projectId) {
-    dashbboardService.saveLastProject(projectId);
-    return {type: constants.actionTypes.DASHBOARD_CURRENT_PROJECT, projectId};
+    return async (dispatch) => {
+        dashboardService.saveLastProject(projectId);
+        dispatch({type: constants.actionTypes.DASHBOARD_CURRENT_PROJECT, projectId});
+        dispatch(loadOperations(projectId));
+    };
 }
 
 function restoreCurrentProject() {
-    let projectId = dashbboardService.restoreLastProject();
+    let projectId = dashboardService.restoreLastProject();
     console.info("Restore project (if null project will not be restored), projectId=" + projectId);
     if (projectId) {
         return setCurrentProject(projectId);
     }
+}
+
+function loadOperations(projectId) {
+    console.info("Loading operations for projectId = " + projectId);
+    return async (dispatch) => {
+        dispatch(loading(true));
+        try {
+            let operations = await dashboardService.loadOperations(projectId);
+            dispatch(setOperations(operations));
+        } catch (response) {
+            message.error(response);
+        }
+        dispatch(loading(false));
+    };
 }
 
 
@@ -50,3 +66,6 @@ function storeProjects(projects) {
     return {type: constants.actionTypes.DASHBOARD_STORE_PROJECTS, projects}
 }
 
+function setOperations(operations) {
+    return {type: constants.actionTypes.DASHBOARD_SET_OPERATIONS, operations}
+}

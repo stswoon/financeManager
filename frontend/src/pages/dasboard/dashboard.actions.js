@@ -34,7 +34,7 @@ function restoreCurrentProject() {
     let projectId = dashbboardService.restoreLastProject();
     console.info("Restore project (if null project will not be restored), projectId=" + projectId);
     if (projectId) {
-        return {type: constants.actionTypes.DASHBOARD_CURRENT_PROJECT, projectId};
+        return setCurrentProject(projectId);
     }
 }
 

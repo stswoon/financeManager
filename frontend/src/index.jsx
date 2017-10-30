@@ -14,7 +14,7 @@ render(
     document.querySelector("#root")
 );
 
-if (module && module.hot) {
+if (module && module.hot) { //todo also for redux
     module.hot.accept('./App.jsx', () => {
         const App = require('./App.jsx').default;
         render(

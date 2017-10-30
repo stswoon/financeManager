@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {message} from "antd";
 import {bindActionCreators} from 'redux';
+import Redirect from "react-router-dom/es/Redirect";
 
 import NotificationCollector from "../../components/dashboard/NotificationCollector";
 import ProjectMenu from "../../components/dashboard/ProjectMenu";
@@ -18,7 +19,8 @@ function mapStateToProps(state) {
     return {
         userId: loginReducer.authData.userId,
         username: loginReducer.authData.username,
-        projects: dashboardReducer.projects
+        projects: dashboardReducer.projects,
+        currentProjectId: dashboardReducer.currentProjectId
     };
 }
 
@@ -35,13 +37,13 @@ export class DashboardPage extends React.Component {
         };
     }
 
-    componentWidMount() {
+    componentWillMount() {
         let projectId = this.props.match.params.projectId;
         if (projectId) {
             console.info("Set project from url projectId=" + projectId);
-            this.actions.setCurrentProject(projectId);
+            this.props.actions.setCurrentProject(projectId);
         } else {
-            this.actions.restoreCurrentProject();
+            this.props.actions.restoreCurrentProject();
         }
     }
 
@@ -60,8 +62,12 @@ export class DashboardPage extends React.Component {
     };
 
     render() {
-        console.debug("projectId=" + this.props.projectId);
-        const projectId = parseInt(this.props.projectId);
+        console.debug("projectId=" + this.props.currentProjectId);
+        const currentProjectId = parseInt(this.props.currentProjectId);
+        const urlProjectId = this.props.match.params.projectId;
+        if (currentProjectId != urlProjectId) {
+            return (<Redirect to={"/dashboard/"+currentProjectId}/>);
+        }
 
         return (
             <div>
@@ -84,7 +90,7 @@ export class DashboardPage extends React.Component {
                 <div className="content">
                     {/*<MoneySummary/>*/}
                     {/*<Diagram/>*/}
-                    {projectId && <OperationTable projectId={projectId} onNewOpertion={this.handleNewOpeartion}/>}
+                    {currentProjectId && <OperationTable projectId={currentProjectId} onNewOpertion={this.handleNewOpeartion}/>}
                 </div>
             </div>
         )

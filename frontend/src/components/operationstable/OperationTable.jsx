@@ -1,8 +1,8 @@
 import React from "react";
-import {Input, Button, Icon, Menu, Dropdown} from 'antd';
+import {Button} from 'antd';
 import {Table} from 'antd';
-import jQuery from "jquery";
-import NewOperation from "./NewOperation";
+
+import OperationPopup from "./OperationPopup";
 
 function formatDate(date) {
     //todo: https://learn.javascript.ru/datetime or https://stackoverflow.com/questions/3552461/how-to-format-a-javascript-date
@@ -15,19 +15,17 @@ function formatDate(date) {
 class OperationTable extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            operations: []
-        };
+        this.state = {};
     }
 
-    showOperationCreatePopup = () => {
-        this.setState({showOperationCreatePopup: true});
+    showOperationCreatePopup = () => this.setState({showOperationCreatePopup: true});
+
+    handleCreate = (newOperationData) => {
+        this.props.onOperationCreate(newOperationData);
+        this.setState({showOperationCreatePopup: false});
     };
 
-    handleCreate = async (newOperation) => {
-        let close = await this.props.onOperationCreate(newOperation);
-        this.setState({showOperationCreatePopup: close});
-    };
+    handleCancel = () => this.setState({showOperationCreatePopup: false});
 
     render() {
         const data = this.props.operations.map((item) => {
@@ -79,10 +77,8 @@ class OperationTable extends React.Component {
             <div className={"operation-table"}>
                 <Button onClick={this.showOperationCreatePopup}>New operation</Button>
                 <Table columns={columns} dataSource={data}/>
-                {this.state.showOperationCreatePopup && <OperationCreatePopup
-                    visible={this.state.newOperation}
-                    onCreate={this.handleCreate}
-                />}
+                {this.state.showOperationCreatePopup &&
+                <OperationPopup onOk={this.handleCreate} onCancel={this.handleCancel}/>}
             </div>
         );
     }

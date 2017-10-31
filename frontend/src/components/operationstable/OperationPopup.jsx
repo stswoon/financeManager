@@ -1,53 +1,33 @@
 import React from "react";
-import {Input, Button, Icon, Menu, Select, DatePicker, Form, InputNumber,LocaleProvider } from 'antd';
-import {Table} from 'antd';
-import jQuery from "jquery";
+import {Input, Select, DatePicker, Form, InputNumber, LocaleProvider} from 'antd';
 import {Modal} from 'antd';
-const FormItem = Form.Item;
 import moment from 'moment';
-import './new-operation.less';
 import locales from 'antd/lib/locale-provider/en_US';
+const FormItem = Form.Item;
 
-class NewOperation extends React.Component {
+import './new-operation.less';
+
+class OperationCreatePopup extends React.Component {
     constructor(props) {
         super(props);
+        const now = moment();
         this.state = {
-            visible: false,
-            value: 0
+            comment: "",
+            value: 0,
+            type: "MINUS",
+            date: now
         };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({visible: nextProps.visible});
     }
 
     handleOk = (e) => {
         console.log(e);
-
-        var request = {
-            type: "PUT",
-            url: envData.gateway + "/backend/operation/" + this.props.projectId,
-            headers: {
-                'Accept': 'application/json;charset=UTF-8',
-                'Content-Type': 'application/json;charset=UTF-8'
-            },
-            data: JSON.stringify({
-                comment: this.state.comment,
-                value: this.state.value,
-                operationType: this.state.type,
-                date: this.state.date
-            })
+        let data = {
+            comment: this.state.comment,
+            value: this.state.value,
+            operationType: this.state.type,
+            date: this.state.date.toDate().getTime()
         };
-        jQuery.ajax(request)
-            .then( () => this.setState({visible: false}) )
-            .then(response => this.props.onCreate(response))
-            .catch(alert);
-    };
-    handleCancel = (e) => {
-        console.log(e);
-        this.setState({
-            visible: false
-        });
+        this.props.onOk(data);
     };
 
     handleInputChange = (event) => {
@@ -57,19 +37,13 @@ class NewOperation extends React.Component {
         this.setState({[name]: value});
     };
 
-    handleNumberInputChange = (value) => {
-        this.setState({value});
-    };
+    handleNumberInputChange = (value) => this.setState({value});
 
-    handleTypeInputChange = (type) => {
-        this.setState({type});
-    };
+    handleTypeInputChange = (type) => this.setState({type});
 
-    handleDateChange = (date) => {
-        this.setState({date: date.toDate().getTime()});
-    };
+    handleDateChange = (date) => this.setState({date});
 
-    render() { //todo: make operation creation form
+    render() {
         const formItems = [];
 
         formItems.push(
@@ -83,7 +57,7 @@ class NewOperation extends React.Component {
         );
         formItems.push(
             <FormItem>
-                <Select defaultValue="MINUS"
+                <Select defaultValue={this.state.type}
                         name="type"
                         style={{width: 120}}
                         onChange={this.handleTypeInputChange}>
@@ -99,12 +73,11 @@ class NewOperation extends React.Component {
             </FormItem>
         );
         const dateFormat = 'DD-MM-YYYY';
-        const now = moment();
         //https://github.com/ant-design/ant-design/issues/4284
         formItems.push(
             <FormItem>
                 <LocaleProvider locale={locales}>
-                    <DatePicker defaultValue={now} format={dateFormat}
+                    <DatePicker defaultValue={this.state.date} format={dateFormat}
                                 onChange={this.handleDateChange}/>
                 </LocaleProvider>
             </FormItem>
@@ -116,14 +89,13 @@ class NewOperation extends React.Component {
             </Form>
         );
 
-
         return (
             <div>
                 <Modal width="300"
                        title="Basic Modal"
-                       visible={this.state.visible}
+                       visible={true}
                        onOk={this.handleOk}
-                       onCancel={this.handleCancel}
+                       onCancel={this.props.onCancel}
                        okText="Create"
                        cancelText="Cancel"
                 >
@@ -134,4 +106,4 @@ class NewOperation extends React.Component {
     }
 }
 
-export default NewOperation;
+export default OperationCreatePopup;

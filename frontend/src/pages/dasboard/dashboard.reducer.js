@@ -14,6 +14,8 @@ const dashboardReducer = (state = {projects: []}, action) => {
             return {...state, projects: action.projects};
         case constants.actionTypes.DASHBOARD_CURRENT_PROJECT:
             return {...state, currentProjectId: action.projectId};
+        case constants.actionTypes.DASHBOARD_SET_OPERATIONS:
+            return {...state, operations: action.operations};
         default:
             return state;
     }

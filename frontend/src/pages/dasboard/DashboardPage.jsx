@@ -4,10 +4,10 @@ import {message} from "antd";
 import {bindActionCreators} from 'redux';
 import Redirect from "react-router-dom/es/Redirect";
 
-import NotificationCollector from "../../components/dashboard/NotificationCollector";
-import ProjectMenu from "../../components/dashboard/ProjectMenu";
-import OperationTable from "../../components/dashboard/OperationTable";
-import User from "../../components/dashboard/User";
+import NotificationCollector from "../../components/notifications/NotificationCollector";
+import ProjectMenu from "../../components/projectsmenu/ProjectMenu";
+import OperationTable from "../../components/operationstable/OperationTable";
+import User from "../../components/user/User";
 import Request from "../../services/request.service";
 import constants from "../../../src/utils/constants";
 import {dashboardActions} from "./dashboard.actions";
@@ -20,7 +20,8 @@ function mapStateToProps(state) {
         userId: loginReducer.authData.userId,
         username: loginReducer.authData.username,
         projects: dashboardReducer.projects,
-        currentProjectId: dashboardReducer.currentProjectId
+        currentProjectId: dashboardReducer.currentProjectId,
+        operations: dashboardReducer.operations
     };
 }
 
@@ -33,7 +34,8 @@ export class DashboardPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            projects: []
+            projects: [],
+            operations: []
         };
     }
 
@@ -45,9 +47,7 @@ export class DashboardPage extends React.Component {
         } else {
             this.props.actions.restoreCurrentProject();
         }
-    }
 
-    componentDidMount() {
         this.props.actions.loadProjects(this.props.userId);
     }
 
@@ -57,8 +57,8 @@ export class DashboardPage extends React.Component {
             .catch(alert);
     };
 
-    handleNewOpeartion = () => {
-        this.setState({newOpeartion: true});
+    handleOperationCreate = (operationData) => {
+        this.props.actions.createOperation(operationData, this.props.currentProjectId);
     };
 
     render() {
@@ -66,8 +66,10 @@ export class DashboardPage extends React.Component {
         const currentProjectId = parseInt(this.props.currentProjectId);
         const urlProjectId = this.props.match.params.projectId;
         if (currentProjectId != urlProjectId) {
-            return (<Redirect to={"/dashboard/"+currentProjectId}/>);
+            return (<Redirect to={"/dashboard/" + currentProjectId}/>);
         }
+
+        let operations = this.props.operations || [];
 
         return (
             <div>
@@ -90,19 +92,18 @@ export class DashboardPage extends React.Component {
                 <div className="content">
                     {/*<MoneySummary/>*/}
                     {/*<Diagram/>*/}
-                    {currentProjectId && <OperationTable projectId={currentProjectId} onNewOpertion={this.handleNewOpeartion}/>}
+                    {currentProjectId && <OperationTable operations={operations}
+                                                         onOperationCreate={this.handleOperationCreate}/>}
                 </div>
             </div>
         )
     }
 }
 
-//todo get last project from local storage
 
 
-// const connected = connect(mapStateToProps)(DashboardPage);
+//const connected = connect(mapStateToProps)(DashboardPage);
 //export {connected as DashboardPage};
-
 // https://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
 // this.props.history.push('/dashboard/' + projectId);
 // //context.history.push('/dashboard/' + projectId);
@@ -113,4 +114,3 @@ export class DashboardPage extends React.Component {
 //     })
 // }
 //export default withRouter(Dashboard); //https://stackoverflow.com/questions/42701129/how-to-push-to-history-in-react-router-v4
-

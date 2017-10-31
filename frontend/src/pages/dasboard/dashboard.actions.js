@@ -7,7 +7,8 @@ export const dashboardActions = {
     loadProjects,
     setCurrentProject,
     restoreCurrentProject,
-    loadOperations
+    loadOperations,
+    createOperation
 };
 
 function loadProjects(userId) {
@@ -47,6 +48,21 @@ function loadOperations(projectId) {
         try {
             let operations = await dashboardService.loadOperations(projectId);
             dispatch(setOperations(operations));
+        } catch (response) {
+            message.error(response);
+        }
+        dispatch(loading(false));
+    };
+}
+
+function createOperation(operationData, projectId) {
+    console.info("Create projectId = " + projectId + " operation: ", operationData);
+    return async (dispatch) => {
+        dispatch(loading(true));
+        try {
+            let operations = await dashboardService.createOperation(operationData, projectId);
+            //todo dispatch(setOperations(operations));
+            dispatch(loadOperations(projectId));
         } catch (response) {
             message.error(response);
         }

@@ -3,6 +3,7 @@ const constants = {
     loginUrl: "/auth/oauth/token?grant_type=password&username={login}&password={password}", //todo post!!!
     checkTokenUrl: "/auth/oauth/check_token?token={token}",
     getProjectsUrl: "/backend/project/{userId}",
+    getOperationsUrl: "/backend/operation/{projectId}",
 
     incorrectCredentialsMessage: "Login or password are incorrect",
     unexpectedErrorMessage: "Unexpected error, please contact your administrator",
@@ -19,7 +20,8 @@ const constants = {
 
         DASHBOARD_LOADING: 'DASHBOARD_LOADING',
         DASHBOARD_STORE_PROJECTS: 'DASHBOARD_STORE_PROJECTS',
-        DASHBOARD_CURRENT_PROJECT: 'DASHBOARD_CURRENT_PROJECT'
+        DASHBOARD_CURRENT_PROJECT: 'DASHBOARD_CURRENT_PROJECT',
+        DASHBOARD_SET_OPERATIONS: 'DASHBOARD_SET_OPERATIONS'
     }
 };
 

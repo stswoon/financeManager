@@ -1,5 +1,6 @@
 package nodomain.stswoon.financemanager.backend.operations;
 
+import lombok.extern.slf4j.Slf4j;
 import nodomain.stswoon.financemanager.backend.authorization.Authorization;
 import nodomain.stswoon.financemanager.backend.authorization.AuthorizationManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
+@Slf4j
 @RestController
 public class OperationController {
     private final OperationRepository operationRepository;
@@ -49,6 +51,7 @@ public class OperationController {
         operationEntity.setOperationTypeId(operationDto.getOperationType().getOperationTypeId());
         operationEntity.setValue(operationDto.getValue());
         operationEntity.setProjectId(projectId);
+        log.info("Creation operationEntity: " + operationEntity);
         operationRepository.save(operationEntity);
     }
 

@@ -105,7 +105,7 @@ class OperationTable extends React.Component {
 
         let operationPopup =
             (<OperationPopup onOk={this.state.operationPopupMode == "create" ? this.handleCreate : this.handleEdit}
-                             okLabel={this.state.operationPopupMode == "create" ?
+                             okText={this.state.operationPopupMode == "create" ?
                                  constants.operationPopup.create : constants.operationPopup.update}
                              onCancel={this.handleCancel}
                              inputData={this.state.inputOperationData}

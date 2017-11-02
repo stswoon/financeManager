@@ -102,7 +102,7 @@ class OperationPopup extends React.Component {
                        visible={true}
                        onOk={this.handleOk}
                        onCancel={this.props.onCancel}
-                       okText="Create"
+                       okText={this.props.okText}
                        cancelText="Cancel"
                 >
                     {form}

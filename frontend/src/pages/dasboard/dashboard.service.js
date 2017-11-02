@@ -27,8 +27,8 @@ async function createOperation(operationData, projectId) {
     return response;
 }
 
-async function updateOperation(operationData, operationId) {
-    let request = new Request("POST",  constants.updateOperationUrl.replace("{id}", operationId), operationData);
+async function updateOperation(operationData) {
+    let request = new Request("POST",  constants.updateOperationUrl.replace("{id}", operationData.id), operationData);
     let response = await request.send();
     return response;
 }

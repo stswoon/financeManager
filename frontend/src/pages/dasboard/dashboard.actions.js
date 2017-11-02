@@ -63,7 +63,8 @@ function createOperation(operationData, projectId) {
         dispatch(loading(true));
         try {
             let operationId = await dashboardService.createOperation(operationData, projectId);
-            dispatch(_addOperation(operationId, operationData));
+            let operation = {...operationData, id: operationId};
+            dispatch(_addOperation(operation));
             //todo create refresh button via dispatch(loadOperations(projectId));
         } catch (response) {
             message.error(response);
@@ -72,13 +73,13 @@ function createOperation(operationData, projectId) {
     };
 }
 
-function updateOperation(operationData, operationId) {
-    console.info("Update operationId = " + operationId + " operation: ", operationData);
+function updateOperation(operationData) {
+    console.info("Update operationId = " + operationData.id + " operation: ", operationData);
     return async (dispatch) => {
         dispatch(loading(true));
         try {
-            await dashboardService.updateOperation(operationData, operationId);
-            dispatch(_updateOperation(operationId, operationData));
+            await dashboardService.updateOperation(operationData);
+            dispatch(_updateOperation(operationData));
         } catch (response) {
             message.error(response);
         }
@@ -101,7 +102,6 @@ function removeOperation(operationId) {
 }
 
 
-
 //private api below
 
 function loading(loading) {
@@ -120,11 +120,11 @@ function _removeOperation(id) {
     return {type: constants.actionTypes.DASHBOARD_REMOVE_OPERATION, id}
 }
 
-function _updateOperation(id, operation) {
-    return {type: constants.actionTypes.DASHBOARD_UPDATE_OPERATION, id, operation}
+function _updateOperation(operation) {
+    return {type: constants.actionTypes.DASHBOARD_UPDATE_OPERATION, operation}
 }
 
-function _addOperation(id, operation) {
-    return {type: constants.actionTypes.DASHBOARD_ADD_OPERATION, id, operation}
+function _addOperation(operation) {
+    return {type: constants.actionTypes.DASHBOARD_ADD_OPERATION, operation}
 }
 

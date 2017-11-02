@@ -62,7 +62,7 @@ export class DashboardPage extends React.Component {
     };
 
     handleOperationUpdate = (operationData) => {
-        this.props.actions.updateOperation(operationData, operationData.id);
+        this.props.actions.updateOperation(operationData);
     };
 
     handleOperationRemove = (operationId) => {

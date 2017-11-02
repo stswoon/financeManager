@@ -35,4 +35,15 @@ public class OperationEntity implements Identifiable<Long> {
     public Long getId() {
         return id;
     }
+
+    public OperationEntity() {
+    }
+
+    public OperationEntity(Long projectId, Long operationTypeId, Integer value, String comment, Date date) {
+        this.projectId = projectId;
+        this.operationTypeId = operationTypeId;
+        this.value = value;
+        this.comment = comment;
+        this.date = date;
+    }
 }

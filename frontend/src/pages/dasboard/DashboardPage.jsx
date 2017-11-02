@@ -61,6 +61,14 @@ export class DashboardPage extends React.Component {
         this.props.actions.createOperation(operationData, this.props.currentProjectId);
     };
 
+    handleOperationUpdate = (operationData) => {
+        this.props.actions.updateOperation(operationData, operationData.id);
+    };
+
+    handleOperationRemove = (operationId) => {
+        this.props.actions.removeOperation(operationId);
+    };
+
     render() {
         console.debug("projectId=" + this.props.currentProjectId);
         const currentProjectId = parseInt(this.props.currentProjectId);
@@ -81,11 +89,11 @@ export class DashboardPage extends React.Component {
                         />
                     </div>
                     <div className="navigation_right-block">
+                        {/*<div className="navigation_item">*/}
+                            {/*<NotificationCollector/>*/}
+                        {/*</div>*/}
                         <div className="navigation_item">
-                            <NotificationCollector/>
-                        </div>
-                        <div className="navigation_item">
-                            <User/>
+                            <User userName={this.props.username}/>
                         </div>
                     </div>
                 </div>
@@ -93,7 +101,10 @@ export class DashboardPage extends React.Component {
                     {/*<MoneySummary/>*/}
                     {/*<Diagram/>*/}
                     {currentProjectId && <OperationTable operations={operations}
-                                                         onOperationCreate={this.handleOperationCreate}/>}
+                                                         onOperationCreate={this.handleOperationCreate}
+                                                         onOperationUpdate={this.handleOperationUpdate}
+                                                         onOperationRemove={this.handleOperationRemove}
+                    />}
                 </div>
             </div>
         )

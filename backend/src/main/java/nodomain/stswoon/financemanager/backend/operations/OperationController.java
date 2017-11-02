@@ -44,7 +44,7 @@ public class OperationController {
 
     @Authorization(entityType = AuthorizationManager.EntityType.PROJECT)
     @RequestMapping(value = "/operation/{projectId}", method = PUT)
-    public void create(@PathVariable Long projectId, @RequestBody OperationDto operationDto) {
+    public long create(@PathVariable Long projectId, @RequestBody OperationDto operationDto) {
         OperationEntity operationEntity = new OperationEntity();
         operationEntity.setComment(operationDto.getComment());
         operationEntity.setDate(operationDto.getDate());
@@ -53,6 +53,7 @@ public class OperationController {
         operationEntity.setProjectId(projectId);
         log.info("Creation operationEntity: " + operationEntity);
         operationRepository.save(operationEntity);
+        return operationEntity.getId();
     }
 
     @Authorization(entityType = AuthorizationManager.EntityType.OPERATION)
@@ -61,6 +62,7 @@ public class OperationController {
         operationRepository.delete(id);
     }
 
+    //todo PUT -> POST, POST -> PUT everywhere!!!
     @Authorization(entityType = AuthorizationManager.EntityType.OPERATION)
     @RequestMapping(value = "/operation/{id}", method = POST)
     public void update(@PathVariable long id, @RequestBody OperationDto operationDto) {

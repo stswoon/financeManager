@@ -5,9 +5,11 @@ import moment from 'moment';
 import locales from 'antd/lib/locale-provider/en_US';
 const FormItem = Form.Item;
 
+import constants from "../../utils/constants";
+
 import './new-operation.less';
 
-class OperationCreatePopup extends React.Component {
+class OperationPopup extends React.Component {
     constructor(props) {
         super(props);
         const now = moment();
@@ -17,11 +19,16 @@ class OperationCreatePopup extends React.Component {
             type: "MINUS",
             date: now
         };
+        let state = this.state;
+        let inputData = this.props.inputData;
+        let date = moment(inputData.date);
+        this.state = {...state, ...inputData, date}; //todo maybe move to will receive props
     }
 
     handleOk = (e) => {
         console.log(e);
         let data = {
+            id: this.props.inputData && this.props.inputData.id,
             comment: this.state.comment,
             value: this.state.value,
             operationType: this.state.type,
@@ -72,12 +79,11 @@ class OperationCreatePopup extends React.Component {
                 />
             </FormItem>
         );
-        const dateFormat = 'DD-MM-YYYY';
         //https://github.com/ant-design/ant-design/issues/4284
         formItems.push(
             <FormItem>
                 <LocaleProvider locale={locales}>
-                    <DatePicker defaultValue={this.state.date} format={dateFormat}
+                    <DatePicker defaultValue={this.state.date} format={constants.dateFormat}
                                 onChange={this.handleDateChange}/>
                 </LocaleProvider>
             </FormItem>
@@ -106,4 +112,4 @@ class OperationCreatePopup extends React.Component {
     }
 }
 
-export default OperationCreatePopup;
+export default OperationPopup;

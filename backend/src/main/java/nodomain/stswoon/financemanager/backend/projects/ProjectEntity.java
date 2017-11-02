@@ -21,4 +21,12 @@ public class ProjectEntity implements Identifiable<Long> {
 
     @Column
     private String name;
+
+    public ProjectEntity() {
+    }
+
+    public ProjectEntity(Long userId, String name) {
+        this.userId = userId;
+        this.name = name;
+    }
 }

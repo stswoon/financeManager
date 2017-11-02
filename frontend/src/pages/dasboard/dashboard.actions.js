@@ -8,7 +8,9 @@ export const dashboardActions = {
     setCurrentProject,
     restoreCurrentProject,
     loadOperations,
-    createOperation
+    createOperation,
+    updateOperation,
+    removeOperation
 };
 
 function loadProjects(userId) {
@@ -56,13 +58,41 @@ function loadOperations(projectId) {
 }
 
 function createOperation(operationData, projectId) {
-    console.info("Create projectId = " + projectId + " operation: ", operationData);
+    console.info("Create operation: {} for projectId = {}", operationData, projectId);
     return async (dispatch) => {
         dispatch(loading(true));
         try {
-            let operations = await dashboardService.createOperation(operationData, projectId);
-            //todo dispatch(setOperations(operations));
-            dispatch(loadOperations(projectId));
+            let operationId = await dashboardService.createOperation(operationData, projectId);
+            dispatch(_addOperation(operationId, operationData));
+            //todo create refresh button via dispatch(loadOperations(projectId));
+        } catch (response) {
+            message.error(response);
+        }
+        dispatch(loading(false));
+    };
+}
+
+function updateOperation(operationData, operationId) {
+    console.info("Update operationId = " + operationId + " operation: ", operationData);
+    return async (dispatch) => {
+        dispatch(loading(true));
+        try {
+            await dashboardService.updateOperation(operationData, operationId);
+            dispatch(_updateOperation(operationId, operationData));
+        } catch (response) {
+            message.error(response);
+        }
+        dispatch(loading(false));
+    };
+}
+
+function removeOperation(operationId) {
+    console.info("Remove operationId = " + operationId);
+    return async (dispatch) => {
+        dispatch(loading(true));
+        try {
+            await dashboardService.removeOperation(operationId);
+            dispatch(_removeOperation(operationId));
         } catch (response) {
             message.error(response);
         }
@@ -85,3 +115,16 @@ function storeProjects(projects) {
 function setOperations(operations) {
     return {type: constants.actionTypes.DASHBOARD_SET_OPERATIONS, operations}
 }
+
+function _removeOperation(id) {
+    return {type: constants.actionTypes.DASHBOARD_REMOVE_OPERATION, id}
+}
+
+function _updateOperation(id, operation) {
+    return {type: constants.actionTypes.DASHBOARD_UPDATE_OPERATION, id, operation}
+}
+
+function _addOperation(id, operation) {
+    return {type: constants.actionTypes.DASHBOARD_ADD_OPERATION, id, operation}
+}
+

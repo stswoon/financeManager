@@ -18,15 +18,20 @@ class LoginPage extends React.Component {
     handleSubmit = (username, password) => {
         this.props.dispatch(loginActions.login(username, password));
     };
+    handleRegistration = (username, password) => {
+        this.props.dispatch(loginActions.register(username, password));
+    };
 
     render() {
-        let result = this.props.authData ?
-            <Redirect to={"/"}></Redirect> : <LoginForm handleSubmit={this.handleSubmit}></LoginForm>;
+        if (this.props.authData) {
+            return (<Redirect to={"/"}></Redirect>);
+        }
         return (
-            <login-page>
-                {result}
-            </login-page>
-        );
+            <LoginForm
+                handleSubmit={this.handleSubmit}
+                handleRegistration={this.handleRegistration}
+            ></LoginForm>
+        )
     }
 }
 
@@ -34,6 +39,7 @@ function mapStateToProps(state) {
     const {loginReducer} = state;
     return loginReducer;
 }
+
 const connected = connect(mapStateToProps)(LoginPage);
 export {connected as LoginPage};
 

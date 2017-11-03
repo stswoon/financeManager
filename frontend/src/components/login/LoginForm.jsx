@@ -33,7 +33,8 @@ class Login extends React.Component {
         event.preventDefault(); //cancel normal html submit
 
         if (this.isRegistration()) {
-            register.call(this);
+            //todo disable button if repeat is different
+            this.props.handleRegistration(this.state.login, this.state.password);
         } else {
             this.props.handleSubmit(this.state.login, this.state.password);
         }

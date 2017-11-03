@@ -4,13 +4,13 @@ import {message} from "antd";
 import {bindActionCreators} from 'redux';
 import Redirect from "react-router-dom/es/Redirect";
 
-import NotificationCollector from "../../components/notifications/NotificationCollector";
 import ProjectMenu from "../../components/projectsmenu/ProjectMenu";
 import OperationTable from "../../components/operationstable/OperationTable";
 import User from "../../components/user/User";
 import Request from "../../services/request.service";
 import constants from "../../../src/utils/constants";
 import {dashboardActions} from "./dashboard.actions";
+import {loginActions} from '../../redux/login.actions';
 
 import "./dashboardPage.less";
 
@@ -69,6 +69,10 @@ export class DashboardPage extends React.Component {
         this.props.actions.removeOperation(operationId);
     };
 
+    logout = () => {
+        this.props.dispatch(loginActions.logout());
+    };
+
     render() {
         console.debug("projectId=" + this.props.currentProjectId);
         const currentProjectId = parseInt(this.props.currentProjectId);
@@ -89,28 +93,25 @@ export class DashboardPage extends React.Component {
                         />
                     </div>
                     <div className="navigation_right-block">
-                        {/*<div className="navigation_item">*/}
-                            {/*<NotificationCollector/>*/}
-                        {/*</div>*/}
                         <div className="navigation_item">
-                            <User userName={this.props.username}/>
+                            <User userName={this.props.username} onLogout={this.logout}/>
                         </div>
                     </div>
                 </div>
                 <div className="content">
-                    {/*<MoneySummary/>*/}
-                    {/*<Diagram/>*/}
-                    {currentProjectId && <OperationTable operations={operations}
-                                                         onOperationCreate={this.handleOperationCreate}
-                                                         onOperationUpdate={this.handleOperationUpdate}
-                                                         onOperationRemove={this.handleOperationRemove}
+                    {/*<MoneySummary/> todo*/}
+                    {/*<Diagram/> todo*/}
+                    {currentProjectId &&
+                    <OperationTable operations={operations}
+                                    onOperationCreate={this.handleOperationCreate}
+                                    onOperationUpdate={this.handleOperationUpdate}
+                                    onOperationRemove={this.handleOperationRemove}
                     />}
                 </div>
             </div>
         )
     }
 }
-
 
 
 //const connected = connect(mapStateToProps)(DashboardPage);

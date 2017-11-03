@@ -17,8 +17,8 @@ import Request from "../services/request.service";
 export const loginActions = {
     restoreLogin,
     login,
-    logout//,
-    //register
+    logout,
+    register
 };
 
 function login(username, password) {
@@ -50,6 +50,27 @@ function login(username, password) {
 function logout() {
     loginService.logout();
     return {type: constants.actionTypes.LOGIN_LOGOUT};
+}
+
+function register(username, password) {
+    console.info("Register new user");
+    return async (dispatch) => {
+        dispatch(loading({loading: true}));
+        try {
+            let result = await loginService.register(username, password);
+            if (result.type == loginService.loginResultTypes.SUCCESS) {
+                dispatch(login(username, password));
+                console.info("Registration success");
+            } else {
+                message.warning(constants.incorrectRegistrationMessage);
+                console.info("User already exist");
+            }
+        } catch (response) {
+            console.info("Registration failed, response: ", response);
+            message.error(constants.unexpectedErrorMessage)
+        }
+        dispatch(loading({loading: false}));
+    };
 }
 
 function restoreLogin() {

@@ -7,6 +7,8 @@ import moment from 'moment';
 import OperationPopup from "./OperationPopup";
 import constants from "../../utils/constants";
 
+import './operation-table.less';
+
 
 
 function formatDate(date) {
@@ -113,7 +115,7 @@ class OperationTable extends React.Component {
         //todo insert 'New operation' button in first data row
         //<operation-table/> - bad for verstka
         return (
-            <div className={"operation-table"}>
+            <div className="operation-table">
                 <Button onClick={this.showCreateOperationPopup}>New operation</Button>
                 <Table columns={columns} dataSource={data}/>
                 {this.state.showOperationPopup && operationPopup}

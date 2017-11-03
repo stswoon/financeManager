@@ -7,8 +7,6 @@ const FormItem = Form.Item;
 
 import constants from "../../utils/constants";
 
-import './new-operation.less';
-
 class OperationPopup extends React.Component {
     constructor(props) {
         super(props);

@@ -28,9 +28,9 @@ security:
     authorization:
       check-token-access: permitAll()
 
-#logging:
-#  level:
-#    org.springframework.security: DEBUG
+logging:
+  level:
+    org.springframework.security: DEBUG
 #    nodomain.stswoon: DEBUG
 
 createTestData: true

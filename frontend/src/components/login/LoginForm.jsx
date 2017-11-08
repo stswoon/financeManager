@@ -12,11 +12,10 @@ import "./login-form.less";
 const FormItem = Form.Item;
 
 //http://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example
-
 class Login extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {warnings: false};
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,8 +32,9 @@ class Login extends React.Component {
         event.preventDefault(); //cancel normal html submit
 
         if (this.isRegistration()) {
-            //todo disable button if repeat is different
-            this.props.handleRegistration(this.state.login, this.state.password);
+            if (!this.state.warnings) {
+                this.props.handleRegistration(this.state.login, this.state.password);
+            }
         } else {
             this.props.handleSubmit(this.state.login, this.state.password);
         }
@@ -61,6 +61,7 @@ class Login extends React.Component {
                 />
             </FormItem>
         );
+
         formItems.push(
             <FormItem>
                 <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>}
@@ -73,8 +74,21 @@ class Login extends React.Component {
             </FormItem>
         );
         if (this.isRegistration()) {
+            let validation = (show) => {
+                if (!show) {
+                    return {};
+                }
+
+                return {
+                    validateStatus: "error",
+                    help: "Doesn't equals to pasword"
+                }
+            }
+
             formItems.push(
-                <FormItem>
+                <FormItem
+                    {...validation(this.state.passwordRepeat && this.state.password != this.state.passwordRepeat)}
+                >
                     <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>}
                            type="password"
                            placeholder="Repeat Password"
@@ -85,10 +99,14 @@ class Login extends React.Component {
                 </FormItem>
             );
         }
+
+        const warning = this.isRegistration() && (!this.state.password || this.state.password != this.state.passwordRepeat)
         formItems.push(
             <FormItem>
-                <Checkbox>Remember me</Checkbox>
-                <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.login}>
+                {/*<Checkbox>Remember me</Checkbox>*/}
+                <Button type="primary" htmlType="submit" className="login-form-button"
+                        onClick={this.login}
+                        disabled={warning}>
                     {this.isRegistration() ? "Register" : "Log in"}
                 </Button>
                 <span className="login-form_register-link">

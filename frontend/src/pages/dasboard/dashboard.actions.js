@@ -2,6 +2,7 @@ import {message} from "antd";
 
 import constants from "../../utils/constants";
 import {dashboardService} from "./dashboard.service";
+import {loginActions} from "../login/login.actions";
 
 export const dashboardActions = {
     loadProjects,
@@ -10,7 +11,8 @@ export const dashboardActions = {
     loadOperations,
     createOperation,
     updateOperation,
-    removeOperation
+    removeOperation,
+    logout
 };
 
 function loadProjects(userId) {
@@ -99,6 +101,11 @@ function removeOperation(operationId) {
         }
         dispatch(loading(false));
     };
+}
+
+function logout() {
+    console.info("Logout");
+    return dispatch => dispatch(loginActions.logout());
 }
 
 

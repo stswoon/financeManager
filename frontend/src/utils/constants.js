@@ -2,6 +2,7 @@ const constants = {
     registerUrl: "/auth/user",
     //loginUrl: "https://stswoon-fm-auth.herokuapp.com" + "/auth/oauth/token?grant_type=password&username={login}&password={password}";
     loginUrl: "/auth/oauth/token?grant_type=password&username={login}&password={password}", //todo post!!!
+    logoutUrl: "/auth/exit",
     checkTokenUrl: "/auth/oauth/check_token?token={token}",
     getProjectsUrl: "/backend/project/{userId}",
     getOperationsUrl: "/backend/operation/{projectId}",
@@ -11,7 +12,7 @@ const constants = {
     incorrectCredentialsMessage: "Login or password are incorrect",
     unexpectedErrorMessage: "Unexpected error, please contact your administrator",
 
-    authenticationCookieName: "authentication",
+    authenticationKey: "authentication",
     lastProjectId: "lastProjectId",
 
     actionTypes: {

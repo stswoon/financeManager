@@ -75,7 +75,9 @@ function register(username, password) {
 
 function restoreLogin() {
     let authData = loginService.restoreLogin();
-    Request.setApplicationProps({authToken: authData.bearerToken});
+    if (authData) {
+        Request.setApplicationProps({authToken: authData.bearerToken});
+    }
     return {type: constants.actionTypes.LOGIN_CHECK, authData};
 }
 

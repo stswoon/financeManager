@@ -70,7 +70,8 @@ export class DashboardPage extends React.Component {
     };
 
     logout = () => {
-        this.props.dispatch(loginActions.logout());
+        this.props.actions.logout()
+        //this.props.dispatch(loginActions.logout());
     };
 
     render() {

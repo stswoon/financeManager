@@ -31,7 +31,7 @@ async function login(username, password) {
             userId: response.id,
             bearerToken
         };
-        localStorage.setItem(constants.authenticationCookieName, JSON.stringify(authData));
+        localStorage.setItem(constants.authenticationKey, JSON.stringify(authData));
 
         console.debug("Login success, authData = ", authData);
         //this.props.history.push('/dashboard/');
@@ -54,15 +54,16 @@ async function login(username, password) {
 }
 
 function restoreLogin() {
-    let authData = localStorage.getItem(constants.authenticationCookieName);
+    let authData = localStorage.getItem(constants.authenticationKey);
     if (authData) {
         authData = JSON.parse(authData);
     }
     return authData;
 }
 
-function logout() {
-    localStorage.removeItem(constants.authenticationCookieName);
+async function logout() {
+    localStorage.removeItem(constants.authenticationKey);
+    await new Request("GET", constants.logoutUrl).send();
 }
 
 async function register(username, password) {

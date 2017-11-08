@@ -1,8 +1,8 @@
 import React from "react";
 
-import {loginActions} from '../redux/login.actions';
+import {loginActions} from './login.actions';
 import {connect} from "react-redux";
-import LoginForm from "../components/login/LoginForm";
+import LoginForm from "../../components/login/LoginForm";
 import Redirect from "react-router-dom/es/Redirect";
 
 class LoginPage extends React.Component {

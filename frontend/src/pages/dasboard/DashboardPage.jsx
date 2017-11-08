@@ -10,7 +10,7 @@ import User from "../../components/user/User";
 import Request from "../../services/request.service";
 import constants from "../../../src/utils/constants";
 import {dashboardActions} from "./dashboard.actions";
-import {loginActions} from '../../redux/login.actions';
+import {loginActions} from '../login/login.actions';
 
 import "./dashboardPage.less";
 

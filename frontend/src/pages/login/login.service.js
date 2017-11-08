@@ -1,5 +1,5 @@
-import constants from "../../src/utils/constants";
-import Request from "./request.service";
+import constants from "../../utils/constants";
+import Request from "../../services/request.service";
 
 const loginResultTypes = {
     SUCCESS: "SUCCESS",

@@ -3,8 +3,8 @@ import {Switch, Route} from 'react-router'
 import {Provider} from 'react-redux';
 
 import Request from "./services/request.service";
-import {store} from './redux/store';
-import {LoginPage} from "./pages/LoginPage";
+import {store} from './AppStore';
+import {LoginPage} from "./pages/login/LoginPage";
 import {PrivateRoute} from "./pages/utils/PrivateRoute";
 import {WelcomePage} from "./pages/WelcomePage";
 import {DashboardPage} from "./pages/dasboard";

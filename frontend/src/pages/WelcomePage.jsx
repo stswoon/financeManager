@@ -1,7 +1,7 @@
 import React from "react";
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
-import {loginActions} from "../redux/login.actions";
+import {loginActions} from "./login/login.actions";
 
 class WelcomePage extends React.Component {
     constructor(props) {

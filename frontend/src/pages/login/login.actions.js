@@ -1,9 +1,9 @@
 //http://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example
 
-import {loginService} from "../services/login.service";
-import constants from "../utils/constants";
+import {loginService} from "./login.service";
+import constants from "../../utils/constants";
 import {message} from "antd";
-import Request from "../services/request.service";
+import Request from "../../services/request.service";
 
 // export const LOGIN_CHANGE_MODE = 'LOGIN_CHANGE_MODE';
 // export const changeMode = (mode) => {

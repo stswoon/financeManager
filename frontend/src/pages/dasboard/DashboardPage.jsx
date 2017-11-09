@@ -16,12 +16,14 @@ import "./dashboardPage.less";
 
 function mapStateToProps(state) {
     const {loginReducer, dashboardReducer} = state;
+    
     return {
         userId: loginReducer.authData.userId,
         username: loginReducer.authData.username,
         projects: dashboardReducer.projects,
         currentProjectId: dashboardReducer.currentProjectId,
-        operations: dashboardReducer.operations
+        operations: dashboardReducer.operations,
+        createUpdateLoading: dashboardReducer.createUpdateLoading
     };
 }
 
@@ -106,6 +108,7 @@ export class DashboardPage extends React.Component {
                     <OperationTable operations={operations}
                                     onOperationCreate={this.handleOperationCreate}
                                     onOperationUpdate={this.handleOperationUpdate}
+                                    createUpdateLoading={this.props.createUpdateLoading}
                                     onOperationRemove={this.handleOperationRemove}
                     />}
                 </div>

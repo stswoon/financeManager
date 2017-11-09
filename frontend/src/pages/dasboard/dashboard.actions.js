@@ -62,7 +62,7 @@ function loadOperations(projectId) {
 function createOperation(operationData, projectId) {
     console.info("Create operation: {} for projectId = {}", operationData, projectId);
     return async (dispatch) => {
-        dispatch(loading(true));
+        dispatch(loadingCreate(true));
         try {
             let operationId = await dashboardService.createOperation(operationData, projectId);
             let operation = {...operationData, id: operationId};
@@ -71,21 +71,21 @@ function createOperation(operationData, projectId) {
         } catch (response) {
             message.error(response);
         }
-        dispatch(loading(false));
+        dispatch(loadingCreate(false));
     };
 }
 
 function updateOperation(operationData) {
     console.info("Update operationId = " + operationData.id + " operation: ", operationData);
     return async (dispatch) => {
-        dispatch(loading(true));
+        dispatch(loadingCreate(true));
         try {
             await dashboardService.updateOperation(operationData);
             dispatch(_updateOperation(operationData));
         } catch (response) {
             message.error(response);
         }
-        dispatch(loading(false));
+        dispatch(loadingCreate(false));
     };
 }
 
@@ -113,6 +113,10 @@ function logout() {
 
 function loading(loading) {
     return {type: constants.actionTypes.DASHBOARD_LOADING, loading}
+}
+
+function loadingCreate(loading) {
+    return {type: constants.actionTypes.DASHBOARD_LOADING_CREATE_UPDATE, loading}
 }
 
 function storeProjects(projects) {

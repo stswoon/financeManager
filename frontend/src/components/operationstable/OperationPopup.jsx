@@ -1,5 +1,5 @@
 import React from "react";
-import {Input, Select, DatePicker, Form, InputNumber, LocaleProvider} from 'antd';
+import {Input, Select, DatePicker, Form, InputNumber, LocaleProvider, Button} from 'antd';
 import {Modal} from 'antd';
 import moment from 'moment';
 import locales from 'antd/lib/locale-provider/en_US';
@@ -98,10 +98,14 @@ class OperationPopup extends React.Component {
                 <Modal width="300"
                        title="Basic Modal"
                        visible={true}
-                       onOk={this.handleOk}
-                       onCancel={this.props.onCancel}
-                       okText={this.props.okText}
-                       cancelText="Cancel"
+                       footer={[
+                           <Button key="Cancel" onClick={this.props.onCancel}>Cancel</Button>,
+                           <Button key="Submit" type="primary"
+                                   loading={this.props.loading}
+                                   onClick={this.handleOk}>
+                               {this.props.okText}
+                           </Button>
+                       ]}
                 >
                     {form}
                 </Modal>

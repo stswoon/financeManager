@@ -111,6 +111,7 @@ class OperationTable extends React.Component {
                                  constants.operationPopup.create : constants.operationPopup.update}
                              onCancel={this.handleCancel}
                              inputData={this.state.inputOperationData}
+                             loading={this.props.createUpdateLoading}
             />);
         //todo insert 'New operation' button in first data row
         //<operation-table/> - bad for verstka
@@ -118,7 +119,7 @@ class OperationTable extends React.Component {
             <div className="operation-table">
                 <Button onClick={this.showCreateOperationPopup}>New operation</Button>
                 <Table columns={columns} dataSource={data}/>
-                {this.state.showOperationPopup && operationPopup}
+                {(this.state.showOperationPopup || this.props.createUpdateLoading) && operationPopup}
             </div>
         );
     }

@@ -9,7 +9,7 @@ const dashboardReducer = (state = {projects: []}, action) => {
             if (loadingCount < 0) {
                 throw new Error("Illegal state in dashboardReducer: loadingCount < 0");
             }
-            return {...state, loading: loadingCount == 0};
+            return {...state, loading: loadingCount != 0};
         case constants.actionTypes.DASHBOARD_LOADING_CREATE_UPDATE:
             return {...state, createUpdateLoading: action.loading};
         case constants.actionTypes.DASHBOARD_STORE_PROJECTS:

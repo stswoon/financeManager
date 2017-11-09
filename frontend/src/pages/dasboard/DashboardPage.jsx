@@ -16,14 +16,15 @@ import "./dashboardPage.less";
 
 function mapStateToProps(state) {
     const {loginReducer, dashboardReducer} = state;
-    
+
     return {
         userId: loginReducer.authData.userId,
         username: loginReducer.authData.username,
         projects: dashboardReducer.projects,
         currentProjectId: dashboardReducer.currentProjectId,
         operations: dashboardReducer.operations,
-        createUpdateLoading: dashboardReducer.createUpdateLoading
+        createUpdateLoading: dashboardReducer.createUpdateLoading,
+        loading: dashboardReducer.loading
     };
 }
 
@@ -76,6 +77,8 @@ export class DashboardPage extends React.Component {
         //this.props.dispatch(loginActions.logout());
     };
 
+    refresh = () => this.props.actions.loadOperations(this.props.userId);
+
     render() {
         console.debug("projectId=" + this.props.currentProjectId);
         const currentProjectId = parseInt(this.props.currentProjectId);
@@ -106,6 +109,8 @@ export class DashboardPage extends React.Component {
                     {/*<Diagram/> todo*/}
                     {currentProjectId &&
                     <OperationTable operations={operations}
+                                    onRefresh={this.refresh}
+                                    loading={this.props.loading}
                                     onOperationCreate={this.handleOperationCreate}
                                     onOperationUpdate={this.handleOperationUpdate}
                                     createUpdateLoading={this.props.createUpdateLoading}

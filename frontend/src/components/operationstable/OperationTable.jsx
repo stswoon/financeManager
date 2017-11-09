@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Modal} from 'antd';
+import {Button, Modal, Spin} from 'antd';
 import {Table} from 'antd';
 const confirm = Modal.confirm;
 import moment from 'moment';
@@ -117,7 +117,19 @@ class OperationTable extends React.Component {
         //<operation-table/> - bad for verstka
         return (
             <div className="operation-table">
-                <Button onClick={this.showCreateOperationPopup}>New operation</Button>
+                <div className="operation-table__title">
+                    <h4 className="operation-table__title-name">Operations</h4>
+                    <Button className="operation-table__button"
+                            onClick={this.props.onRefresh}
+                            icon="reload" shape="circle"
+                            loading={this.props.loading}>
+                    </Button>
+                    <Button className="operation-table__button"
+                            onClick={this.showCreateOperationPopup}
+                            icon="plus-circle">
+                        New operation
+                    </Button>
+                </div>
                 <Table columns={columns} dataSource={data}/>
                 {(this.state.showOperationPopup || this.props.createUpdateLoading) && operationPopup}
             </div>

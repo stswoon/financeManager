@@ -2,10 +2,14 @@ import React from "react";
 import {Input, Select, DatePicker, Form, InputNumber, LocaleProvider, Button} from 'antd';
 import {Modal} from 'antd';
 import moment from 'moment';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import locales from 'antd/lib/locale-provider/en_US';
+
 const FormItem = Form.Item;
 
 import constants from "../../utils/constants";
+
+import './operation-popup.less'
 
 class OperationPopup extends React.Component {
     constructor(props) {
@@ -44,7 +48,13 @@ class OperationPopup extends React.Component {
 
     handleNumberInputChange = (value) => this.setState({value});
 
-    handleTypeInputChange = (type) => this.setState({type});
+    handleTypeInputChange = () => {
+        if (this.state.type == "PLUS") {
+            this.setState({type: "MINUS"});
+        } else {
+            this.setState({type: "PLUS"});
+        }
+    };
 
     handleDateChange = (date) => this.setState({date});
 
@@ -60,21 +70,39 @@ class OperationPopup extends React.Component {
                 />
             </FormItem>
         );
+        //animation beetween is hard - https://stackoverflow.com/questions/33426539/react-animate-transition-between-components
         formItems.push(
             <FormItem>
-                <Select defaultValue={this.state.type}
-                        name="type"
-                        style={{width: 120}}
-                        onChange={this.handleTypeInputChange}>
-                    <Option value="PLUS">+</Option>
-                    <Option value="MINUS">-</Option>
-                </Select>
-                <InputNumber min={0}
-                             defaultValue={0}
-                             name="value"
-                             value={this.state.value}
-                             onChange={this.handleNumberInputChange}
-                />
+                <div className="moneyInput">
+                    <div className="plusMinusButton__wrapper">
+                        <ReactCSSTransitionGroup
+                            transitionName="plusMinusButton"
+                            transitionEnterTimeout={500}
+                            transitionLeaveTimeout={500}
+                            transitionAppear={true}
+                            transitionLeave={true}>
+                            {this.state.type == "PLUS" && <Button className="plusMinusButton__button"
+                                                                  onClick={this.handleTypeInputChange}>+</Button>}
+                            {this.state.type == "MINUS" && <Button className="plusMinusButton__button"
+                                                                   onClick={this.handleTypeInputChange}>-</Button>}
+
+
+                            {/*<Select defaultValue={this.state.type}*/}
+                            {/*name="type"*/}
+                            {/*style={{width: 120}}*/}
+                            {/*onChange={this.handleTypeInputChange}>*/}
+                            {/*<Option value="PLUS">+</Option>*/}
+                            {/*<Option value="MINUS">-</Option>*/}
+                            {/*</Select>*/}
+                        </ReactCSSTransitionGroup>
+                    </div>
+                    <InputNumber min={0}
+                                 defaultValue={0}
+                                 name="value"
+                                 value={this.state.value}
+                                 onChange={this.handleNumberInputChange}
+                    />
+                </div>
             </FormItem>
         );
         //https://github.com/ant-design/ant-design/issues/4284

@@ -1,0 +1,34 @@
+.moneyInput {
+  display: flex;
+}
+
+.plusMinusButton {
+  &__button {
+    position: absolute;
+    width: 40px;
+    height: 27px;
+  }
+  &__wrapper {
+    width: 40px;
+    height: 26px;
+  }
+
+  &-enter {
+    opacity: 0;
+  }
+
+  &-enter.plusMinusButton-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+    //transition-delay: 500ms;
+  }
+
+  &-leave {
+    opacity: 1;
+  }
+
+  &-leave.plusMinusButton-leave-active {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+  }
+}

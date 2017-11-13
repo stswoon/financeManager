@@ -81,10 +81,10 @@ class OperationPopup extends React.Component {
                             transitionLeaveTimeout={500}
                             transitionAppear={true}
                             transitionLeave={true}>
-                            {this.state.type == "PLUS" && <Button className="plusMinusButton__button"
-                                                                  onClick={this.handleTypeInputChange}>+</Button>}
-                            {this.state.type == "MINUS" && <Button className="plusMinusButton__button"
-                                                                   onClick={this.handleTypeInputChange}>-</Button>}
+                            {this.state.type == "PLUS" && <Button className="plusMinusButton__button _plus" icon="plus"
+                                                                  onClick={this.handleTypeInputChange}></Button>}
+                            {this.state.type == "MINUS" && <Button className="plusMinusButton__button _minus" icon="minus"
+                                                                   onClick={this.handleTypeInputChange}></Button>}
 
 
                             {/*<Select defaultValue={this.state.type}*/}

@@ -1,6 +1,8 @@
 import React from "react";
 import {Input, Button} from "antd";
 
+import "./new-project.less"
+
 class NewProject extends React.Component {
     constructor(props) {
         super(props);
@@ -13,42 +15,31 @@ class NewProject extends React.Component {
         this.setState({projectName: value});
     };
 
-    showEdit = () => {
-        this.setState({edit: true});
-    };
+    onProjectCreate = () => this.props.onProjectCreate(this.state.projectName);
 
-    hideEdit = () => {
-        this.setState({edit: false});
-    };
-
-    onProjectCreate = () => {
-        this.props.onProjectCreate(this.state.projectName);
-        this.hideEdit();
+    onCancel = (event) => {
+        //https://stackoverflow.com/questions/24415631/reactjs-syntheticevent-stoppropagation-only-works-with-react-events
+        event.stopPropagation(); //cancel click in menu container
+        this.props.onCancel();
     };
 
     render() {
-        let result;
-        if (!this.state.edit) {
-            result = (
-                <span onClick={this.showEdit}>New Project...</span>
-            );
-        } else {
-            result = (
-                <div>
-                    <Input placeholder="My Project"
-                           value={this.state.projectName} //todo ref
+        if (!this.props.edit) {
+            return (<span>{this.props.readModePlaceholder || "New Project..."}</span>);
+        }
+        return (
+            <div className="createInput">
+                <div className="createInput__input-wrapper">
+                    <Input placeholder={this.props.editModePlaceholder || "My Project"}
+                           value={this.state.projectName}
                            onChange={this.handleInputChange}
-                    />
-                    <Button type="primary" shape="circle" icon="plus"
-                            onClick={this.onProjectCreate}
-                    />
-                    <Button shape="circle" icon="close"
-                            onClick={this.hideEdit}
+                           className="createInput__input"
                     />
                 </div>
-            );
-        }
-        return (<div>{result}</div>)
+                <Button type="primary" shape="circle" icon="plus" onClick={this.onProjectCreate}/>
+                <Button shape="circle" icon="close" onClick={this.onCancel}/>
+            </div>
+        );
     }
 }
 

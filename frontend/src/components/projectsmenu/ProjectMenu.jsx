@@ -2,6 +2,8 @@ import React from "react";
 import {Input, Button, Icon, Menu, Dropdown} from 'antd';
 import NewProject from "./NewProject";
 
+import "./project-menu.less"
+
 class ProjectMenu extends React.Component {
     constructor(props) {
         super(props);
@@ -9,40 +11,38 @@ class ProjectMenu extends React.Component {
     }
 
     handleMenuItemClick = (menuItem) => {
-        console.log(menuItem);
+        //console.log(menuItem);
         if (menuItem.key === "new") {
-            //this.setState({editProjectMode: true});
+            this.setState({editProjectMode: true});
         } else {
             this.props.changeProject(menuItem.key);
         }
     };
 
-    handleVisibleChange = (visibility) => {
-        //if (!this.state.editProjectMode) {
-            this.setState({visibility});
-        //}
-    };
+    handleVisibleChange = (visibility) =>
+        (visibility || !this.state.editProjectMode) && this.setState({visibility}); //check not to close in case of edit mode
+
+    handleCancelNewProject = () => this.setState({editProjectMode: false});
 
     render() {
         let menuItems = this.props.projects.map(project => (
             <Menu.Item key={project.id}>
-                <span>{project.name}</span>
-                <Button type="danger" shape="circle" icon="delete"
-                        onClick={this.onProjectRemove}
-                />
+                <span className="projectMenu__item-text">{project.name}</span>
+                <Button className="projectMenu__item-button" type="danger" shape="circle" icon="delete"
+                        onClick={this.onProjectRemove}/>
             </Menu.Item>)
         );
-        //menuItems.push((<Menu.Divider />));
+        menuItems.push((<Menu.Divider/>));
         menuItems.push((
             <Menu.Item key="new">
-                <NewProject onProjectCreate={this.props.onProjectCreate} />
+                <NewProject edit={this.state.editProjectMode}
+                            onCancel={this.handleCancelNewProject}
+                            onProjectCreate={this.props.onProjectCreate}
+                />
             </Menu.Item>
         ));
-        let menu = (
-            <Menu onClick={this.handleMenuItemClick}>
-                {menuItems}
-            </Menu>
-        );
+
+        let menu = (<Menu className="projectMenu" onClick={this.handleMenuItemClick}>{menuItems}</Menu>);
         return (
             <Dropdown overlay={menu} trigger={['click']}
                       onVisibleChange={this.handleVisibleChange}

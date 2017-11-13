@@ -24,6 +24,8 @@ class ProjectMenu extends React.Component {
 
     handleCancelNewProject = () => this.setState({editProjectMode: false});
 
+    onProjectRemove = () => {}; //todo chaeck popup with confirm input project name
+
     render() {
         let menuItems = this.props.projects.map(project => (
             <Menu.Item key={project.id}>

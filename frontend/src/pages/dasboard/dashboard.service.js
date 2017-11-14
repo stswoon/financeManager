@@ -39,6 +39,18 @@ async function removeOperation(operationId) {
     return response;
 }
 
+async function createProject(userId, projectData) {
+    let request = new Request("PUT",  constants.createProjectUrl.replace("{userId}", userId), projectData);
+    let response = await request.send();
+    return response;
+}
+
+async function removeProject(id) {
+    let request = new Request("DELETE",  constants.removeProjectUrl.replace("{id}", id));
+    let response = await request.send();
+    return response;
+}
+
 
 
 export const dashboardService = {
@@ -48,5 +60,7 @@ export const dashboardService = {
     loadProjects,
     createOperation,
     updateOperation,
-    removeOperation
+    removeOperation,
+    createProject,
+    removeProject
 };

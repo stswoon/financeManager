@@ -1,5 +1,5 @@
 import React from "react";
-import {Input, Button, Icon, Menu, Dropdown} from 'antd';
+import {Input, Button, Icon, Menu, Dropdown, Modal} from 'antd';
 import NewProject from "./NewProject";
 
 import "./project-menu.less"
@@ -24,14 +24,24 @@ class ProjectMenu extends React.Component {
 
     handleCancelNewProject = () => this.setState({editProjectMode: false});
 
-    onProjectRemove = () => {}; //todo chaeck popup with confirm input project name
+    onProjectRemove = (event, projectId) => {
+        event.stopPropagation();
+        this.setState({removing: true, removedProjectId: projectId});
+    };
+
+    cancelRemove = () => this.setState({removing: false, removedProjectId: null});
+
+    confirmRemove = () => {
+        this.props.onProjectRemove(this.state.removedProjectId);
+        this.cancelRemove();
+    }
 
     render() {
         let menuItems = this.props.projects.map(project => (
             <Menu.Item key={project.id}>
                 <span className="projectMenu__item-text">{project.name}</span>
                 <Button className="projectMenu__item-button" type="danger" shape="circle" icon="delete"
-                        onClick={this.onProjectRemove}/>
+                        onClick={(event) => this.onProjectRemove(event, project.id)}/>
             </Menu.Item>)
         );
         menuItems.push((<Menu.Divider/>));
@@ -46,13 +56,23 @@ class ProjectMenu extends React.Component {
 
         let menu = (<Menu className="projectMenu" onClick={this.handleMenuItemClick}>{menuItems}</Menu>);
         return (
-            <Dropdown overlay={menu} trigger={['click']}
-                      onVisibleChange={this.handleVisibleChange}
-                      visible={this.state.visibility}>
-                <a className="ant-dropdown-link" href="#">
-                    Projects <Icon type="down"/>
-                </a>
-            </Dropdown>
+            <div>
+                <Dropdown overlay={menu} trigger={['click']}
+                          onVisibleChange={this.handleVisibleChange}
+                          visible={this.state.visibility}>
+                    <a className="ant-dropdown-link" href="#">
+                        Projects <Icon type="down"/>
+                    </a>
+                </Dropdown>
+                {
+                    this.state.removing &&
+                    <Modal title="" visible={true}
+                           onOk={this.confirmRemove} onCancel={this.cancelRemove}
+                           okText="Yes" cancelText="No">
+                        <span>Are you sure delete this project?</span>
+                    </Modal>
+                }
+            </div>
         );
     }
 }

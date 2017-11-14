@@ -31,6 +31,11 @@ const dashboardReducer = (state = {projects: []}, action) => {
                 return item;
             });
             return {...state, operations: operations2};
+        case constants.actionTypes.DASHBOARD_ADD_PROJECT:
+            return {...state, projects: [...state.projects, action.project]};
+        case constants.actionTypes.DASHBOARD_REMOVE_PROJECT:
+            let projects = state.projects.filter(item => item.id != action.id);
+            return {...state, projects: projects};
         default:
             return state;
     }

@@ -54,11 +54,7 @@ export class DashboardPage extends React.Component {
         this.props.actions.loadProjects(this.props.userId);
     }
 
-    handleNewProject = (name) => {
-        new Request("PUT", envData.gateway + "/backend/project/" + this.props.userId, {name: name}).send()
-            .then(response => this.setState({projects: [...this.state.projects, response]}))
-            .catch(alert);
-    };
+    handleCreateProject = (name) => this.props.actions.createProject(name, this.props.userId);
 
     handleOperationCreate = (operationData) => {
         this.props.actions.createOperation(operationData, this.props.currentProjectId);
@@ -94,7 +90,8 @@ export class DashboardPage extends React.Component {
                 <div className="navigation">
                     <div className="navigation_item">
                         <ProjectMenu projects={this.props.projects}
-                                     onProjectCreate={this.handleNewProject}
+                                     onProjectCreate={this.handleCreateProject}
+                                     onProjectRemove={this.props.actions.removeProject}
                                      changeProject={this.props.actions.setCurrentProject}
                         />
                     </div>

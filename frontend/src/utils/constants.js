@@ -7,6 +7,8 @@ const constants = {
     getProjectsUrl: "/backend/project/{userId}",
     getOperationsUrl: "/backend/operation/{projectId}",
     updateOperationUrl: "/backend/operation/{id}",
+    createProjectUrl: "/backend/project/{userId}",
+    removeProjectUrl: "/backend/project/{id}",
 
     incorrectRegistrationMessage: "Such user is exist",
     incorrectCredentialsMessage: "Login or password are incorrect",
@@ -29,7 +31,9 @@ const constants = {
         DASHBOARD_SET_OPERATIONS: 'DASHBOARD_SET_OPERATIONS',
         DASHBOARD_UPDATE_OPERATION: 'DASHBOARD_UPDATE_OPERATION',
         DASHBOARD_REMOVE_OPERATION: 'DASHBOARD_REMOVE_OPERATION',
-        DASHBOARD_ADD_OPERATION: 'DASHBOARD_ADD_OPERATION'
+        DASHBOARD_ADD_OPERATION: 'DASHBOARD_ADD_OPERATION',
+        DASHBOARD_REMOVE_PROJECT: 'DASHBOARD_REMOVE_PROJECT',
+        DASHBOARD_ADD_PROJECT: 'DASHBOARD_ADD_PROJECT'
     },
 
     dateFormat: 'DD.MM.YYYY',

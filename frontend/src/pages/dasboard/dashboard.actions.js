@@ -12,7 +12,9 @@ export const dashboardActions = {
     createOperation,
     updateOperation,
     removeOperation,
-    logout
+    logout,
+    removeProject,
+    createProject
 };
 
 function loadProjects(userId) {
@@ -67,7 +69,6 @@ function createOperation(operationData, projectId) {
             let operationId = await dashboardService.createOperation(operationData, projectId);
             let operation = {...operationData, id: operationId};
             dispatch(_addOperation(operation));
-            //todo create refresh button via dispatch(loadOperations(projectId));
         } catch (response) {
             message.error(response);
         }
@@ -108,6 +109,33 @@ function logout() {
     return dispatch => dispatch(loginActions.logout());
 }
 
+function createProject(name, userId) {
+    console.info("Create project '{}'", name);
+    return async (dispatch) => {
+        dispatch(loading(true));
+        try {
+            let project = await dashboardService.createProject(userId, {name});
+            dispatch(_addProject(project));
+            //dispatch(setCurrentProject());
+        } catch (response) {
+            message.error(response);
+        }
+        dispatch(loading(false));
+    };
+}
+
+function removeProject(id) {
+    console.info("Remove project, id=" + id);
+    return async (dispatch) => {
+        try {
+            await dashboardService.removeProject(id);
+            dispatch(_removeProject(id));
+        } catch (response) {
+            message.error(response);
+        }
+    };
+}
+
 
 //private api below
 
@@ -137,5 +165,13 @@ function _updateOperation(operation) {
 
 function _addOperation(operation) {
     return {type: constants.actionTypes.DASHBOARD_ADD_OPERATION, operation}
+}
+
+function _removeProject(id) {
+    return {type: constants.actionTypes.DASHBOARD_REMOVE_PROJECT, id}
+}
+
+function _addProject(project) {
+    return {type: constants.actionTypes.DASHBOARD_ADD_PROJECT, project}
 }
 

@@ -3,7 +3,6 @@ import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import {loginActions} from "./login/login.actions";
 
-//todo make in functional!!!!
 class WelcomePage extends React.Component {
     constructor(props) {
         super(props);

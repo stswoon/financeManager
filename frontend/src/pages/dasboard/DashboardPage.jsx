@@ -103,7 +103,7 @@ export class DashboardPage extends React.Component {
                 </div>
                 <div className="content">
                     {/*<MoneySummary/> todo*/}
-                    {/*<Diagram/> todo*/}
+                    {currentProjectId && <Diagram />}
                     {currentProjectId &&
                     <OperationTable operations={operations}
                                     onRefresh={this.refresh}

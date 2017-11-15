@@ -9,12 +9,26 @@ import {PrivateRoute} from "./pages/utils/PrivateRoute";
 import {WelcomePage} from "./pages/WelcomePage";
 import {DashboardPage} from "./pages/dasboard";
 //import {renderDevTools} from './utils/devTools';
+import {message} from "antd";
+import {loginActions} from "./pages/login/login.actions";
 
+
+const errorResponseHandler = (response) => {
+    if (response.status == 401) {
+        console.log("Unauthenticated, response = ", response);
+        message.warn("Unauthenticated");
+        store.dispatch(loginActions.logout()); //todo???
+    } else {
+        console.error("Unexpected error, response = ", response);
+        message.error(constants.unexpectedErrorMessage);
+    }
+};
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         Request.setApplicationProps({urlPrefix: envData.gateway});
+        Request.setErrorResponseHandler(errorResponseHandler)
     }
 
     render() {

@@ -1,8 +1,5 @@
 import jQuery from "jquery";
 import lodash from "lodash";
-import Cookie from "js-cookie";
-
-import constants from "../utils/constants";
 
 const defaultRequest = {
     type: "GET",
@@ -13,6 +10,10 @@ const defaultRequest = {
 };
 
 let applicationProps = {};
+
+let errorResponseHandler = function (response) {
+    alert("Response status = " + response.status);
+};
 
 class Request {
     /**
@@ -48,6 +49,10 @@ class Request {
         applicationProps = {};
     }
 
+    static setErrorResponseHandler(func) {
+        errorResponseHandler = func
+    }
+
     send(disableDefaultAuthCatch = false, disablePrefix = false) {
         const authorizationHeader = applicationProps.authToken ?
             {headers: {Authorization: "Bearer " + applicationProps.authToken}} : {};
@@ -60,10 +65,8 @@ class Request {
             jQuery.ajax(request)
                 .then(resolve)
                 .catch((response) => {
-                    if (!disableDefaultAuthCatch) {
-                       if (response.status === 401) {
-                           alert("401"); //todo show login popup
-                       }
+                    if (!disableDefaultAuthCatch && errorResponseHandler) {
+                        errorResponseHandler(response);
                     }
                     reject(response);
                 })

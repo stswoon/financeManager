@@ -47,6 +47,11 @@ public class TestData {
         operationRepository.save(new OperationEntity(projectId, OperationType.PLUS.getOperationTypeId(), 30, "Additional money", date));
         operationRepository.save(new OperationEntity(projectId, OperationType.MINUS.getOperationTypeId(), 80, "Online gaming", date));
         operationRepository.save(new OperationEntity(projectId, OperationType.MINUS.getOperationTypeId(), 20, "Dinner", date));
+
+        projectId = projectRepository.findByNameAndUserId("Test Project", 2L).getId();
+        operationRepository.save(new OperationEntity(projectId, OperationType.MINUS.getOperationTypeId(), 20, "op1", date));
+        operationRepository.save(new OperationEntity(projectId, OperationType.PLUS.getOperationTypeId(), 20, "op2", date));
+        operationRepository.save(new OperationEntity(projectId, OperationType.MINUS.getOperationTypeId(), 20, "op3", date));
     }
 
 

@@ -9,6 +9,7 @@ const constants = {
     updateOperationUrl: "/backend/operation/{id}",
     createProjectUrl: "/backend/project/{userId}",
     removeProjectUrl: "/backend/project/{id}",
+    statisticsUrl: "/backend/statistics/{projectId}",
 
     incorrectRegistrationMessage: "Such user is exist",
     incorrectCredentialsMessage: "Login or password are incorrect",

@@ -13,6 +13,7 @@ import {dashboardActions} from "./dashboard.actions";
 import {loginActions} from '../login/login.actions';
 
 import "./dashboardPage.less";
+import DiagramContainer from "../../containers/DiagramContainer";
 
 function mapStateToProps(state) {
     const {loginReducer, dashboardReducer} = state;
@@ -103,7 +104,7 @@ export class DashboardPage extends React.Component {
                 </div>
                 <div className="content">
                     {/*<MoneySummary/> todo*/}
-                    {currentProjectId && <Diagram />}
+                    {currentProjectId && <DiagramContainer projectId={this.props.projectId} />}
                     {currentProjectId &&
                     <OperationTable operations={operations}
                                     onRefresh={this.refresh}

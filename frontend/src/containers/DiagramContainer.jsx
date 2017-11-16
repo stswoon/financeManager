@@ -1,9 +1,9 @@
 import React from "react";
 import Diagram from "../components/diagram/Diagram";
-import {Spin} from "antd";
 import Request from "../services/request.service";
 import constants from "../utils/constants";
 
+import "./diagram-container.less"
 
 class DiagramContainer extends React.Component {
     constructor(props) {
@@ -11,28 +11,26 @@ class DiagramContainer extends React.Component {
         this.state = {};
     }
 
-    async componentDidMount() {
-        if (this.props.projectId) {
-            this.setState({
-                ready: this.props.projectId == this.state.projectId,
-                projectId: this.props.projectId
-            });
-            let request = new Request("GET", constants.statisticsUrl.replace("{projectId}", this.props.projectId));
-            let response = await request.send();
-            this.setState({...response, ready: true})
-        }
+    async componentWillMount() {
+        this.setState({
+            ready: this.props.projectId === this.state.projectId,
+            projectId: this.props.projectId
+        });
+        let request = new Request("GET", constants.statisticsUrl.replace("{projectId}", this.props.projectId));
+        let response = await request.send();
+        this.setState({...response, ready: true})
     }
 
     render() {
-        if (!this.state.ready) {
-            return (<Spin size="large"/>);
-        }
-
         return (
-            <Diagram
-                categories={this.state.categories || []}
-                incomesData={this.state.data || []}
-            />
+            <div className="diagramContainer">
+                <Diagram
+                    className="diagramContainer__diagram"
+                    placeholderId="statistics"
+                    categories={this.state.categories || []}
+                    data={this.state.data || []}
+                />
+            </div>
         );
     }
 }

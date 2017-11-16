@@ -2,6 +2,7 @@ import React from "react";
 import Highcharts from 'highcharts';
 
 import "highcharts/css/highcharts.css"
+import LoaderHOC from "./LoaderHOC";
 
 
 class Diagram extends React.Component {
@@ -25,7 +26,7 @@ class Diagram extends React.Component {
                 categories: this.props.categories
             },
             series: [{
-                name: '',
+                name: 'Money',
                 data: this.props.data
             }]
         };
@@ -34,9 +35,9 @@ class Diagram extends React.Component {
 
     render() {
         return (
-            <div id={this.props.placeholderId}/>
+            <div className={this.props.className} id={this.props.placeholderId}/>
         );
     }
-};
+}
 
-export default Diagram;
+export default LoaderHOC(Diagram);

@@ -104,7 +104,7 @@ export class DashboardPage extends React.Component {
                 </div>
                 <div className="content">
                     {/*<MoneySummary/> todo*/}
-                    {currentProjectId && <DiagramContainer projectId={this.props.projectId} />}
+                    {currentProjectId && <DiagramContainer projectId={currentProjectId} />}
                     {currentProjectId &&
                     <OperationTable operations={operations}
                                     onRefresh={this.refresh}

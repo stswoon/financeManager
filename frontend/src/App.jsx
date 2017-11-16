@@ -11,6 +11,7 @@ import {DashboardPage} from "./pages/dasboard";
 //import {renderDevTools} from './utils/devTools';
 import {message} from "antd";
 import {loginActions} from "./pages/login/login.actions";
+import Logger from "./services/log.service";
 
 
 const errorResponseHandler = (response) => {
@@ -28,7 +29,9 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         Request.setApplicationProps({urlPrefix: envData.gateway});
-        Request.setErrorResponseHandler(errorResponseHandler)
+        Request.setErrorResponseHandler(errorResponseHandler);
+        Logger.integrate();
+        Logger.setSendServerLogs(false); //todo remove after server side  will be ready
     }
 
     render() {

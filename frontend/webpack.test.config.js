@@ -29,11 +29,12 @@ module.exports = {
     //todo https://www.codementor.io/kimagure/testing-reactjs-components-with-karma-and-webpack-8sdzi6hkf
     //same as production except entry and output
     entry: {
-        simpleTest: "./src/test/web/simpleTest.jsx"
+        simpleTest: "./test/simpleTest.js"
     },
     output: {
-        filename: "target/test/[name].bundle.js",
-        chunkFilename: "[id].bundle.js"
+        publicPath: './',
+        path: path.join(__dirname, 'public'),
+        filename: 'test.js'
     },
     // entry: [
     //     './src/index.jsx'

@@ -7,6 +7,7 @@
   "scripts": {
     "build": "webpack --config webpack.production.config.js --progress --profile --colors",
     "serve": "webpack-dev-server --progress --profile --colors",
+    "karma": "webpack --config webpack.test.config.js && karma start karma.conf.js --single-run"
     "clean": "rimraf ./dist/*",
     "start": "npm run build && node index.js"
   },
@@ -64,6 +65,13 @@
     "webpack": "^3.6.0",
     "webpack-cleanup-plugin": "^0.4.2",
     "webpack-dashboard": "^0.3.0",
-    "webpack-dev-server": "^2.9.1"
+    "webpack-dev-server": "^2.9.1",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.4.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-junit-reporter": "^1.2.0",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "react": "^15.4.2",
+    "react-addons-test-utils": "^15.4.2"
   }
 }

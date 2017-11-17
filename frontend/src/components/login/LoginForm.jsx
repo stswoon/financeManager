@@ -52,7 +52,7 @@ class Login extends React.Component {
     render() {
         const formItems = [];
         formItems.push(
-            <FormItem>
+            <FormItem key="username">
                 <Input prefix={<Icon type="user" style={{fontSize: 13}}/>}
                        placeholder="Username"
                        name="login"
@@ -63,7 +63,7 @@ class Login extends React.Component {
         );
 
         formItems.push(
-            <FormItem>
+            <FormItem key="password">
                 <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>}
                        type="password"
                        placeholder="Password"
@@ -86,7 +86,7 @@ class Login extends React.Component {
             }
 
             formItems.push(
-                <FormItem
+                <FormItem key="passwordRepeat"
                     {...validation(this.state.passwordRepeat && this.state.password != this.state.passwordRepeat)}
                 >
                     <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>}
@@ -102,7 +102,7 @@ class Login extends React.Component {
 
         const warning = this.isRegistration() && (!this.state.password || this.state.password != this.state.passwordRepeat)
         formItems.push(
-            <FormItem>
+            <FormItem key="controls">
                 {/*<Checkbox>Remember me</Checkbox>*/}
                 <Button type="primary" htmlType="submit" className="login-form-button"
                         onClick={this.login}

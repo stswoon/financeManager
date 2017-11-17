@@ -1,5 +1,5 @@
 import React from "react";
-import {Input, Select, DatePicker, Form, InputNumber, LocaleProvider, Button} from 'antd';
+import {Input, DatePicker, Form, InputNumber, LocaleProvider, Button} from 'antd';
 import {Modal} from 'antd';
 import moment from 'moment';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -62,7 +62,7 @@ class OperationPopup extends React.Component {
         const formItems = [];
 
         formItems.push(
-            <FormItem>
+            <FormItem key="comment">
                 <Input placeholder="Comment"
                        name="comment"
                        value={this.state.comment}
@@ -72,19 +72,18 @@ class OperationPopup extends React.Component {
         );
         //animation beetween is hard - https://stackoverflow.com/questions/33426539/react-animate-transition-between-components
         formItems.push(
-            <FormItem>
+            <FormItem key="moneyInput">
                 <div className="moneyInput">
                     <div className="plusMinusButton__wrapper">
                         <ReactCSSTransitionGroup
                             transitionName="plusMinusButton"
                             transitionEnterTimeout={500}
                             transitionLeaveTimeout={500}
-                            transitionAppear={true}
                             transitionLeave={true}>
-                            {this.state.type == "PLUS" && <Button className="plusMinusButton__button _plus" icon="plus"
-                                                                  onClick={this.handleTypeInputChange}></Button>}
-                            {this.state.type == "MINUS" && <Button className="plusMinusButton__button _minus" icon="minus"
-                                                                   onClick={this.handleTypeInputChange}></Button>}
+                            {this.state.type === "PLUS" && <Button className="plusMinusButton__button _plus" icon="plus"
+                                                                  onClick={this.handleTypeInputChange}/>}
+                            {this.state.type === "MINUS" && <Button className="plusMinusButton__button _minus" icon="minus"
+                                                                   onClick={this.handleTypeInputChange}/>}
 
 
                             {/*<Select defaultValue={this.state.type}*/}
@@ -107,7 +106,7 @@ class OperationPopup extends React.Component {
         );
         //https://github.com/ant-design/ant-design/issues/4284
         formItems.push(
-            <FormItem>
+            <FormItem key="date">
                 <LocaleProvider locale={locales}>
                     <DatePicker defaultValue={this.state.date} format={constants.dateFormat}
                                 onChange={this.handleDateChange}/>

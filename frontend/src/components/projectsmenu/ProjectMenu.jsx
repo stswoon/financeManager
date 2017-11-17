@@ -1,5 +1,5 @@
 import React from "react";
-import {Input, Button, Icon, Menu, Dropdown, Modal} from 'antd';
+import {Button, Icon, Menu, Dropdown, Modal} from 'antd';
 import NewProject from "./NewProject";
 
 import "./project-menu.less"
@@ -34,7 +34,7 @@ class ProjectMenu extends React.Component {
     confirmRemove = () => {
         this.props.onProjectRemove(this.state.removedProjectId);
         this.cancelRemove();
-    }
+    };
 
     render() {
         let menuItems = this.props.projects.map(project => (
@@ -44,7 +44,7 @@ class ProjectMenu extends React.Component {
                         onClick={(event) => this.onProjectRemove(event, project.id)}/>
             </Menu.Item>)
         );
-        menuItems.push((<Menu.Divider/>));
+        menuItems.push((<Menu.Divider key="divider" />));
         menuItems.push((
             <Menu.Item key="new">
                 <NewProject edit={this.state.editProjectMode}

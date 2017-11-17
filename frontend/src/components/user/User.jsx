@@ -19,7 +19,7 @@ class User extends React.Component {
 
     render() {
         let items = [
-            (<a className="user-nav_logout" href="#" onClick={this.props.onLogout}>Log Out</a>)
+            (<a key="logout" className="user-nav_logout" href="#" onClick={this.props.onLogout}>Log Out</a>)
         ];
         return (
             <Popover
@@ -29,7 +29,7 @@ class User extends React.Component {
                 visible={this.state.showNotifications}
                 onVisibleChange={this.handleVisibleChange}
             >
-                <div className="user">
+                <div key="user" className="user">
                     <Avatar className="user__avatar" size="large">{this.props.userName}</Avatar>
                 </div>
             </Popover>

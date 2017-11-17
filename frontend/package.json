@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack --config webpack.production.config.js --progress --profile --colors",
     "serve": "webpack-dev-server --progress --profile --colors",
-    "karma": "webpack --config webpack.test.config.js && karma start karma.conf.js --single-run"
+    "karma": "webpack --config webpack.test.config.js && karma start karma.conf.js --single-run",
     "clean": "rimraf ./dist/*",
     "start": "npm run build && node index.js"
   },

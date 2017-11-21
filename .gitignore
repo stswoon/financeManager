@@ -23,3 +23,5 @@
 /heroku-deploy-plugin/target
 /heroku-deploy-plugin/utils.iml
 /heroku-deploy-plugin/heroku-deploy-plugin.iml
+/frontend/backstop_data/html_report
+/frontend/backstop_data/bitmaps_test

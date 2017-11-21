@@ -49,15 +49,26 @@ class Request {
         applicationProps = {};
     }
 
+    /**
+     * Set function to handle remote errors.
+     * @param func : Function - function(response) {}
+     */
     static setErrorResponseHandler(func) {
         errorResponseHandler = func
     }
 
+    /**
+     * Send request
+     * @param disableDefaultAuthCatch : boolean - disable error handler set in {@link Request.setErrorResponseHandler}
+     * or default one
+     * @param disablePrefix : boolean - disable to add prefix set in {@link Request.setApplicationProps}
+     * @return {Promise}
+     */
     send(disableDefaultAuthCatch = false, disablePrefix = false) {
         const authorizationHeader = applicationProps.authToken ?
             {headers: {Authorization: "Bearer " + applicationProps.authToken}} : {};
         let request = lodash.merge({}, defaultRequest, authorizationHeader, this.requestProps);
-        if (disablePrefix == false && request.url.startsWith("http") == false) {
+        if (disablePrefix == false && startWith(request.url, "http") == false) {
             request.url = applicationProps.urlPrefix + request.url;
         }
 
@@ -73,6 +84,10 @@ class Request {
         });
         return promise;
     }
+}
+
+function startWith(str, substr) {
+    return str.indexOf(substr) === 0;
 }
 
 //todo axios (https://daveceddia.com/ajax-requests-in-react/) or fetch

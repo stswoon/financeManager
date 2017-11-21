@@ -9,11 +9,16 @@ module.exports = function (config) {
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: ["jasmine"],
+        // start these browsers
+        // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+        browsers: ['Chrome'], //['PhantomJS'],
+
 
         // list of files / patterns to load in the browser
         files: [
             // "/test/**/*.js",
             "public/test.js"
+            // "public/test.js.map"
         ],
 
         // preprocess matching files before serving them to the browser
@@ -39,16 +44,33 @@ module.exports = function (config) {
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: false,
 
-        // start these browsers
-        // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ["PhantomJS"],
-
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
         singleRun: false,
 
         // Concurrency level
         // how many browser should be started simultaneous
-        concurrency: Infinity
+        concurrency: Infinity,
+
+        webpack: {
+            devtool: 'inline-source-map',
+            module: {
+                loaders: [
+                    { test: /\.js$/, loader: 'babel-loader' }
+                ]
+            }
+        },
+
+        plugins: [
+            'karma-webpack',
+            'karma-jasmine',
+            'karma-sourcemap-loader',
+            'karma-chrome-launcher',
+            'karma-phantomjs-launcher'
+        ],
+
+        webpackServer: {
+            noInfo: true
+        }
     });
 };

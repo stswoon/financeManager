@@ -56,12 +56,12 @@ class ProjectMenu extends React.Component {
 
         let menu = (<Menu className="projectMenu" onClick={this.handleMenuItemClick}>{menuItems}</Menu>);
         return (
-            <div>
+            <div className="ProjectMenu">
                 <Dropdown overlay={menu} trigger={['click']}
                           onVisibleChange={this.handleVisibleChange}
                           visible={this.state.visibility}>
                     <a className="ant-dropdown-link" href="#">
-                        Projects <Icon type="down"/>
+                        Projects<Icon type="down"/>
                     </a>
                 </Dropdown>
                 {

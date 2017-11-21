@@ -9,6 +9,7 @@
     "serve": "webpack-dev-server --progress --profile --colors",
     "test": "webpack --config webpack.tests.config.js && karma start karma.conf.js --single-run --no-auto-watch --browsers PhantomJS",
     "karma": "webpack --config webpack.tests.config.js && karma start karma.conf.js",
+    "prepare-for-backstop-test": "webpack-dev-server --config webpack.screens.config.js --progress --profile --colors",
     "clean": "rimraf ./dist/*",
     "start": "npm run build && node index.js"
   },
@@ -46,6 +47,7 @@
     "babel-preset-es2015": "6.22.0",
     "babel-preset-react": "^6.23.0",
     "babel-runtime": "^6.22.0",
+    "backstopjs": "^3.0.32",
     "css-loader": "0.26.1",
     "ejs": "2.5.6",
     "extract-text-webpack-plugin": "^v2.0.0-rc.1",

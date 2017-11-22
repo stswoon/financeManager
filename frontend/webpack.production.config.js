@@ -23,15 +23,25 @@ loaders.push({
         use: 'css-loader?sourceMap&localIdentName=[local]___[hash:base64:5]!less-loader?outputStyle=expanded'
     }),
     exclude: ['node_modules']
+}, {
+    test: /\.css$/,
+    loader: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: 'css-loader?sourceMap&localIdentName=[local]___[hash:base64:5]'
+        //use: 'css-loader'
+    }),
+    exclude: ['node_modules']
 });
+
+const DEBUG_PROD = false; //todo uncomment devtool and comment UglifyJsPlugin depends on it
 
 module.exports = {
     entry: [
         './src/index.jsx'
     ],
     output: {
-        publicPath: './',
-        path: path.join(__dirname, 'public'),
+        publicPath: '/', //https://github.com/jantimon/html-webpack-plugin/issues/156
+        path: path.join(__dirname, './public'),
         filename: '[chunkhash].js'
     },
     resolve: {
@@ -40,6 +50,8 @@ module.exports = {
     module: {
         loaders
     },
+
+    //devtool: 'inline-source-map',
     plugins: [
         new WebpackCleanupPlugin(),
         new webpack.DefinePlugin({
@@ -47,6 +59,7 @@ module.exports = {
                 NODE_ENV: '"production"'
             }
         }),
+
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
@@ -56,8 +69,9 @@ module.exports = {
             }
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
+
         new ExtractTextPlugin({
-            filename: 'style.css',
+            filename: '[chunkhash].css',
             allChunks: true
         }),
         new HtmlWebpackPlugin({

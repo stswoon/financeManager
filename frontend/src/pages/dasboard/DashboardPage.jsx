@@ -78,9 +78,9 @@ export class DashboardPage extends React.Component {
 
     render() {
         console.debug("projectId=" + this.props.currentProjectId);
-        const currentProjectId = parseInt(this.props.currentProjectId);
+        const currentProjectId = this.props.currentProjectId == null ? null : parseInt(this.props.currentProjectId);
         const urlProjectId = this.props.match.params.projectId;
-        if (currentProjectId != urlProjectId) {
+        if (currentProjectId != null && currentProjectId != urlProjectId) {
             return (<Redirect to={"/dashboard/" + currentProjectId}/>);
         }
 

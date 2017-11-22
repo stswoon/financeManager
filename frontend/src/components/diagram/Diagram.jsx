@@ -1,9 +1,9 @@
 import React from "react";
 import Highcharts from 'highcharts';
 
-import "highcharts/css/highcharts.css"
 import LoaderHOC from "./LoaderHOC";
 
+import "highcharts/css/highcharts.css"
 
 class Diagram extends React.Component {
     constructor(props) {
@@ -24,6 +24,11 @@ class Diagram extends React.Component {
             },
             xAxis: {
                 categories: this.props.categories
+            },
+            plotOptions: {
+                series: {
+                    animation: false
+                }
             },
             series: [{
                 name: 'Money',

@@ -10,8 +10,9 @@
     "test": "webpack --config webpack.tests.config.js && karma start karma.conf.js --single-run --no-auto-watch --browsers PhantomJS",
     "karma": "webpack --config webpack.tests.config.js && karma start karma.conf.js",
     "prepare-for-backstop-test": "webpack-dev-server --config webpack.screens.config.js --progress --profile --colors",
-    "clean": "rimraf ./dist/*",
-    "start": "npm run build && node index.js"
+    "clean": "rimraf ./public/*",
+    "start": "npm run build && node server.js",
+    "node-server": "node server.js"
   },
   "repository": {
     "type": "git",

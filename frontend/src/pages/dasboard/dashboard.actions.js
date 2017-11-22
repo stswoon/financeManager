@@ -44,6 +44,8 @@ function restoreCurrentProject() {
     console.info("Restore project (if null project will not be restored), projectId=" + projectId);
     if (projectId) {
         return setCurrentProject(projectId);
+    } else {
+        return {type: constants.actionTypes.DASHBOARD_CURRENT_PROJECT, projectId: null};
     }
 }
 

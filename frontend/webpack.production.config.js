@@ -23,14 +23,6 @@ loaders.push({
         use: 'css-loader?sourceMap&localIdentName=[local]___[hash:base64:5]!less-loader?outputStyle=expanded'
     }),
     exclude: ['node_modules']
-}, {
-    test: /\.css$/,
-    loader: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: 'css-loader?sourceMap&localIdentName=[local]___[hash:base64:5]'
-        //use: 'css-loader'
-    }),
-    exclude: ['node_modules']
 });
 
 const DEBUG_PROD = false; //todo uncomment devtool and comment UglifyJsPlugin depends on it
@@ -42,7 +34,7 @@ module.exports = {
     output: {
         publicPath: '/', //https://github.com/jantimon/html-webpack-plugin/issues/156
         path: path.join(__dirname, './public'),
-        filename: '[chunkhash].js'
+        filename: 'bundle-[chunkhash].js'
     },
     resolve: {
         extensions: ['.js', '.jsx']
@@ -71,7 +63,7 @@ module.exports = {
         new webpack.optimize.OccurrenceOrderPlugin(),
 
         new ExtractTextPlugin({
-            filename: '[chunkhash].css',
+            filename: 'style-[chunkhash].css',
             allChunks: true
         }),
         new HtmlWebpackPlugin({

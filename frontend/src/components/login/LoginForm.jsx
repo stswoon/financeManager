@@ -1,12 +1,7 @@
 import React from "react";
-import {Form, Icon, Input, Button, Checkbox, message} from "antd";
-import {Redirect, Route} from 'react-router-dom';
+import {Form, Icon, Input, Button} from "antd";
 import {withRouter} from "react-router-dom";
 
-import Request from "../../services/request.service";
-import constants from "../../../src/utils/constants";
-
-import "antd/dist/antd.css";
 import "./login-form.less";
 
 const FormItem = Form.Item;

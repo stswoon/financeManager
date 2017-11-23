@@ -3,8 +3,6 @@ import Highcharts from 'highcharts';
 
 import LoaderHOC from "./LoaderHOC";
 
-import "highcharts/css/highcharts.css"
-
 class Diagram extends React.Component {
     constructor(props) {
         super(props);

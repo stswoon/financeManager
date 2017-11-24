@@ -11,8 +11,9 @@
     "karma": "webpack --config webpack.tests.config.js && karma start karma.conf.js",
     "prepare-for-backstop-test": "webpack-dev-server --config webpack.screens.config.js --progress --profile --colors",
     "clean": "rimraf ./public/*",
-    "start": "npm run build && node server.js",
-    "node-server": "node server.js"
+    "build-server": "webpack --config webpack.production-server.config.js --progress --profile --colors",
+    "node-server": "node src/server/server-ssr.js",
+    "start": "npm run build && npm run build-server && node public/server-ssr.js"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,9 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "express": "^4.16.2",
+    "fs": "0.0.1-security"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",
@@ -54,6 +57,7 @@
     "extract-text-webpack-plugin": "^v2.0.0-rc.1",
     "file-loader": "^0.10.0",
     "html-webpack-plugin": "^2.26.0",
+    "ignore-loader": "^0.1.2",
     "jasmine": "^2.5.2",
     "jasmine-ajax": "^3.3.1",
     "jasmine-core": "^2.5.2",

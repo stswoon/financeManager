@@ -45,7 +45,7 @@ module.exports = {
 
     //devtool: 'inline-source-map',
     plugins: [
-        new WebpackCleanupPlugin(),
+        // new WebpackCleanupPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"production"'

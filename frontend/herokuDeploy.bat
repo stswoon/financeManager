@@ -10,9 +10,9 @@ xcopy webpack.loaders.js herokuDeploy
 xcopy webpack.production.config.js herokuDeploy
 
 cd herokuDeploy
-heroku repo:reset -a stswoon-fm-frontend
+heroku repo:reset -a stswoon-fm-frontend-ssr
 git init
-heroku git:remote -a stswoon-fm-frontend
+heroku git:remote -a stswoon-fm-frontend-ssr
 git add -A
 git commit -m "deploy"
 git push heroku master

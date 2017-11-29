@@ -34,7 +34,8 @@ module.exports = {
     output: {
         publicPath: '/', //https://github.com/jantimon/html-webpack-plugin/issues/156
         path: path.join(__dirname, './public'),
-        filename: 'bundle-[chunkhash].js'
+        filename: 'bundle-[chunkhash].js',
+        libraryTarget: 'umd'
     },
     resolve: {
         extensions: ['.js', '.jsx']

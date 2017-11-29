@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import constants from "../../utils/constants";
 import Request from "../../services/request.service";
 
@@ -33,6 +34,9 @@ async function login(username, password) {
         };
         localStorage.setItem(constants.authenticationKey, JSON.stringify(authData));
 
+        //SSR
+        Cookies.set("auth-token", authData.bearerToken);
+
         console.debug("Login success, authData = ", authData);
         //this.props.history.push('/dashboard/');
         return {type: loginResultTypes.SUCCESS, authData};
@@ -54,7 +58,12 @@ async function login(username, password) {
 }
 
 function restoreLogin() {
-    let authData = localStorage.getItem(constants.authenticationKey);
+    let authData = null;
+    try {
+        authData = localStorage.getItem(constants.authenticationKey);
+    } catch (e) {
+        console.log("SSR", e)
+    }
     if (authData) {
         authData = JSON.parse(authData);
     }
@@ -63,6 +72,7 @@ function restoreLogin() {
 
 async function logout() {
     localStorage.removeItem(constants.authenticationKey);
+    Cookies.remove('auth-token');
     await new Request("GET", constants.logoutUrl).send();
 }
 

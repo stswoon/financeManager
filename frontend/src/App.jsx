@@ -29,13 +29,22 @@ const errorResponseHandler = (response) => {
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-        Request.setApplicationProps({urlPrefix: envData.gateway});
+        //let isNode = (typeof module !== 'undefined' && module.exports);
+        try {
+            let isNode = typeof envData == 'undefined';
+            if (!isNode) {
+                Request.setApplicationProps({urlPrefix: envData.gateway});
+            }
+        } catch (e) {
+            console.log("SSR", e);
+        }
         Request.setErrorResponseHandler(errorResponseHandler);
         Logger.integrate();
         Logger.setSendServerLogs(false); //todo remove after server side  will be ready
     }
 
     render() {
+        console.log("anneq303::SSR - app");
         return (
             <app>
                 <Provider store={store}>

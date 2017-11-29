@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 //from https://github.com/cornflourblue/react-redux-registration-login-example
 const PrivateRoute = ({component: Component, ...rest}) => {
     let authenticated = rest.authenticated;
+    console.log("anneq304::SSR - PrivateRoute::authenticated="+authenticated);
     return (
         <Route {...rest} render={
             (props) => {

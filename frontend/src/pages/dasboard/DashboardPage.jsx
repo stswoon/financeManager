@@ -1,16 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
-import {message} from "antd";
 import {bindActionCreators} from 'redux';
 import Redirect from "react-router-dom/es/Redirect";
 
 import ProjectMenu from "../../components/projectsmenu/ProjectMenu";
 import OperationTable from "../../components/operationstable/OperationTable";
 import User from "../../components/user/User";
-import Request from "../../services/request.service";
-import constants from "../../../src/utils/constants";
 import {dashboardActions} from "./dashboard.actions";
-import {loginActions} from '../login/login.actions';
 
 import "./dashboardPage.less";
 import DiagramContainer from "../../containers/DiagramContainer";
@@ -77,6 +73,8 @@ export class DashboardPage extends React.Component {
     refresh = () => this.props.actions.loadOperations(this.props.userId);
 
     render() {
+        console.log("anneq302::SSR - dashboard");
+
         console.debug("projectId=" + this.props.currentProjectId);
         const currentProjectId = this.props.currentProjectId == null ? null : parseInt(this.props.currentProjectId);
         const urlProjectId = this.props.match.params.projectId;
@@ -86,6 +84,8 @@ export class DashboardPage extends React.Component {
 
         let operations = this.props.operations || [];
 
+        console.log("anneq301::SSR - dashboard::operations.length="+operations.length);
+        console.log("anneq301::SSR - dashboard::currentProjectId="+currentProjectId);
         return (
             <div>
                 <div className="navigation">

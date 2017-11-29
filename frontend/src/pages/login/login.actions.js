@@ -18,7 +18,9 @@ export const loginActions = {
     restoreLogin,
     login,
     logout,
-    register
+    register,
+
+    success //SSR
 };
 
 function login(username, password) {

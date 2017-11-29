@@ -13,7 +13,7 @@
     "clean": "rimraf ./public/*",
     "build-server": "webpack --config webpack.production-server.config.js --progress --profile --colors",
     "node-server": "node src/server/server-ssr.js",
-    "start": "npm run build && npm run build-server && node public/server-ssr.js"
+    "start": "npm run clean && npm run build && npm run build-server && npm run node-server"
   },
   "repository": {
     "type": "git",

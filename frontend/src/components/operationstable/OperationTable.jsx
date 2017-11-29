@@ -113,7 +113,8 @@ class OperationTable extends React.Component {
                              inputData={this.state.inputOperationData}
                              loading={this.props.createUpdateLoading}
             />);
-        //todo insert 'New operation' button in first data row
+
+        console.log("anneq304::SSR - operationTable::operations.length="+this.props.operations.length);
         //<operation-table/> - bad for verstka
         return (
             <div className="operation-table">

@@ -27,13 +27,15 @@ module.exports = {
         net: 'empty'
     },
     entry: [
-        './src/server/server-ssr.js'
+        // './src/server/server-ssr.js'
+        './src/index-server.jsx'
     ],
     output: {
         publicPath: '/', //https://github.com/jantimon/html-webpack-plugin/issues/156
         path: path.join(__dirname, './public'),
-        filename: 'server-ssr.js',
-        libraryTarget: "commonjs2"
+        // filename: 'server-ssr.js',
+        filename: 'react-for-server.js',
+        libraryTarget: "commonjs"
     },
     resolve: {
         extensions: ['.js', '.jsx']

@@ -14,7 +14,9 @@ export const dashboardActions = {
     removeOperation,
     logout,
     removeProject,
-    createProject
+    createProject,
+
+    setOperations //SSR
 };
 
 function loadProjects(userId) {
@@ -33,9 +35,9 @@ function loadProjects(userId) {
 
 function setCurrentProject(projectId) {
     return async (dispatch) => {
-        dashboardService.saveLastProject(projectId);
         dispatch({type: constants.actionTypes.DASHBOARD_CURRENT_PROJECT, projectId});
         dispatch(loadOperations(projectId));
+        dashboardService.saveLastProject(projectId);
     };
 }
 

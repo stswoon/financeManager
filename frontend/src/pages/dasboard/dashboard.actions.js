@@ -112,7 +112,10 @@ function removeOperation(operationId) {
 
 function logout() {
     console.info("Logout");
-    return dispatch => dispatch(loginActions.logout());
+    return dispatch => {
+        dispatch(loginActions.logout());
+        dispatch({type: "clear"});
+    }
 }
 
 function createProject(name, userId) {

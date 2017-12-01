@@ -53,7 +53,7 @@ export class DashboardPage extends React.Component {
         }
 
         console.log("anneq411::this.props.projects="+this.props.projects);
-        if (!this.props.projects) { //SSR
+        if (this.props.projects.length === 0) { //SSR
             this.props.actions.loadProjects(this.props.userId);
         }
     }

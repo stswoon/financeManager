@@ -8,11 +8,11 @@ function saveLastProject(projectId) {
 
 function restoreLastProject() {
     console.log("anneq406");
-    try {
-        throw new Error("anneq");
-    } catch (e) {
-        console.error("anneq410::", e)
-    }
+    // try {
+    //     throw new Error("anneq");
+    // } catch (e) {
+    //     console.error("anneq410::", e)
+    // }
     return localStorage.getItem(constants.lastProjectId);
 }
 

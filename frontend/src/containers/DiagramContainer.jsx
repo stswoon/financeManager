@@ -22,11 +22,9 @@ class DiagramContainer extends React.Component {
     }
 
     render() {
-        if (true) {
-            return <span>DISABLED DIAGRAM</span>
-        }
+        let modificator = this.state.ready ? "" : " _inprogress";
         return (
-            <div className="diagramContainer">
+            <div className={"diagramContainer" + modificator}>
                 <Diagram
                     className="diagramContainer__diagram"
                     placeholderId="statistics"

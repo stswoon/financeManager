@@ -36,6 +36,8 @@ const dashboardReducer = (state = {projects: []}, action) => {
         case constants.actionTypes.DASHBOARD_REMOVE_PROJECT:
             let projects = state.projects.filter(item => item.id != action.id);
             return {...state, projects: projects};
+        case "clear":
+            return {projects: []};
         default:
             return state;
     }

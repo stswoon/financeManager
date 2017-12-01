@@ -16,7 +16,9 @@ export const dashboardActions = {
     removeProject,
     createProject,
 
-    setOperations //SSR
+    setOperations, //SSR
+    storeProjects, //SSR
+    setCurrentProjectSimple
 };
 
 function loadProjects(userId) {
@@ -177,5 +179,9 @@ function _removeProject(id) {
 
 function _addProject(project) {
     return {type: constants.actionTypes.DASHBOARD_ADD_PROJECT, project}
+}
+
+function setCurrentProjectSimple(projectId) {
+    return {type: constants.actionTypes.DASHBOARD_CURRENT_PROJECT, projectId}
 }
 

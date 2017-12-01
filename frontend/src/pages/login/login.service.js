@@ -32,10 +32,11 @@ async function login(username, password) {
             userId: response.id,
             bearerToken
         };
+        console.log("anneq407");
         localStorage.setItem(constants.authenticationKey, JSON.stringify(authData));
 
         //SSR
-        Cookies.set("auth-token", authData.bearerToken);
+        Cookies.set("auth-token", authData);
 
         console.debug("Login success, authData = ", authData);
         //this.props.history.push('/dashboard/');
@@ -62,7 +63,7 @@ function restoreLogin() {
     try {
         authData = localStorage.getItem(constants.authenticationKey);
     } catch (e) {
-        console.log("SSR", e)
+        console.log("SSR::", e.message)
     }
     if (authData) {
         authData = JSON.parse(authData);
@@ -71,6 +72,7 @@ function restoreLogin() {
 }
 
 async function logout() {
+    console.log("we");
     localStorage.removeItem(constants.authenticationKey);
     Cookies.remove('auth-token');
     await new Request("GET", constants.logoutUrl).send();

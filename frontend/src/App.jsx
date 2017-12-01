@@ -13,6 +13,7 @@ import {message} from "antd";
 import {loginActions} from "./pages/login/login.actions";
 import Logger from "./services/log.service";
 import constants from "./utils/constants";
+import {loginService} from "./pages/login/login.service"
 
 
 const errorResponseHandler = (response) => {
@@ -34,6 +35,7 @@ export default class App extends React.Component {
             let isNode = typeof envData == 'undefined';
             if (!isNode) {
                 Request.setApplicationProps({urlPrefix: envData.gateway});
+                Request.setApplicationProps({authToken: loginService.restoreLogin().bearerToken}); //SSR
             }
         } catch (e) {
             console.log("SSR", e);

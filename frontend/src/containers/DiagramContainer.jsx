@@ -11,7 +11,7 @@ class DiagramContainer extends React.Component {
         this.state = {};
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
         this.setState({
             ready: this.props.projectId === this.state.projectId,
             projectId: this.props.projectId
@@ -22,6 +22,9 @@ class DiagramContainer extends React.Component {
     }
 
     render() {
+        if (true) {
+            return <span>DISABLED DIAGRAM</span>
+        }
         return (
             <div className="diagramContainer">
                 <Diagram

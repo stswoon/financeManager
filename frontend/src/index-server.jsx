@@ -27,10 +27,11 @@ export {AppServer as AppServer};
 
 
 
-function initStore(data) {
+function initStore(data) { //todo do it via prepared store
     store.dispatch(dashboardActions.setOperations(data.operations));
-    store.dispatch(dashboardActions.setCurrentProject(data.currentProjectId));
-    store.dispatch(loginActions.success({})); //fake authData
+    store.dispatch(dashboardActions.setCurrentProjectSimple(data.currentProjectId));
+    store.dispatch(loginActions.success(data.auth));
+    store.dispatch(dashboardActions.storeProjects(data.projects));
 }
 export {initStore as initStore};
 

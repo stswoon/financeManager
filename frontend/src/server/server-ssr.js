@@ -4,12 +4,12 @@ const fs = require('fs');
 const express = require('express');
 const path = require('path'); //https://stackoverflow.com/a/14594282
 const fetch = require('isomorphic-fetch');
-var cookieParser = require('cookie-parser')
-
+var cookieParser = require('cookie-parser');
+//globals.Promise = require("bluebird"); //https://github.com/mozilla/pdf.js/issues/8489
 
 const app = express();
-app.use(cookieParser()) //http://expressjs.com/ru/api.html
-app.set('port', (process.env.PORT || 5001));
+app.use(cookieParser()); //http://expressjs.com/ru/api.html
+app.set('port', (process.env.PORT || 5000));
 app.use(function (req, res, next) {
     if (req.url.match(/.*\.(css|js|img|font)/)) {
         console.log("anneq001::");
@@ -33,33 +33,41 @@ const file = fs.readFileSync(__dirname + '../../../public/index.html', "utf8");
 //https://www.youtube.com/watch?v=duhudXkHRf4
 app.get('/dashboard/*', function (request, response) {
     console.log("anneq003::url=" + request.url);
-    let authToken = request.cookies["auth-token"];
+    let auth = JSON.parse(request.cookies["auth-token"]);
+    console.log("anneq003::auth=" + auth);
+    console.log("anneq003::auth.userId=" + auth.userId);
+    console.log("anneq003::auth.bearerToken=" + auth.bearerToken);
     let projectId = request.url.replace("/dashboard/", "");
     let fetchConfig = {
         method: "get",
         headers: {
             'Accept': 'application/json;charset=UTF-8',
             'Content-Type': 'application/json;charset=UTF-8',
-            'Authorization': "Bearer " + authToken
+            'Authorization': "Bearer " + auth.bearerToken
         }
     };
 
     const AppServer = require("../../public/react-for-server").AppServer;
     const initStore = require("../../public/react-for-server").initStore;
 
-    fetch("https://stswoon-fm-gateway.herokuapp.com/backend/operation/" + projectId, fetchConfig)
-        .then(res => res.json())
-        .then(operations => {
+    let projectsPromise = fetch("https://stswoon-fm-gateway.herokuapp.com/backend/project/" + auth.userId, fetchConfig).then(res => res.json());
+    let operationsPromise = fetch("https://stswoon-fm-gateway.herokuapp.com/backend/operation/" + projectId, fetchConfig).then(res => res.json());
+    Promise.all([projectsPromise, operationsPromise])
+        .then(([projects, operations])  => {
+            console.log("anneq003_1::projects.length=" + projects.length);
             console.log("anneq003_1::operations.length=" + operations.length);
             console.log("anneq003_1::projectId=" + projectId);
             let initData = {
                 operations: operations,
-                currentProjectId: projectId
+                currentProjectId: projectId,
+                projects: projects,
+                auth: auth
             };
-            //todo get authData from cookie + recieve project => so full state will be get (diagram should be loaded after)
+            //todo (diagram should be loaded after)
             initStore(initData);
             const AppInstance2 = React.createElement(AppServer, {url: request.url}, null);
             let reactData = ReactDOMServer.renderToString(AppInstance2);
+            reactData = "<div id=\"root\">" + reactData + "</div>";
             console.log("anneq004::reactData=" + reactData);
             let initDataAsString = "<script>window.__initialData__ = " + JSON.stringify(initData) + "</script>";
             console.log("anneq005::initDataAsString=" + initDataAsString);

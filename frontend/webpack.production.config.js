@@ -4,6 +4,7 @@ var loaders = require('./webpack.loaders');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 const HOST = process.env.HOST || "localhost";
 const PORT = process.env.PORT || "9000";
@@ -44,7 +45,7 @@ module.exports = {
         loaders
     },
 
-    //devtool: 'inline-source-map',
+    devtool: 'inline-source-map',
     plugins: [
         // new WebpackCleanupPlugin(),
         new webpack.DefinePlugin({
@@ -53,14 +54,14 @@ module.exports = {
             }
         }),
 
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-                screw_ie8: true,
-                drop_console: true,
-                drop_debugger: true
-            }
-        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false,
+        //         screw_ie8: true,
+        //         drop_console: true,
+        //         drop_debugger: true
+        //     }
+        // }),
         new webpack.optimize.OccurrenceOrderPlugin(),
 
         new ExtractTextPlugin({
@@ -76,6 +77,9 @@ module.exports = {
             envData: {
                 gateway: GATEWAY
             }
+        }),
+        new ScriptExtHtmlWebpackPlugin({
+            defaultAttribute: 'defer'
         })
     ]
 };

@@ -39,16 +39,23 @@ export class DashboardPage extends React.Component {
         };
     }
 
-    componentWillMount() {
-        let projectId = this.props.match.params.projectId;
-        if (projectId) {
+    componentDidMount() {
+        let projectId = this.props.match.params.projectId; //from url
+        const currentProjectId = this.props.currentProjectId == null ? null : parseInt(this.props.currentProjectId);
+        console.log("anneq411::currentProjectId="+currentProjectId+" projectId="+projectId);
+        if (projectId && currentProjectId != projectId) {
             console.info("Set project from url projectId=" + projectId);
             this.props.actions.setCurrentProject(projectId);
         } else {
-            this.props.actions.restoreCurrentProject();
+            if (currentProjectId == null) {
+                this.props.actions.restoreCurrentProject();
+            }
         }
 
-        this.props.actions.loadProjects(this.props.userId);
+        console.log("anneq411::this.props.projects="+this.props.projects);
+        if (!this.props.projects) { //SSR
+            this.props.actions.loadProjects(this.props.userId);
+        }
     }
 
     handleCreateProject = (name) => this.props.actions.createProject(name, this.props.userId);

@@ -18,21 +18,22 @@ try { //SSR
     serverState = window.__initialData__;
     serverState = {
         dashboardReducer: {
-            currentProjectId: serverState.projectId,
+            currentProjectId: serverState.currentProjectId,
             loading: false,
             operations: serverState.operations,
-            projects: []
+            projects: serverState.projects
         },
         loginReducer: {
-            authData: {}
+            authData: serverState.auth
         }
     }
 } catch (e) {
-    console.log("SSR::serverState", e)
+    console.log("SSR::serverState", e.message)
 }
 
 let _store;
 if (serverState) {
+    console.log("SSR::init client store with server data");
     _store = createStore(
         rootReducer,
         serverState,
@@ -42,13 +43,32 @@ if (serverState) {
         )
     );
 } else {
-    _store = createStore(
-        rootReducer,
-        applyMiddleware(
-            thunkMiddleware,
-            loggerMiddleware
-        )
-    );
+    try {
+        localStorage.getItem("qwe");
+
+
+        console.log("SSR::init client store");
+        _store = createStore(
+            rootReducer,
+            applyMiddleware(
+                thunkMiddleware,
+                loggerMiddleware
+            )
+        );
+
+
+    } catch (e) {
+        //SSR, in nodejs
+        console.log("SSR::init store in nodejs");
+        _store = createStore(
+            rootReducer,
+            applyMiddleware(
+                thunkMiddleware,
+            )
+        );
+    }
+
+
 }
 
 export const store = _store;

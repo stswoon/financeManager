@@ -12,8 +12,9 @@
     "prepare-for-backstop-test": "webpack-dev-server --config webpack.screens.config.js --progress --profile --colors",
     "clean": "rimraf ./public/*",
     "build-server": "webpack --config webpack.production-server.config.js --progress --profile --colors",
-    "node-server": "node src/server/server-ssr.js",
-    "start": "npm run clean && npm run build && npm run build-server && npm run node-server"
+    "node-server": "node ./server-ssr.js",
+    "start": "npm run build && npm run build-server && npm run node-server",
+    "heroku-prebuild": "npm install --only=dev"
   },
   "repository": {
     "type": "git",

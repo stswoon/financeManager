@@ -17,12 +17,12 @@ app.use(function (req, res, next) {
     }
     next();
 });
-const safePath = path.resolve(__dirname + '../../../public');
-app.use(express.static(safePath));
+//const safePath = path.resolve(__dirname + '../../../public');
+app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'html');
 
 
-const file = fs.readFileSync(__dirname + '../../../public/index.html', "utf8");
+const file = fs.readFileSync(__dirname + '/public/index.html', "utf8");
 //console.log("anneq002::" + file);
 
 //https://github.com/mhart/react-server-example
@@ -47,13 +47,14 @@ app.get('/dashboard/*', function (request, response) {
         }
     };
 
-    const AppServer = require("../../public/react-for-server").AppServer;
-    const initStore = require("../../public/react-for-server").initStore;
+    const AppServer = require("./public/react-for-server").AppServer;
+    const initStore = require("./public/react-for-server").initStore;
 
     let projectsPromise = fetch("https://stswoon-fm-gateway.herokuapp.com/backend/project/" + auth.userId, fetchConfig).then(res => res.json());
     let operationsPromise = fetch("https://stswoon-fm-gateway.herokuapp.com/backend/operation/" + projectId, fetchConfig).then(res => res.json());
-    Promise.all([projectsPromise, operationsPromise])
-        .then(([projects, operations])  => {
+    let statisticPromise = fetch("https://stswoon-fm-gateway.herokuapp.com/backend/statistics/" + projectId, fetchConfig).then(res => res.json());
+    Promise.all([projectsPromise, operationsPromise, statisticPromise])
+        .then(([projects, operations, statistic])  => {
             console.log("anneq003_1::projects.length=" + projects.length);
             console.log("anneq003_1::operations.length=" + operations.length);
             console.log("anneq003_1::projectId=" + projectId);
@@ -61,7 +62,8 @@ app.get('/dashboard/*', function (request, response) {
                 operations: operations,
                 currentProjectId: projectId,
                 projects: projects,
-                auth: auth
+                auth: auth,
+                statistic: statistic
             };
             //todo (diagram should be loaded after)
             initStore(initData);

@@ -16,9 +16,14 @@ class DiagramContainer extends React.Component {
             ready: this.props.projectId === this.state.projectId,
             projectId: this.props.projectId
         });
-        let request = new Request("GET", constants.statisticsUrl.replace("{projectId}", this.props.projectId));
-        let response = await request.send();
-        this.setState({...response, ready: true})
+        if (window.__initialData__ && window.__initialData__.statistic) {
+            this.setState({...window.__initialData__.statistic, ready: true});
+            window.__initialData__.statistic = null;
+        } else {
+            let request = new Request("GET", constants.statisticsUrl.replace("{projectId}", this.props.projectId));
+            let response = await request.send();
+            this.setState({...response, ready: true});
+        }
     }
 
     render() {

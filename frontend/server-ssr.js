@@ -81,12 +81,16 @@ app.get('/dashboard/*', function (request, response) {
 });
 
 
-// app.get('/*', function (request, response) {
-//     console.log("anneq006::url=" + request.url);
-//     var safePath = path.resolve(__dirname + '../../../public/index.html');
-//     response.sendFile(safePath);
-// });
+app.get(['/', '/login', '/dashboard'], function (request, response) {
+    console.log("anneq007::url=" + request.url);
+    var safePath = path.resolve(__dirname + '/public/index.html');
+    response.sendFile(safePath);
+});
 
+app.get('/*', function (request, response) {
+    console.log("anneq008::url=" + request.url);
+    response.status(404).send('Not found');
+});
 
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));

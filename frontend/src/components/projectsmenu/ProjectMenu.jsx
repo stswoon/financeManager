@@ -39,12 +39,14 @@ class ProjectMenu extends React.Component {
     render() {
         let menuItems = this.props.projects.map(project => (
             <Menu.Item key={project.id}>
-                <span className="projectMenu__item-text">{project.name}</span>
-                <Button className="projectMenu__item-button" type="danger" shape="circle" icon="delete"
-                        onClick={(event) => this.onProjectRemove(event, project.id)}/>
+                <div className="projectMenu__item">
+                    <span className="projectMenu__item-text">{project.name}</span>
+                    <Button className="projectMenu__item-button" type="danger" shape="circle" icon="delete"
+                            onClick={(event) => this.onProjectRemove(event, project.id)}/>
+                </div>
             </Menu.Item>)
         );
-        menuItems.push((<Menu.Divider key="divider" />));
+        menuItems.push((<Menu.Divider key="divider"/>));
         menuItems.push((
             <Menu.Item key="new">
                 <NewProject edit={this.state.editProjectMode}

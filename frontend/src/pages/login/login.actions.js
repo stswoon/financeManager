@@ -36,7 +36,7 @@ function login(username, password) {
                     dispatch(success(result.authData));
                     break;
                 case loginService.loginResultTypes.FAILED:
-                    console.info("Login or password are incorrect, response: ", response);
+                    console.info("Login or password are incorrect, response: ", result);
                     message.warning(constants.incorrectCredentialsMessage);
                     dispatch(failure(constants.incorrectCredentialsMessage));
                     break;

@@ -6,9 +6,11 @@ const path = require('path'); //https://stackoverflow.com/a/14594282
 const fetch = require('isomorphic-fetch');
 var cookieParser = require('cookie-parser');
 //globals.Promise = require("bluebird"); //https://github.com/mozilla/pdf.js/issues/8489
+var compression = require('compression');
 
 const app = express();
 app.use(cookieParser()); //http://expressjs.com/ru/api.html
+app.use(compression());
 app.set('port', (process.env.PORT || 5000));
 app.use(function (req, res, next) {
     if (req.url.match(/.*\.(css|js|img|font)/)) {

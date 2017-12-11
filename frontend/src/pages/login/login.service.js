@@ -17,7 +17,7 @@ async function login(username, password) {
             type: "POST",
             url: loginUrl,
             headers: {
-                'Authorization': 'Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA==' //todo hide in node internal request
+                "Authorization": "Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA==" //todo hide in node internal request
             }
         });
         let response = await request.send();
@@ -51,7 +51,7 @@ async function login(username, password) {
             error.response = response;
             throw error;
         } else {
-            error = response;
+            let error = response;
             console.error("Unexpected flow during login user, error: ", error);
             throw error;
         }
@@ -74,7 +74,7 @@ function restoreLogin() {
 async function logout() {
     console.log("we");
     localStorage.removeItem(constants.authenticationKey);
-    Cookies.remove('auth-token');
+    Cookies.remove("auth-token");
     await new Request("GET", constants.logoutUrl).send();
 }
 
@@ -99,7 +99,7 @@ async function register(username, password) {
         }
     }
 
-    return response;
+    //return response;
 }
 
 

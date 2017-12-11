@@ -1,9 +1,9 @@
 import React from "react";
-import {Switch, Route} from 'react-router'
-import {Provider} from 'react-redux';
+import {Switch, Route} from "react-router"
+import {Provider} from "react-redux";
 
 import Request from "./services/request.service";
-import {store} from './AppStore';
+import {store} from "./AppStore";
 import {LoginPage} from "./pages/login/LoginPage";
 import {PrivateRoute} from "./pages/utils/PrivateRoute";
 import {WelcomePage} from "./pages/WelcomePage";
@@ -17,7 +17,7 @@ import {loginService} from "./pages/login/login.service"
 
 
 const errorResponseHandler = (response) => {
-    if (response.status == 401) {
+    if (response.status === 401) {
         console.log("Unauthenticated, response = ", response);
         message.warn("Unauthenticated");
         store.dispatch(loginActions.logout()); //todo???
@@ -32,7 +32,7 @@ export default class App extends React.Component {
         super(props);
         //let isNode = (typeof module !== 'undefined' && module.exports);
         try {
-            let isNode = typeof envData == 'undefined';
+            let isNode = typeof envData === "undefined";
             if (!isNode) {
                 Request.setApplicationProps({urlPrefix: envData.gateway});
                 Request.setApplicationProps({authToken: loginService.restoreLogin().bearerToken}); //SSR

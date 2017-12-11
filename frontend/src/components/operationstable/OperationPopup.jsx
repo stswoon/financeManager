@@ -124,6 +124,7 @@ class OperationPopup extends React.Component {
             <div>
                 <Modal width="300"
                        title="Basic Modal"
+                       wrapClassName="operation-popup"
                        visible={true}
                        footer={[
                            <Button key="Cancel" onClick={this.props.onCancel}>Cancel</Button>,

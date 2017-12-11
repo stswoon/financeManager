@@ -23,6 +23,8 @@ const Logger = {
         if (integrated) {
             console._error("Already integrated");
         }
+
+        // eslint-disable-next-line no-constant-condition
         if (true) return; //todo
 
         //https://stackoverflow.com/questions/326596/how-do-i-wrap-a-function-in-javascript

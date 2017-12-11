@@ -4,8 +4,8 @@ import lodash from "lodash";
 const defaultRequest = {
     type: "GET",
     headers: {
-        'Accept': 'application/json;charset=UTF-8',
-        'Content-Type': 'application/json;charset=UTF-8',
+        "Accept": "application/json;charset=UTF-8",
+        "Content-Type": "application/json;charset=UTF-8",
     }
 };
 
@@ -72,6 +72,7 @@ class Request {
             request.url = applicationProps.urlPrefix + request.url;
         }
 
+        // eslint-disable-next-line no-undef
         const promise = new Promise((resolve, reject) => {
             jQuery.ajax(request)
                 .then(resolve)

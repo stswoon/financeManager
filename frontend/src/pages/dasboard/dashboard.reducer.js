@@ -20,22 +20,26 @@ const dashboardReducer = (state = {projects: []}, action) => {
             return {...state, operations: action.operations};
         case constants.actionTypes.DASHBOARD_ADD_OPERATION:
             return {...state, operations: [...state.operations, action.operation]};
-        case constants.actionTypes.DASHBOARD_REMOVE_OPERATION:
-            let operations1 = state.operations.filter(item => item.id != action.id);
+        case constants.actionTypes.DASHBOARD_REMOVE_OPERATION: {
+            let operations1 = state.operations.filter(item => item.id !== action.id);
             return {...state, operations: operations1};
-        case constants.actionTypes.DASHBOARD_UPDATE_OPERATION:
+        }
+        case constants.actionTypes.DASHBOARD_UPDATE_OPERATION: {
             let operations2 = state.operations.map(item => {
-                if (item.id == action.operation.id) {
+                if (item.id === action.operation.id) {
                     return action.operation;
                 }
                 return item;
             });
             return {...state, operations: operations2};
-        case constants.actionTypes.DASHBOARD_ADD_PROJECT:
+        }
+        case constants.actionTypes.DASHBOARD_ADD_PROJECT: {
             return {...state, projects: [...state.projects, action.project]};
-        case constants.actionTypes.DASHBOARD_REMOVE_PROJECT:
-            let projects = state.projects.filter(item => item.id != action.id);
+        }
+        case constants.actionTypes.DASHBOARD_REMOVE_PROJECT: {
+            let projects = state.projects.filter(item => item.id !== action.id);
             return {...state, projects: projects};
+        }
         case "clear":
             return {projects: []};
         default:

@@ -1,5 +1,7 @@
-import jQuery from "jquery";
-import lodash from "lodash";
+import ajax from "jquery/src/ajax";
+const jQuery = {ajax};
+import merge from "lodash/merge";
+const lodash = {merge};
 
 const defaultRequest = {
     type: "GET",

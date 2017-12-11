@@ -1,3 +1,5 @@
+// todo https://www.codementor.io/drewpowers/high-performance-webpack-config-for-front-end-delivery-90sqic1qa
+
 var webpack = require('webpack');
 var path = require('path');
 var loaders = require('./webpack.loaders');
@@ -6,10 +8,12 @@ var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+//var RuntimeAnalyzerPlugin = require('webpack-runtime-analyzer');
 
-const HOST = process.env.HOST || "localhost";
-const PORT = process.env.PORT || "9000";
-const GATEWAY = process.env.GATEWAY || "https://stswoon-fm-gateway.herokuapp.com";
+const HOST = process.env.HOST || 'localhost';
+const PORT = process.env.PORT || '9000';
+const GATEWAY = process.env.GATEWAY || 'https://stswoon-fm-gateway.herokuapp.com';
 
 loaders.push({
     test: /\.scss$/,
@@ -36,7 +40,7 @@ const DEBUG_PROD = false; //todo uncomment devtool and comment UglifyJsPlugin de
 
 module.exports = {
     entry: [
-        "babel-polyfill",
+        'babel-polyfill',
         './src/index.jsx'
     ],
     output: {
@@ -60,7 +64,10 @@ module.exports = {
                 NODE_ENV: '"production"'
             }
         }),
-
+        new webpack.ContextReplacementPlugin( //https://habrahabr.ru/company/jugru/blog/342842/
+            /moment[\/\\]locale$/,
+            /en|ru/
+        ),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
@@ -70,6 +77,17 @@ module.exports = {
             }
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({ //https://habrahabr.ru/post/307694/, https://webpack.js.org/plugins/commons-chunk-plugin/
+            children: true,
+            async: true
+        }),
+        new BundleAnalyzerPlugin(),
+        // new RuntimeAnalyzerPlugin({
+        //     mode: 'standalone',
+        //     port: 0,
+        //     open: true,
+        //     watchModeOnly: true
+        // }),
 
         new ExtractTextPlugin({
             filename: 'style-[chunkhash].css',
@@ -78,7 +96,7 @@ module.exports = {
         new OptimizeCssAssetsPlugin({
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano'),
-            cssProcessorOptions: { discardComments: { removeAll: true } },
+            cssProcessorOptions: {discardComments: {removeAll: true}},
             canPrint: true
         }),
         new HtmlWebpackPlugin({

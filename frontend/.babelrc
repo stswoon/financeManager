@@ -10,15 +10,15 @@
     "transform-async-to-generator",
     "react-hot-loader/babel",
     "transform-object-rest-spread"
-//    ,
-//    [
-//      "import",
-//      [
-//        {
-//          "libraryName": "antd",
+    ,
+    [
+      "import",
+      [
+        {
+          "libraryName": "antd"
 //          "style": true
-//        }
-//      ]
-//    ]
+        }
+      ]
+    ]
   ]
 }

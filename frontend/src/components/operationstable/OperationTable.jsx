@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Modal, Spin} from 'antd';
+import {Button, Modal} from 'antd';
 import {Table} from 'antd';
 const confirm = Modal.confirm;
 import moment from 'moment';

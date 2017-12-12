@@ -1,0 +1,14 @@
+{
+  "source": "src",
+  "destination": "./dist/esdoc",
+  "includes": ["\\.jsx?$"],
+  "plugins": [
+    {"name": "esdoc-standard-plugin"},
+    {"name": "esdoc-ecmascript-proposal-plugin", "option": {"all": true}},
+    {"name": "esdoc-jsx-plugin", "option": {"enable": true}}
+  ],
+  "comment" : {
+    "//1":"https://github.com/esdoc/esdoc-plugins/issues/17",
+    "//2":"http://en.blog.koba04.com/2015/06/28/esdoc-documentation-for-react-and-es6/"
+  }
+}

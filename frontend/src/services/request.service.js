@@ -1,5 +1,4 @@
-import ajax from "jquery/src/ajax";
-const jQuery = {ajax};
+import jQuery from "jquery";
 import merge from "lodash/merge";
 const lodash = {merge};
 

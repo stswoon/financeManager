@@ -24,7 +24,9 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'html');
 
 
-const file = fs.readFileSync(__dirname + '/public/index.html', "utf8");
+let file = null;
+let AppServer = null;
+let initStore = null;
 //console.log("anneq002::" + file);
 
 //https://github.com/mhart/react-server-example
@@ -34,6 +36,12 @@ const file = fs.readFileSync(__dirname + '/public/index.html', "utf8");
 //https://www.jetbrains.com/help/idea/running-and-debugging-node-js.html#Node.js_run
 //https://www.youtube.com/watch?v=duhudXkHRf4
 app.get('/dashboard/*', function (request, response) {
+    if (!file && !AppServer) {
+        file = fs.readFileSync(__dirname + '/public/index.html', "utf8");
+        AppServer = require("./public/react-for-server").AppServer;
+        initStore = require("./public/react-for-server").initStore;
+    }
+
     console.log("anneq003::url=" + request.url);
     let auth = JSON.parse(request.cookies["auth-token"]);
     console.log("anneq003::auth=" + auth);
@@ -49,8 +57,7 @@ app.get('/dashboard/*', function (request, response) {
         }
     };
 
-    const AppServer = require("./public/react-for-server").AppServer;
-    const initStore = require("./public/react-for-server").initStore;
+
 
     let projectsPromise = fetch("https://stswoon-fm-gateway.herokuapp.com/backend/project/" + auth.userId, fetchConfig).then(res => res.json());
     let operationsPromise = fetch("https://stswoon-fm-gateway.herokuapp.com/backend/operation/" + projectId, fetchConfig).then(res => res.json());

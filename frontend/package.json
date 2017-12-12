@@ -13,7 +13,8 @@
     "clean": "rimraf ./public/*",
     "build-server": "webpack --config webpack.production-server.config.js --progress --profile --colors",
     "node-server": "node ./server-ssr.js",
-    "start": "npm run build && npm run build-server && npm run node-server",
+    "//qwe-start": "npm run build && npm run build-server && npm run node-server",
+    "start": "node ./server-ssr.js",
     "heroku-prebuild": "npm install --only=dev"
   },
   "repository": {

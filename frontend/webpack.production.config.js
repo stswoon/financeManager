@@ -39,10 +39,10 @@ loaders.push({
 const DEBUG_PROD = false; //todo uncomment devtool and comment UglifyJsPlugin depends on it
 
 module.exports = {
-    entry: [
-        'babel-polyfill',
-        './src/index.jsx'
-    ],
+    entry: {
+        vendor: ['react', 'react-dom', 'react-router', 'highcharts', 'jQuery'],
+        app: ["babel-polyfill", './src/index.jsx']
+    },
     output: {
         publicPath: '/', //https://github.com/jantimon/html-webpack-plugin/issues/156
         path: path.join(__dirname, './public'),
@@ -61,7 +61,8 @@ module.exports = {
         // new WebpackCleanupPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: '"production"'
+                NODE_ENV: '"production"',
+                PLATFORM: '"web"'
             }
         }),
         new webpack.ContextReplacementPlugin( //https://habrahabr.ru/company/jugru/blog/342842/
@@ -78,16 +79,11 @@ module.exports = {
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.CommonsChunkPlugin({ //https://habrahabr.ru/post/307694/, https://webpack.js.org/plugins/commons-chunk-plugin/
-            children: true,
-            async: true
+            name: 'vendor'
+            //children: true,
+            //async: true
         }),
-        new BundleAnalyzerPlugin(),
-        // new RuntimeAnalyzerPlugin({
-        //     mode: 'standalone',
-        //     port: 0,
-        //     open: true,
-        //     watchModeOnly: true
-        // }),
+        //new BundleAnalyzerPlugin(), //only for dev
 
         new ExtractTextPlugin({
             filename: 'style-[chunkhash].css',

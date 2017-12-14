@@ -40,13 +40,13 @@ const DEBUG_PROD = false; //todo uncomment devtool and comment UglifyJsPlugin de
 
 module.exports = {
     entry: {
-        vendor: ['react', 'react-dom', 'react-router', 'highcharts', 'jQuery'],
-        app: ["babel-polyfill", './src/index.jsx']
+        vendor: ["babel-polyfill", 'react', 'react-dom', 'react-router', 'highcharts', 'jQuery'],
+        app: ['./src/index.jsx']
     },
     output: {
         publicPath: '/', //https://github.com/jantimon/html-webpack-plugin/issues/156
         path: path.join(__dirname, './public'),
-        filename: 'bundle-[chunkhash].js',
+        filename: 'bundle-[name]-[chunkhash].js',
         libraryTarget: 'umd'
     },
     resolve: {
@@ -96,13 +96,15 @@ module.exports = {
             canPrint: true
         }),
         new HtmlWebpackPlugin({
+            favicon: 'src/favicon.png',
             template: './src/index.ejs',
             files: {
                 css: ['style.css'],
                 js: ['bundle.js'],
             },
             envData: {
-                gateway: GATEWAY
+                gateway: GATEWAY,
+                serverLogin: true
             }
         }),
         new ScriptExtHtmlWebpackPlugin({

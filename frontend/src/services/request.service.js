@@ -69,7 +69,7 @@ class Request {
         const authorizationHeader = applicationProps.authToken ?
             {headers: {Authorization: "Bearer " + applicationProps.authToken}} : {};
         let request = lodash.merge({}, defaultRequest, authorizationHeader, this.requestProps);
-        if (disablePrefix == false && startWith(request.url, "http") == false) {
+        if (disablePrefix === false && startWith(request.url, "http") === false) {
             request.url = applicationProps.urlPrefix + request.url;
         }
 
@@ -85,6 +85,10 @@ class Request {
                 })
         });
         return promise;
+    }
+
+    static toParam(json) {
+        return jQuery.param(json);
     }
 }
 

@@ -2,14 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
+    <meta http-equiv="x-dns-prefetch-control" content="on">
     <title>Application</title>
+    <!--
+    https://ymatuhin.ru/front-end/html5-link-prefetch/
+    https://www.searchengines.ru/ispolzovanie-preload-prefetch-i-preconnect.html
+    https://habrahabr.ru/company/paysto/blog/266495/
+    chrome://dns/
+    -->
+    <link rel="dns-prefetch" href="//stswoon-fm-gateway.herokuapp.com">
+    <link rel="preconnect" href="//stswoon-fm-gateway.herokuapp.com">
 </head>
 <body>
 <script>
     var envData = {};
     envData.gateway = "<%= htmlWebpackPlugin.options.envData.gateway %>";
+    envData.serverLogin = "<%= htmlWebpackPlugin.options.envData.serverLogin %>";
     console.info("envData=", envData);
 </script>
 <div id="root"></div>
 </body>
 </html>
+<!--todo: async routes https://medium.com/@addyosmani/progressive-web-apps-with-react-js-part-2-page-load-performance-33b932d97cf2-->

@@ -12,15 +12,23 @@ async function login(username, password) {
     console.debug("Starting login");
 
     try {
-        let loginUrl = constants.loginUrl.replace("{login}", username).replace("{password}", password);
+        let serverLogin = !!window.envData.serverLogin;
+        //serverLogin = true;
+        let loginUrl = serverLogin ? constants.serverLoginUrl : constants.loginUrl;
+        //loginUrl = "http://localhost:5000" + constants.serverLoginUrl;
+        let headers = {
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+        };
+        if (!serverLogin) {
+            headers["Authorization"] = "Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA==";
+        }
         let request = new Request({
             type: "POST",
             url: loginUrl,
-            headers: {
-                "Authorization": "Basic b2F1dGgyX2NsaWVudDpvYXV0aDJfY2xpZW50X3NlY3JldA==" //todo hide in node internal request
-            }
+            data: Request.toParam({grant_type: "password", username, password}),
+            headers
         });
-        let response = await request.send();
+        let response = await request.send(false, serverLogin);
         const bearerToken = response.access_token;
         console.info("Bearer token = " + bearerToken);
 

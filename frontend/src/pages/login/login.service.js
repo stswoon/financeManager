@@ -13,9 +13,12 @@ async function login(username, password) {
 
     try {
         let serverLogin = !!window.envData.serverLogin;
-        //serverLogin = true;
         let loginUrl = serverLogin ? constants.serverLoginUrl : constants.loginUrl;
+
+
+        //serverLogin = true;
         //loginUrl = "http://localhost:5000" + constants.serverLoginUrl;
+
         let headers = {
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
         };

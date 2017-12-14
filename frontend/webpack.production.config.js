@@ -40,8 +40,9 @@ const DEBUG_PROD = false; //todo uncomment devtool and comment UglifyJsPlugin de
 
 module.exports = {
     entry: {
-        vendor: ["babel-polyfill", 'react', 'react-dom', 'react-router', 'highcharts', 'jQuery'],
+        vendor: ["babel-polyfill", 'react', 'react-dom', 'react-router', 'highcharts'], //remove 'jQuery' from here because it cause t.nodeName.toLowerCase error
         app: ['./src/index.jsx']
+        //app: ["babel-polyfill", './src/index.jsx']
     },
     output: {
         publicPath: '/', //https://github.com/jantimon/html-webpack-plugin/issues/156

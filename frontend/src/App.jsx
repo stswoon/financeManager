@@ -17,7 +17,7 @@ import {loginService} from "./pages/login/login.service"
 
 
 const errorResponseHandler = (response) => {
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 400) {
         console.log("Unauthenticated, response = ", response);
         message.warn("Unauthenticated");
         store.dispatch(loginActions.logout()); //todo???
@@ -42,7 +42,7 @@ export default class App extends React.Component {
         }
         Request.setErrorResponseHandler(errorResponseHandler);
         Logger.integrate();
-        Logger.setSendServerLogs(false); //todo remove after server side  will be ready
+        //Logger.setSendServerLogs(false); //todo remove after server side  will be ready
     }
 
     render() {

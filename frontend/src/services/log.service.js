@@ -1,11 +1,17 @@
 import Request from "./request.service";
 
 async function send(data) {
+    if (!window.envData.serverLogs) {
+        return;
+    }
     if (!sendServerLogs) {
         return;
     }
     try {
-        await new Request("POST", "/logs", data).send(true);
+        let url = "/logs";
+        //
+        //url = "http://localhost:5000/logs";
+        await new Request("POST", url, data).send(true, true);
     } catch (e) {
         console._error("Failed to send logs", e); //use original only
     }
@@ -25,7 +31,12 @@ const Logger = {
         }
 
         // eslint-disable-next-line no-constant-condition
-        if (true) return; //todo
+        //if (true) return; //todo
+        try {
+            window.a;
+        } catch (e) {
+            return //SSR: node enviroment
+        }
 
         //https://stackoverflow.com/questions/326596/how-do-i-wrap-a-function-in-javascript
         console._debug =console.debug;

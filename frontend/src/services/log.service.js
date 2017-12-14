@@ -1,7 +1,7 @@
 import Request from "./request.service";
 
 async function send(data) {
-    if (!window.envData.serverLogs) {
+    if (window.envData.serverLogs) {
         return;
     }
     if (!sendServerLogs) {

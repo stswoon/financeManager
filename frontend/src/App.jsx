@@ -15,7 +15,6 @@ import Logger from "./services/log.service";
 import constants from "./utils/constants";
 import {loginService} from "./pages/login/login.service"
 
-
 const errorResponseHandler = (response) => {
     if (response.status === 401 || response.status === 400) {
         console.log("Unauthenticated, response = ", response);

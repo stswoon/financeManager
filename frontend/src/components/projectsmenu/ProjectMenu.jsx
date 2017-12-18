@@ -1,14 +1,21 @@
 import React from "react";
 import {Button, Icon, Menu, Dropdown, Modal} from 'antd';
 import NewProject from "./NewProject";
+//import isEqual from "lodash/isEqual";
+//const lodash = {isEqual};
 
 import "./project-menu.less"
 
-class ProjectMenu extends React.Component {
+class ProjectMenu extends React.PureComponent/*Component*/ {
     constructor(props) {
         super(props);
         this.state = {};
     }
+
+    // shouldComponentUpdate(nextProps) {
+    //     //let result = super.shouldComponentUpdate(nextProps);
+    //     return !lodash.isEqual(nextProps, this.props);
+    // }
 
     handleMenuItemClick = (menuItem) => {
         //console.log(menuItem);

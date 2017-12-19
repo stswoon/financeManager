@@ -8,7 +8,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const HOST = process.env.HOST || "localhost";
 const PORT = process.env.PORT || "9000";
-const GATEWAY = process.env.GATEWAY || "https://stswoon-fm-gateway.herokuapp.com";
+// const GATEWAY = process.env.GATEWAY || "https://stswoon-fm-gateway.herokuapp.com";
+const GATEWAY = process.env.GATEWAY || "http://localhost:3000";
 
 loaders.push({
     test: /\.scss$/,

@@ -1,0 +1,87 @@
+{
+  "auth-token": {
+    "grant_type": "password",
+    "username": "alex",
+    "password": "123456"
+  },
+  "auth-user": {
+    "id": 2,
+    "login": "alex-mock",
+    "password": null
+  },
+  "project-2": [
+    {
+      "id": 1,
+      "name": "Test Project"
+    },
+    {
+      "id": 2,
+      "name": "My Project"
+    },
+    {
+      "id": 3,
+      "name": "My Second Project"
+    }
+  ],
+  "operation-2": [
+    {
+      "id": 5,
+      "comment": "Breakfast",
+      "operationType": "MINUS",
+      "value": 150,
+      "date": 1506729600000
+    },
+    {
+      "id": 6,
+      "comment": "Salary",
+      "operationType": "PLUS",
+      "value": 1000,
+      "date": 1506729600000
+    },
+    {
+      "id": 7,
+      "comment": "Clothes",
+      "operationType": "MINUS",
+      "value": 250,
+      "date": 1506729600000
+    },
+    {
+      "id": 8,
+      "comment": "Lunch",
+      "operationType": "MINUS",
+      "value": 190,
+      "date": 1506729600000
+    },
+    {
+      "id": 9,
+      "comment": "Additional money",
+      "operationType": "PLUS",
+      "value": 30,
+      "date": 1506729600000
+    },
+    {
+      "id": 10,
+      "comment": "Online gaming",
+      "operationType": "MINUS",
+      "value": 80,
+      "date": 1506729600000
+    },
+    {
+      "id": 11,
+      "comment": "Dinner",
+      "operationType": "MINUS",
+      "value": 20,
+      "date": 1506729600000
+    }
+  ],
+  "statistics-2": {
+    "categories": [
+      "Income",
+      "Costs"
+    ],
+    "data": [
+      690,
+      1030
+    ]
+  }
+}

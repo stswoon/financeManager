@@ -10,6 +10,7 @@ var ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 //var RuntimeAnalyzerPlugin = require('webpack-runtime-analyzer');
+// var CSPWebpackPlugin = require('csp-webpack-plugin');
 
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || '9000';
@@ -108,6 +109,10 @@ module.exports = {
                 serverLogin: true
             }
         }),
+        // new CSPWebpackPlugin({
+        //     'default-src': "'self'",
+        //     'connect-src': ["'self'", "stswoon-fm-gateway.herokuapp.com"]
+        // }),
         new ScriptExtHtmlWebpackPlugin({
             defaultAttribute: 'defer'
         })

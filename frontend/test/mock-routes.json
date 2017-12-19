@@ -1,0 +1,11 @@
+{
+  "/auth/oauth/token": "/auth-token",
+  "/auth/user/alex": "/auth-user",
+  "/backend/project/2": "/project-2",
+  "/backend/operation/2": "/operation-2",
+  "/backend/statistics/2": "/statistics-2",
+  "/api/*": "/$1",
+  "/:resource/:id/show": "/:resource/:id",
+  "/posts/:category": "/posts?category=:category",
+  "/articles\\?id=:id": "/posts/:id"
+}

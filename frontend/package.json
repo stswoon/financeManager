@@ -7,6 +7,7 @@
   "scripts": {
     "build": "webpack --config webpack.production.config.js --progress --profile --colors",
     "serve": "webpack-dev-server --progress --profile --colors",
+    "json-server": "json-server test/mock.json --routes test/mock-routes.json",
     "test": "webpack --config webpack.tests.config.js && karma start karma.conf.js --single-run --no-auto-watch --browsers PhantomJS",
     "karma": "webpack --config webpack.tests.config.js && karma start karma.conf.js",
     "prepare-for-backstop-test": "webpack-dev-server --config webpack.screens.config.js --progress --profile --colors",
@@ -27,12 +28,12 @@
   "dependencies": {
     "antd": "^2.10.4",
     "babel-polyfill": "^6.26.0",
-    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "express-csp-header": "^2.1.0",
     "fs": "0.0.1-security",
     "highcharts": "^6.0.3",
     "jquery": "^3.2.1",
@@ -66,6 +67,7 @@
     "babel-preset-react": "^6.23.0",
     "babel-runtime": "^6.22.0",
     "backstopjs": "^3.0.32",
+    "csp-webpack-plugin": "1.0.1",
     "css-loader": "0.26.1",
     "ejs": "2.5.6",
     "esdoc": "^1.0.4",
@@ -83,6 +85,7 @@
     "jasmine-ajax": "^3.3.1",
     "jasmine-core": "^2.5.2",
     "jasmine-enzyme": "^1.2.0",
+    "json-server": "^0.12.1",
     "karma": "^1.3.0",
     "karma-babel-preprocessor": "^6.0.1",
     "karma-chrome-launcher": "^2.0.0",
@@ -113,6 +116,7 @@
     "webpack-dashboard": "^0.3.0",
     "webpack-dev-server": "^2.9.1",
     "webpack-runtime-analyzer": "^1.5.0",
-    "webpack-vendor-chunk-plugin": "^1.0.0"
+    "webpack-vendor-chunk-plugin": "^1.0.0",
+    "why-did-you-update": "^0.1.0"
   }
 }

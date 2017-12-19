@@ -13,6 +13,13 @@ const app = express();
 app.use(cookieParser()); //http://expressjs.com/ru/api.html
 app.use(compression());
 
+const csp = require('express-csp-header');
+app.use(csp({
+    policies: {
+        'default-src': [csp.SELF],
+        'connect-src': [csp.SELF, "localhost", "stswoon-fm-gateway.herokuapp.com"]
+    }
+}));
 
 app.set('port', (process.env.PORT || 5000));
 app.use(function (req, res, next) {

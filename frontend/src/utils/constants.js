@@ -43,7 +43,10 @@ const constants = {
     operationPopup: {
         create: "Create",
         update: "Update"
-    }
+    },
+
+    newOperation: "New Operation",
+    operations: "Operations"
 };
 
 export default constants;

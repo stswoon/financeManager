@@ -2,6 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from 'redux';
 import Redirect from "react-router-dom/es/Redirect";
+import isEqual from "lodash/isEqual";
+const lodash = {isEqual};
 
 import ProjectMenu from "../../components/projectsmenu/ProjectMenu";
 import OperationTable from "../../components/operationstable/OperationTable";
@@ -37,6 +39,10 @@ export class DashboardPage extends React.Component {
             projects: [],
             operations: []
         };
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return !(lodash.isEqual(nextProps, this.props) && lodash.isEqual(nextState, this.state));
     }
 
     componentDidMount() {
@@ -80,7 +86,7 @@ export class DashboardPage extends React.Component {
     refresh = () => this.props.actions.loadOperations(this.props.userId);
 
     render() {
-        console.log("anneq302::SSR - dashboard");
+        //console.log("anneq302::SSR - dashboard");
 
         console.debug("projectId=" + this.props.currentProjectId);
         const currentProjectId = this.props.currentProjectId == null ? null : parseInt(this.props.currentProjectId);
@@ -91,8 +97,8 @@ export class DashboardPage extends React.Component {
 
         let operations = this.props.operations || [];
 
-        console.log("anneq301::SSR - dashboard::operations.length="+operations.length);
-        console.log("anneq301::SSR - dashboard::currentProjectId="+currentProjectId);
+        //console.log("anneq301::SSR - dashboard::operations.length="+operations.length);
+        //console.log("anneq301::SSR - dashboard::currentProjectId="+currentProjectId);
         return (
             <div>
                 <div className="navigation">

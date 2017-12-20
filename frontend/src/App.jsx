@@ -45,7 +45,7 @@ export default class App extends React.Component {
     }
 
     render() {
-        console.log("anneq303::SSR - app");
+        //console.log("anneq303::SSR - app");
         return (
             <app>
                 <Provider store={store}>

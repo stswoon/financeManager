@@ -5,7 +5,7 @@ import constants from "../utils/constants";
 
 import "./diagram-container.less"
 
-class DiagramContainer extends React.Component {
+class DiagramContainer extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {};

@@ -3,6 +3,8 @@ import {Button, Modal} from 'antd';
 import {Table} from 'antd';
 const confirm = Modal.confirm;
 import moment from 'moment';
+import isEqual from "lodash/isEqual";
+const lodash = {isEqual};
 
 import OperationPopup from "./OperationPopup";
 import constants from "../../utils/constants";
@@ -23,6 +25,10 @@ class OperationTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return !(lodash.isEqual(nextProps, this.props) && lodash.isEqual(nextState, this.state));
     }
 
     showCreateOperationPopup = () => this.setState({
@@ -114,7 +120,7 @@ class OperationTable extends React.Component {
                              loading={this.props.createUpdateLoading}
             />);
 
-        console.log("anneq304::SSR - operationTable::operations.length="+this.props.operations.length);
+        //console.log("anneq304::SSR - operationTable::operations.length="+this.props.operations.length);
         //<operation-table/> - bad for verstka
         return (
             <div className="operation-table">

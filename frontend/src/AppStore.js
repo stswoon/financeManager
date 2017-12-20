@@ -5,13 +5,20 @@ import {combineReducers} from "redux"
 import loginReducer from "./pages/login/login.reducer"
 import dashboardReducer from "./pages/dasboard/dashboard.reducer";
 
+let rootReducer;
+if (process.env.NODE_ENV !== "production") {
 //https://monsterlessons.com/project/lessons/reduxjs-asinhronnye-eksheny-s-pomoshyu-redux-thunk
-const loggerMiddleware = createLogger();
+    const loggerMiddleware = createLogger();
 
-const rootReducer = combineReducers({
-    loginReducer,
-    dashboardReducer
-});
+    rootReducer = combineReducers({
+        loginReducer,
+        dashboardReducer
+    });
+} else {
+    rootReducer = combineReducers({
+        dashboardReducer
+    });
+}
 
 let serverState = null;
 try { //SSR

@@ -3,7 +3,7 @@ import {Avatar, Popover} from "antd";
 import "./user.less"
 
 
-class User extends React.Component {
+class User extends React.PureComponent {
     constructor(props) {
         super(props);
 

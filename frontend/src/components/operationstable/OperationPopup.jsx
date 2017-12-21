@@ -11,6 +11,7 @@ import constants from "../../utils/constants";
 
 import './operation-popup.less'
 
+//antd has problems with performance
 class OperationPopup extends React.Component {
     constructor(props) {
         super(props);

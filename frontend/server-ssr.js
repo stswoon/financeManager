@@ -17,7 +17,7 @@ const csp = require('express-csp-header');
 app.use(csp({
     policies: {
         'default-src': [csp.SELF],
-        'script-src': [csp.SELF, "unsafe-inline"],
+        'script-src': [csp.SELF, "'unsafe-inline'", "'sha256-j8RTq+TraMnznSm2efoDa1oA3+5QSq/1gYx6TggEupo='"], //SW
         'connect-src': [csp.SELF, "localhost", "stswoon-fm-gateway.herokuapp.com"],
         'font-src': [csp.SELF, "at.alicdn.com"] //antd
     }

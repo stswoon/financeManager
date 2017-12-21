@@ -7,6 +7,9 @@ import App from "./App.jsx";
 
 import "./style.less"
 
+import register from "./service-worker-registration";
+
+register();
 
 if (process.env.NODE_ENV !== "production") {
     const {whyDidYouUpdate} = require("why-did-you-update");
@@ -14,6 +17,8 @@ if (process.env.NODE_ENV !== "production") {
     const {Perf} = require("react-addons-perf");
     window.Perf = Perf;
 }
+
+
 
 
 render(

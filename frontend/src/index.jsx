@@ -7,7 +7,7 @@ import App from "./App.jsx";
 
 import "./style.less"
 
-import register from "./service-worker-registration";
+import register from "./registerServiceWorker";
 
 register();
 

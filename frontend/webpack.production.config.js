@@ -12,6 +12,7 @@ var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlug
 //var RuntimeAnalyzerPlugin = require('webpack-runtime-analyzer');
 // var CSPWebpackPlugin = require('csp-webpack-plugin');
 var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || '9000';
@@ -42,7 +43,7 @@ const DEBUG_PROD = false; //todo uncomment devtool and comment UglifyJsPlugin de
 
 module.exports = {
     entry: {
-        vendor: ["babel-polyfill", 'react', 'react-dom', 'react-router', 'highcharts'], //remove 'jQuery' from here because it cause t.nodeName.toLowerCase error
+        vendor: ['babel-polyfill', 'react', 'react-dom', 'react-router', 'highcharts'], //remove 'jQuery' from here because it cause t.nodeName.toLowerCase error
         app: ['./src/index.jsx']
         //app: ["babel-polyfill", './src/index.jsx']
     },
@@ -99,17 +100,21 @@ module.exports = {
             canPrint: true
         }),
         new HtmlWebpackPlugin({
-            favicon: 'src/favicon.png',
             template: './src/index.ejs',
             files: {
                 css: ['style.css'],
                 js: ['bundle.js'],
             },
+            //favicon: 'src/favicon.png',
+            faviconWithHash: 'src/favicon.png' + '?hash=' + (new Date()).getTime(),
             envData: {
                 gateway: GATEWAY,
                 serverLogin: true
             }
         }),
+        new CopyWebpackPlugin([
+            {from: 'src/favicon.png', to: 'favicon.png'},
+        ]),
         // new CSPWebpackPlugin({
         //     'default-src': "'self'",
         //     'connect-src': ["'self'", "stswoon-fm-gateway.herokuapp.com"]
@@ -138,12 +143,21 @@ module.exports = {
             },
             minify: true,
             // For unknown URLs, fallback to the index page
-            navigateFallback: '/index.html',
+            navigateFallback: '/',
+            //navigateFallback: '/index.html',
             // Ignores URLs starting from /__ (useful for Firebase):
             // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
             navigateFallbackWhitelist: [/^(?!\/__).*/],
             // Don't precache sourcemaps (they're large) and build asset manifest:
-            staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+            staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/, /\/dashboard/],
+            //https://github.com/goldhand/sw-precache-webpack-plugin/issues/59 - because of SW + SSR
+            // dynamicUrlToDependencies: {
+            //
+            // }
+            // runtimeCaching: [{
+            //     "urlPattern": "/dashboard/(.*)",
+            //     "handler": "networkFirst"
+            // }]
         }),
     ]
 };

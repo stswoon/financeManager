@@ -17,15 +17,16 @@ const csp = require('express-csp-header');
 app.use(csp({
     policies: {
         'default-src': [csp.SELF],
-        'script-src': [csp.SELF, "'unsafe-inline'", "'sha256-j8RTq+TraMnznSm2efoDa1oA3+5QSq/1gYx6TggEupo='"], //SW
+        'script-src': [csp.SELF, "'unsafe-inline'"], //SW
         'connect-src': [csp.SELF, "localhost", "stswoon-fm-gateway.herokuapp.com"],
-        'font-src': [csp.SELF, "at.alicdn.com"] //antd
+        'font-src': [csp.SELF, "at.alicdn.com"], //antd
+        'style-src': [csp.SELF, "'unsafe-inline'"] //antd or SSR
     }
 }));
 
 app.set('port', (process.env.PORT || 5000));
 app.use(function (req, res, next) {
-    if (req.url.match(/.*\.(css|js|img|font)/)) {
+    if (req.url.match(/.*\.(css|js|png|font)/)) {
         console.log('anneq001::');
         res.setHeader('Cache-Control', 'public, max-age=31557600'); //1 year
     }

@@ -8,8 +8,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const HOST = process.env.HOST || "localhost";
 const PORT = process.env.PORT || "9000";
-// const GATEWAY = process.env.GATEWAY || "https://stswoon-fm-gateway.herokuapp.com";
-const GATEWAY = process.env.GATEWAY || "http://localhost:3000";
+ const GATEWAY = process.env.GATEWAY || "https://stswoon-fm-gateway.herokuapp.com";
+//const GATEWAY = process.env.GATEWAY || "http://localhost:3000";
 
 loaders.push({
     test: /\.scss$/,
@@ -67,12 +67,12 @@ module.exports = {
         }),
         new DashboardPlugin(),
         new HtmlWebpackPlugin({
-            favicon: 'src/favicon.png',
             template: './src/index.ejs',
             files: {
                 css: ['style.css'],
                 js: ["bundle.js"],
             },
+            favicon: 'src/favicon.png',
             envData: {
                 gateway: GATEWAY
                 //gateway: "//stswoon-fm-gateway.herokuapp.com"

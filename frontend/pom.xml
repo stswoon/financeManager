@@ -13,16 +13,9 @@
     <name>frontend</name>
     <description>Demo project for Spring Boot</description>
 
-    <!--<parent>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-parent</artifactId>-->
-        <!--<version>1.5.1.RELEASE</version>-->
-        <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
-    <!--</parent>-->
-
-    <properties>
-        <npm.executable>npm.cmd</npm.executable> <!--WA for windows-->
-    </properties>
+    <!--<properties>-->
+        <!--<npm.executable>npm.cmd</npm.executable> &lt;!&ndash;WA for windows&ndash;&gt;-->
+    <!--</properties>-->
 
     <build>
         <plugins>
@@ -43,52 +36,61 @@
             </plugin>
 
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.6</version>
+
+                <!--<configuration>-->
+                    <!--<workingDirectory>/</workingDirectory>-->
+                    <!--<installDirectory>target</installDirectory>-->
+                <!--</configuration>-->
+
                 <executions>
                     <execution>
-                        <id>exec-npm-install</id>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <workingDirectory>${project.basedir}</workingDirectory>
-                            <executable>${npm.executable}</executable>
-                            <arguments>
-                                <argument>install</argument>
-                            </arguments>
-                        </configuration>
+                        <id>install node and npm</id>
                         <goals>
-                            <goal>exec</goal>
+                            <goal>install-node-and-npm</goal>
                         </goals>
+                        <configuration>
+                            <nodeVersion>v8.9.3</nodeVersion>
+                            <npmVersion>5.5.1</npmVersion>
+                            <!--<failOnError>true</failOnError>-->
+                        </configuration>
                     </execution>
+
                     <execution>
-                        <id>exec-npm-webpack</id>
-                        <phase>package</phase>
-                        <configuration>
-                            <workingDirectory>${project.basedir}</workingDirectory>
-                            <executable>${npm.executable}</executable>
-                            <arguments>
-                                <argument>run</argument>
-                                <argument>build</argument>
-                            </arguments>
-                        </configuration>
+                        <id>npm install</id>
                         <goals>
-                            <goal>exec</goal>
+                            <goal>npm</goal>
                         </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                            <!--<failOnError>true</failOnError>-->
+                        </configuration>
                     </execution>
+
                     <execution>
-                        <id>exec-npm-clean</id>
-                        <phase>package</phase>
-                        <configuration>
-                            <workingDirectory>${project.basedir}</workingDirectory>
-                            <executable>${npm.executable}</executable>
-                            <arguments>
-                                <argument>run</argument>
-                                <argument>clean</argument>
-                            </arguments>
-                        </configuration>
+                        <id>npm build</id>
+                        <phase>install</phase>
                         <goals>
-                            <goal>exec</goal>
+                            <goal>npm</goal>
                         </goals>
+                        <configuration>
+                            <arguments>run build</arguments>
+                            <!--<failOnError>true</failOnError>-->
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>npm clean</id>
+                        <phase>pre-clean</phase>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run clean</arguments>
+                            <!--<failOnError>true</failOnError>-->
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

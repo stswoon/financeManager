@@ -17,10 +17,10 @@ const csp = require('express-csp-header');
 app.use(csp({
     policies: {
         'default-src': [csp.SELF],
-        'script-src': [csp.SELF, "'unsafe-inline'"], //SW
-        'connect-src': [csp.SELF, "localhost", "stswoon-fm-gateway.herokuapp.com"],
-        'font-src': [csp.SELF, "at.alicdn.com"], //antd
-        'style-src': [csp.SELF, "'unsafe-inline'"] //antd or SSR
+        'script-src': [csp.SELF, '\'unsafe-inline\''], //SW
+        'connect-src': [csp.SELF, 'localhost', 'stswoon-fm-gateway.herokuapp.com'],
+        'font-src': [csp.SELF, 'at.alicdn.com'], //antd
+        'style-src': [csp.SELF, '\'unsafe-inline\''] //antd or SSR
     }
 }));
 
@@ -49,56 +49,62 @@ let initStore = null;
 //https://www.jetbrains.com/help/idea/running-and-debugging-node-js.html#Node.js_run
 //https://www.youtube.com/watch?v=duhudXkHRf4
 app.get('/dashboard/*', function (request, response) {
-    if (!file && !AppServer) {
-        file = fs.readFileSync(__dirname + '/public/index.html', 'utf8');
-        AppServer = require('./public/react-for-server').AppServer;
-        initStore = require('./public/react-for-server').initStore;
-    }
-
-    console.log('anneq003::url=' + request.url);
-    let auth = JSON.parse(request.cookies['auth-token']);
-    console.log('anneq003::auth=' + auth);
-    console.log('anneq003::auth.userId=' + auth.userId);
-    console.log('anneq003::auth.bearerToken=' + auth.bearerToken);
-    let projectId = request.url.replace('/dashboard/', '');
-    let fetchConfig = {
-        method: 'get',
-        headers: {
-            'Accept': 'application/json;charset=UTF-8',
-            'Content-Type': 'application/json;charset=UTF-8',
-            'Authorization': 'Bearer ' + auth.bearerToken
+    try {
+        if (!file && !AppServer) {
+            file = fs.readFileSync(__dirname + '/public/index.html', 'utf8');
+            AppServer = require('./public/react-for-server').AppServer;
+            initStore = require('./public/react-for-server').initStore;
         }
-    };
+
+        console.log('anneq003::url=' + request.url);
+        let auth = JSON.parse(request.cookies['auth-token']);
+        console.log('anneq003::auth=' + auth);
+        console.log('anneq003::auth.userId=' + auth.userId);
+        console.log('anneq003::auth.bearerToken=' + auth.bearerToken);
+        let projectId = request.url.replace('/dashboard/', '');
+        let fetchConfig = {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json;charset=UTF-8',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Authorization': 'Bearer ' + auth.bearerToken
+            }
+        };
 
 
-    let projectsPromise = fetch('https://stswoon-fm-gateway.herokuapp.com/backend/project/' + auth.userId, fetchConfig).then(res => res.json());
-    let operationsPromise = fetch('https://stswoon-fm-gateway.herokuapp.com/backend/operation/' + projectId, fetchConfig).then(res => res.json());
-    let statisticPromise = fetch('https://stswoon-fm-gateway.herokuapp.com/backend/statistics/' + projectId, fetchConfig).then(res => res.json());
-    Promise.all([projectsPromise, operationsPromise, statisticPromise])
-        .then(([projects, operations, statistic]) => {
-            console.log('anneq003_1::projects.length=' + projects.length);
-            console.log('anneq003_1::operations.length=' + operations.length);
-            console.log('anneq003_1::projectId=' + projectId);
-            let initData = {
-                operations: operations,
-                currentProjectId: projectId,
-                projects: projects,
-                auth: auth,
-                statistic: statistic
-            };
-            //todo (diagram should be loaded after)
-            initStore(initData);
-            const AppInstance2 = React.createElement(AppServer, {url: request.url}, null);
-            let reactData = ReactDOMServer.renderToString(AppInstance2);
-            reactData = '<div id="root">' + reactData + '</div>';
-            console.log('anneq004::reactData=' + reactData);
-            let initDataAsString = '<script>window.__initialData__ = ' + JSON.stringify(initData) + '</script>';
-            console.log('anneq005::initDataAsString=' + initDataAsString);
-            reactData += '\n' + initDataAsString;
-            const result = file.replace('<div id="root"></div>', reactData);
-            response.send(result);
-            console.log('anneq006::');
-        })
+        let projectsPromise = fetch('https://stswoon-fm-gateway.herokuapp.com/backend/project/' + auth.userId, fetchConfig).then(res => res.json());
+        let operationsPromise = fetch('https://stswoon-fm-gateway.herokuapp.com/backend/operation/' + projectId, fetchConfig).then(res => res.json());
+        let statisticPromise = fetch('https://stswoon-fm-gateway.herokuapp.com/backend/statistics/' + projectId, fetchConfig).then(res => res.json());
+        Promise.all([projectsPromise, operationsPromise, statisticPromise])
+            .then(([projects, operations, statistic]) => {
+                console.log('anneq003_1::projects.length=' + projects.length);
+                console.log('anneq003_1::operations.length=' + operations.length);
+                console.log('anneq003_1::projectId=' + projectId);
+                let initData = {
+                    operations: operations,
+                    currentProjectId: projectId,
+                    projects: projects,
+                    auth: auth,
+                    statistic: statistic
+                };
+                //todo (diagram should be loaded after)
+                initStore(initData);
+                const AppInstance2 = React.createElement(AppServer, {url: request.url}, null);
+                let reactData = ReactDOMServer.renderToString(AppInstance2);
+                reactData = '<div id="root">' + reactData + '</div>';
+                console.log('anneq004::reactData=' + reactData);
+                let initDataAsString = '<script>window.__initialData__ = ' + JSON.stringify(initData) + '</script>';
+                console.log('anneq005::initDataAsString=' + initDataAsString);
+                reactData += '\n' + initDataAsString;
+                const result = file.replace('<div id="root"></div>', reactData);
+                response.send(result);
+                console.log('anneq006::');
+            });
+    } catch (e) {
+        console.error('Error during SSR', e);
+        var safePath = path.resolve(__dirname + '/public/index.html');
+        response.sendFile(safePath);
+    }
 });
 
 

@@ -1,14 +1,17 @@
 package nodomain.stswoon.financemanager.auth.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 import javax.sql.DataSource;
 
@@ -20,6 +23,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Qualifier("dataSource")
     @Autowired
     DataSource dataSource;
 
@@ -31,10 +35,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin().permitAll()
                 .and()
                 .logout().logoutUrl("/logout").permitAll()
+                .logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))).permitAll()
                 .and()
                 .requestMatchers()
                 .antMatchers(
-                        "/", "/login", "/oauth/**", "/exit",
+                        "/", "/login", "/oauth/**",
                         "/oauth/authorize",
                         "/oauth/confirm_access",
                         "/oauth/token",
@@ -44,6 +49,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/user").permitAll() //registration
                 .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/exit").permitAll()
                 .anyRequest().authenticated();
     }
 

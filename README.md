@@ -1,3 +1,5 @@
+test CI
+
 # financeManager
 Pet project to test skils in ReactJs and Microservices
 ssh-keygen -t rsa -b 4096 -C "stswoon@yandex.ru"

@@ -42,6 +42,8 @@ const dashboardReducer = (state = {projects: []}, action) => {
         }
         case "clear":
             return {projects: []};
+        case constants.actionTypes.DASHBOARD_CHANGE_LANGUAGE:
+            return {...state, language: action.language};
         default:
             return state;
     }

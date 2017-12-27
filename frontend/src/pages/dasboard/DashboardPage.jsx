@@ -4,14 +4,19 @@ import {bindActionCreators} from 'redux';
 import Redirect from "react-router-dom/es/Redirect";
 import isEqual from "lodash/isEqual";
 const lodash = {isEqual};
+import i18next from 'i18next';
 
 import ProjectMenu from "../../components/projectsmenu/ProjectMenu";
 import OperationTable from "../../components/operationstable/OperationTable";
 import User from "../../components/user/User";
+import Lang from "../../components/lang/Lang";
 import {dashboardActions} from "./dashboard.actions";
 
 import "./dashboardPage.less";
 import DiagramContainer from "../../containers/DiagramContainer";
+
+import enLang from "../../i18n/en.json";
+import ruLang from "../../i18n/ru.json";
 
 function mapStateToProps(state) {
     const {loginReducer, dashboardReducer} = state;
@@ -23,7 +28,8 @@ function mapStateToProps(state) {
         currentProjectId: dashboardReducer.currentProjectId,
         operations: dashboardReducer.operations,
         createUpdateLoading: dashboardReducer.createUpdateLoading,
-        loading: dashboardReducer.loading
+        loading: dashboardReducer.loading,
+        language: dashboardReducer.language
     };
 }
 
@@ -42,7 +48,9 @@ export class DashboardPage extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return !(lodash.isEqual(nextProps, this.props) && lodash.isEqual(nextState, this.state));
+        let result = !(lodash.isEqual(nextProps, this.props) && lodash.isEqual(nextState, this.state));
+        console.log("anneq001::"+result);
+        return result;
     }
 
     componentDidMount() {
@@ -62,6 +70,8 @@ export class DashboardPage extends React.Component {
         if (this.props.projects.length === 0) { //SSR
             this.props.actions.loadProjects(this.props.userId);
         }
+
+        this.setLanguage(null, true);
     }
 
     handleCreateProject = (name) => this.props.actions.createProject(name, this.props.userId);
@@ -84,6 +94,28 @@ export class DashboardPage extends React.Component {
     };
 
     refresh = () => this.props.actions.loadOperations(this.props.userId);
+
+    //https://github.com/dmt-13/i18next-example/blob/master/src/containers/App/index.jsx
+    setLanguage = (language, skipAction) => {
+        if (!language) {
+            //https://github.com/iam-peekay/inbox-react-intl.git in index.js
+            // language = (navigator.languages && navigator.languages[0]) ||
+            //     navigator.language || navigator.userLanguage;
+            // language = language.toLowerCase().split(/[_-]+/)[0];
+            language = "en"; //todo sync with SSR, async lang load, cache
+        }
+
+        i18next.init({
+            lng: language,
+            //resources: require(`json!../../i18n/${language}.json`)
+            resources: language === "en" ? enLang : ruLang
+        });
+
+        if (skipAction === true) {
+        } else {
+            this.props.actions.changeLanguage(language);
+        }
+    };
 
     render() {
         //console.log("anneq302::SSR - dashboard");
@@ -111,6 +143,9 @@ export class DashboardPage extends React.Component {
                     </div>
                     <div className="navigation_right-block">
                         <div className="navigation_item">
+                            <Lang onChange={this.setLanguage}/>
+                        </div>
+                        <div className="navigation_item">
                             <User userName={this.props.username} onLogout={this.logout}/>
                         </div>
                     </div>
@@ -128,6 +163,7 @@ export class DashboardPage extends React.Component {
                                     onOperationRemove={this.handleOperationRemove}
                     />}
                 </div>
+                <div id="i18n-test">{i18next.t('test_message')}</div>
             </div>
         )
     }

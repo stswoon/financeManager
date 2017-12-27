@@ -15,6 +15,7 @@ export const dashboardActions = {
     logout,
     removeProject,
     createProject,
+    changeLanguage,
 
     setOperations, //SSR
     storeProjects, //SSR
@@ -143,6 +144,10 @@ function removeProject(id) {
             message.error(response);
         }
     };
+}
+
+function changeLanguage(language) {
+    return {type: constants.actionTypes.DASHBOARD_CHANGE_LANGUAGE, language}
 }
 
 

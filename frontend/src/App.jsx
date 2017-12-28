@@ -22,7 +22,7 @@ const errorResponseHandler = (response) => {
         store.dispatch(loginActions.logout()); //todo???
     } else {
         console.error("Unexpected error, response = ", response);
-        message.error(constants.unexpectedErrorMessage);
+        message.error(constants.defaultLabels.notifications.unexpectedErrorMessage);
     }
 };
 

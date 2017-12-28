@@ -12,10 +12,6 @@ const constants = {
     removeProjectUrl: "/backend/project/{id}",
     statisticsUrl: "/backend/statistics/{projectId}",
 
-    incorrectRegistrationMessage: "Such user is exist",
-    incorrectCredentialsMessage: "Login or password are incorrect",
-    unexpectedErrorMessage: "Unexpected error, please contact your administrator",
-
     authenticationKey: "authentication",
     lastProjectId: "lastProjectId",
 
@@ -41,13 +37,32 @@ const constants = {
 
     dateFormat: "DD.MM.YYYY",
 
-    operationPopup: {
-        create: "Create",
-        update: "Update"
-    },
-
-    newOperation: "New Operation",
-    operations: "Operations"
+    defaultLabels: {
+        operationPopup: {
+            create: "Create",
+            update: "Update"
+        },
+        operationTable: {
+            newOperation: "New Operation",
+            operations: "Operations"
+        },
+        notifications: {
+            incorrectRegistrationMessage: "Such user is exist",
+            incorrectCredentialsMessage: "Login or password are incorrect",
+            unexpectedErrorMessage: "Unexpected error, please contact your administrator"
+        },
+        projectMenu: {
+            projects: "Projects"
+        },
+        table: {
+            comment: "Comment",
+            value: "Value",
+            date: "Date",
+            action: "Action",
+            edit: "Edit",
+            remove: "Remove"
+        }
+    }
 };
 
 export default constants;

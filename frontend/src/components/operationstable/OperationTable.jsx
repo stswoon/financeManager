@@ -10,6 +10,7 @@ import constants from "../../utils/constants";
 import './operation-table.less';
 import Toolbar from "./Toolbar";
 import TableBody from "./TableBody";
+import WithLocaleHOC from '../localization/WithLocaleHOC';
 
 
 
@@ -61,10 +62,12 @@ class OperationTable extends React.Component {
     };
 
     render() {
+        const createLabel = this.props.i18next.t('operationPopup.create') || constants.defaultLabels.operationPopup.create;
+        const newOperationLabel = this.props.i18next.t('operationPopup.update') || constants.defaultLabels.operationPopup.update;
+
         let operationPopup =
             (<OperationPopup onOk={this.state.operationPopupMode == "create" ? this.handleCreate : this.handleEdit}
-                             okText={this.state.operationPopupMode == "create" ?
-                                 constants.operationPopup.create : constants.operationPopup.update}
+                             okText={this.state.operationPopupMode == "create" ? createLabel : newOperationLabel}
                              onCancel={this.handleCancel}
                              inputData={this.state.inputOperationData}
                              loading={this.props.createUpdateLoading}
@@ -88,4 +91,4 @@ class OperationTable extends React.Component {
     }
 }
 
-export default OperationTable;
+export default WithLocaleHOC(OperationTable);

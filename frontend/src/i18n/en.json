@@ -2,9 +2,33 @@
   "en": {
     "translation": {
       "test_message": "This is a test message",
-
       "amount_of_bananas": "{{count}} banana",
-      "amount_of_bananas_plural": "{{count}} bananas"
+      "amount_of_bananas_plural": "{{count}} bananas",
+
+      "operationPopup": {
+        "create": "Create",
+        "update": "Update"
+      },
+      "operationTable": {
+        "newOperation": "New Operation",
+        "operations": "Operations"
+      },
+      "notifications": {
+        "incorrectRegistrationMessage": "Such user is exist",
+        "incorrectCredentialsMessage": "Login or password are incorrect",
+        "unexpectedErrorMessage": "Unexpected error, please contact your administrator"
+      },
+      "projectMenu": {
+        "projects": "Projects"
+      },
+      "table": {
+        "comment": "Comment",
+        "value": "Value",
+        "date": "Date",
+        "action": "Action",
+        "edit": "Edit",
+        "remove": "Remove"
+      }
     }
   }
 }

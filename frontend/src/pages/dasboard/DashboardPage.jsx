@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropTypes } from 'react';
 import {connect} from "react-redux";
 import {bindActionCreators} from 'redux';
 import Redirect from "react-router-dom/es/Redirect";
@@ -17,6 +17,7 @@ import DiagramContainer from "../../containers/DiagramContainer";
 
 import enLang from "../../i18n/en.json";
 import ruLang from "../../i18n/ru.json";
+import localeService from '../../components/localization/locale.service';
 
 function mapStateToProps(state) {
     const {loginReducer, dashboardReducer} = state;
@@ -45,6 +46,7 @@ export class DashboardPage extends React.Component {
             projects: [],
             operations: []
         };
+        this.i18nextParam = i18next;
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -115,7 +117,17 @@ export class DashboardPage extends React.Component {
         } else {
             this.props.actions.changeLanguage(language);
         }
+        localeService.fire();
     };
+
+    //https://www.youtube.com/watch?v=lxq938kqIss
+    getChildContext() {
+        return {i18next: this.i18nextParam}
+    }
+
+    static childContextTypes = {
+        i18next: PropTypes.object
+    }
 
     render() {
         //console.log("anneq302::SSR - dashboard");
@@ -163,7 +175,8 @@ export class DashboardPage extends React.Component {
                                     onOperationRemove={this.handleOperationRemove}
                     />}
                 </div>
-                <div id="i18n-test">{i18next.t('test_message')}</div>
+                {/*<div id="i18n-test">{i18next.t('test_message')}</div>*/}
+                {/*<div>{i18next.t('amount_of_bananas', {count: 5})}</div>*/}
             </div>
         )
     }

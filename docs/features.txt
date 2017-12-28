@@ -9,13 +9,83 @@
     общая база
 	heroku
 	maven плагин	
+		публикация внутри гита
   логирование
   в будущем
     zipkin, мониторинг, perf, discovery
 Бекенд
   gateway
+	zuul
+	cors
   авторизация
     oauth
+	hash
+	filter-order: 3 в бекенде
+	хак пока в памяти
+  бекенд
+    спринг-бут
+	профайлы
+	junit
+		простые
+		с поднятием сервера
+	heroku база
+	lombok
+	логирование
+	авторизация
+		aspectj
+		паттерн визитор
+		запрос за юзеров (OAuth2RestTemplate)
+		dto и entity	
+	DI
+		автовайринг в конструктор
+		ApplicationProperties как сервис для нормального автовайринга в конструктор
+	health ckeck - не сделан
+	controllers
+		CRUD
+		repository
+		stream api
+		lambda
+	test data
+		sql вырублен но могу немного его писать
+			например мой блог со сложным sql
+		try with resources
+Фронтенд
+	technologies
+		react + redux + antd + routes + react-animation + babel + i18next
+		SSR + express + service-worker + caches + 
+		babel + polifils + highcharts + jquery
+	
+	SSR grate impovements + express
+	service-worker impovements
+	16 ms in frame
+	loading
+	errors
+	fetch via jquery as service
+	localiztion sync
+	webpach vendor chanks
+	webpack js optimization (lodash, moment, antd) and css a bit + minimization
+	
+	global params for gateway
+	server login
+	server logs (without concatination)
+	performanse - shouldUpdate
+	
+	
+Что еще
+	android
+		rutor
+    zipkin, мониторинг, perf, discovery
+	async, webworkets, websockets
+	uptime, advanced CI
+	react 16
+	notification center on butstrapt.css
+	statistics as different service
+	log to server
+	docs and paper on blog
+	css normalizers
+	
+	
+	
 	
    
   

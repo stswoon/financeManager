@@ -2,10 +2,34 @@
   "ru": {
     "translation": {
       "test_message": "Это тестовое сообщение",
-
       "amount_of_bananas_0": "{{count}} банан",
       "amount_of_bananas_1": "{{count}} банана",
-      "amount_of_bananas_2": "{{count}} бананов"
+      "amount_of_bananas_2": "{{count}} бананов",
+
+      "operationPopup": {
+        "create": "Создать",
+        "update": "Обновить"
+      },
+      "operationTable": {
+        "newOperation": "Новая Операция",
+        "operations": "Операции"
+      },
+      "notifications": {
+        "incorrectRegistrationMessage": "Такой юзер уже существует",
+        "incorrectCredentialsMessage": "Логин или пароль некорректные",
+        "unexpectedErrorMessage": "Неожиданная ошибка, пожалуйста обратитесь к вашему администратору"
+      },
+      "projectMenu": {
+        "projects": "Проекты"
+      },
+      "table": {
+        "comment": "Комментарий",
+        "value": "Значение",
+        "date": "Дата",
+        "action": "Функция",
+        "edit": "Редактировать",
+        "remove": "Удалить"
+      }
     }
   }
 }

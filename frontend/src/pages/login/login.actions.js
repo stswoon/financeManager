@@ -37,13 +37,13 @@ function login(username, password) {
                     break;
                 case loginService.loginResultTypes.FAILED:
                     console.info("Login or password are incorrect, response: ", result);
-                    message.warning(constants.incorrectCredentialsMessage);
-                    dispatch(failure(constants.incorrectCredentialsMessage));
+                    message.warning(constants.defaultLabels.notifications.incorrectCredentialsMessage);
+                    dispatch(failure(constants.defaultLabels.notifications.incorrectCredentialsMessage));
                     break;
             }
         }).catch(error => {
             dispatch(loading({loading: false}));
-            message.error(constants.unexpectedErrorMessage);
+            message.error(constants.defaultLabels.notifications.unexpectedErrorMessage);
             console.error("Failed to login user, response: ", error.response);
         });
     };
@@ -64,12 +64,12 @@ function register(username, password) {
                 dispatch(login(username, password));
                 console.info("Registration success");
             } else {
-                message.warning(constants.incorrectRegistrationMessage);
+                message.warning(constants.defaultLabels.notifications.incorrectRegistrationMessage);
                 console.info("User already exist");
             }
         } catch (response) {
             console.info("Registration failed, response: ", response);
-            message.error(constants.unexpectedErrorMessage)
+            message.error(constants.defaultLabels.notifications.unexpectedErrorMessage)
         }
         dispatch(loading({loading: false}));
     };

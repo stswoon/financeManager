@@ -1,20 +1,22 @@
 import React from "react";
 import {Button, Icon, Menu, Dropdown, Modal} from 'antd';
 import NewProject from "./NewProject";
-//import isEqual from "lodash/isEqual";
-//const lodash = {isEqual};
+// import isEqual from "lodash/isEqual";
+// const lodash = {isEqual};
 
 import "./project-menu.less"
+import WithLocaleHOC from '../localization/WithLocaleHOC';
+import constants from '../../utils/constants';
 
-class ProjectMenu extends React.PureComponent/*Component*/ {
+class ProjectMenu extends React.PureComponent/*PureComponent*/ {
     constructor(props) {
         super(props);
         this.state = {};
     }
 
-    // shouldComponentUpdate(nextProps) {
-    //     //let result = super.shouldComponentUpdate(nextProps);
-    //     return !lodash.isEqual(nextProps, this.props);
+    //remove PureComponent because don't work with context forceUpdate in localizationHOC
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return !(lodash.isEqual(nextProps, this.props) && lodash.isEqual(nextState, this.state));
     // }
 
     handleMenuItemClick = (menuItem) => {
@@ -64,18 +66,19 @@ class ProjectMenu extends React.PureComponent/*Component*/ {
         ));
 
         let menu = (<Menu className="projectMenu" onClick={this.handleMenuItemClick}>{menuItems}</Menu>);
+        const projectsLabel = this.props.i18next.t('projectMenu.projects') || constants.defaultLabels.projectMenu.projects;
         return (
             <div className="ProjectMenu">
                 <Dropdown overlay={menu} trigger={['click']}
                           onVisibleChange={this.handleVisibleChange}
                           visible={this.state.visibility}>
                     <a className="ant-dropdown-link" href="#">
-                        Projects<Icon type="down"/>
+                        {projectsLabel}<Icon type="down"/>
                     </a>
                 </Dropdown>
                 {
                     this.state.removing &&
-                    <Modal title="" visible={true}
+                    <Modal title=" " visible={true}
                            onOk={this.confirmRemove} onCancel={this.cancelRemove}
                            okText="Yes" cancelText="No">
                         <span>Are you sure delete this project?</span>
@@ -90,4 +93,4 @@ ProjectMenu.defaultProps = {
     projects: []
 };
 
-export default ProjectMenu;
+export default WithLocaleHOC(ProjectMenu);

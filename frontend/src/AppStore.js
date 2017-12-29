@@ -36,27 +36,46 @@ try { //SSR
 let _store;
 if (serverState) {
     console.log("SSR::init client store with server data");
-    _store = createStore(
-        rootReducer,
-        serverState,
-        applyMiddleware(
-            thunkMiddleware,
-            loggerMiddleware
-        )
-    );
+    if (process.env.NODE_ENV === "production") {
+        _store = createStore(
+            rootReducer,
+            serverState,
+            applyMiddleware(
+                thunkMiddleware
+            )
+        );
+    } else {
+        _store = createStore(
+            rootReducer,
+            serverState,
+            applyMiddleware(
+                thunkMiddleware,
+                loggerMiddleware
+            )
+        );
+    }
 } else {
     try {
         localStorage.getItem("qwe");
 
 
         console.log("SSR::init client store");
-        _store = createStore(
-            rootReducer,
-            applyMiddleware(
-                thunkMiddleware,
-                loggerMiddleware
-            )
-        );
+        if (process.env.NODE_ENV === "production") {
+            _store = createStore(
+                rootReducer,
+                applyMiddleware(
+                    thunkMiddleware,
+                )
+            );
+        } else {
+            _store = createStore(
+                rootReducer,
+                applyMiddleware(
+                    thunkMiddleware,
+                    loggerMiddleware
+                )
+            );
+        }
 
 
     } catch (e) {

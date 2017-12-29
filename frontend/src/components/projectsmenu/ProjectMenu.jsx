@@ -86,7 +86,7 @@ class ProjectMenu extends React.PureComponent/*PureComponent*/ {
                 </Dropdown>
                 {
                     this.state.removing &&
-                    <Modal title=" " visible={true}
+                    <Modal title="" visible={true}
                            onOk={this.confirmRemove} onCancel={this.cancelRemove}
                            okText="Yes" cancelText="No">
                         <span>Are you sure delete this project?</span>

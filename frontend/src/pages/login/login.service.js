@@ -85,6 +85,7 @@ function restoreLogin() {
 async function logout() {
     console.log("we");
     localStorage.removeItem(constants.authenticationKey);
+    localStorage.removeItem(constants.lastProjectId);
     Cookies.remove("auth-token");
     await new Request("GET", constants.logoutUrl).send();
 }

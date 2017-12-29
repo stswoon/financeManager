@@ -106,7 +106,7 @@ module.exports = {
                 js: ['bundle.js'],
             },
             //favicon: 'src/favicon.png',
-            faviconWithHash: 'src/favicon.png' + '?hash=' + (new Date()).getTime(),
+            faviconWithHash: 'favicon.png' + '?hash=' + (new Date()).getTime(),
             envData: {
                 gateway: GATEWAY,
                 serverLogin: true

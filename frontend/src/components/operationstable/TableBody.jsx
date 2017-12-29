@@ -24,7 +24,7 @@ let parseColumns = (showEditOperationPopup, handleRemove, locale) => {
         render: (data) => {
             return (
                 <span>
-                    {(data.type === 'MINUS' ? '-' : '+') + data.value} &#8381;
+                    {(data.operationType === 'MINUS' ? '-' : '+') + data.value} &#8381;
                 </span>    //&#8381 - ruble sign
             )
         }
@@ -62,8 +62,8 @@ class TableBody extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        //return !(lodash.isEqual(nextProps, this.props) && lodash.isEqual(nextState, this.state));
-        return true;
+        return !(lodash.isEqual(nextProps, this.props) && lodash.isEqual(nextState, this.state));
+        //return true;
     }
 
     render() {

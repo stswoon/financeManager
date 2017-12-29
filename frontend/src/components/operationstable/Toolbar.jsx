@@ -24,4 +24,5 @@ const Toolbar = (props) => {
     )
 };
 
-export default WithLocaleHOC(Toolbar);
+export default WithLocaleHOC()(Toolbar);
+//export default Toolbar;

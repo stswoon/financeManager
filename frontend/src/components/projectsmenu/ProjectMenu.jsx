@@ -14,6 +14,14 @@ class ProjectMenu extends React.PureComponent/*PureComponent*/ {
         this.state = {};
     }
 
+    componentDidMount() {
+        console.log("aaa1");
+    }
+
+    componentWillUnmount() {
+        console.log("aaa2");
+    }
+
     //remove PureComponent because don't work with context forceUpdate in localizationHOC
     // shouldComponentUpdate(nextProps, nextState) {
     //     return !(lodash.isEqual(nextProps, this.props) && lodash.isEqual(nextState, this.state));
@@ -93,4 +101,5 @@ ProjectMenu.defaultProps = {
     projects: []
 };
 
-export default WithLocaleHOC(ProjectMenu);
+export default WithLocaleHOC()(ProjectMenu);
+//export default ProjectMenu;

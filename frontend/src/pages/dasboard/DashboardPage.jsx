@@ -18,6 +18,7 @@ import DiagramContainer from "../../containers/DiagramContainer";
 import enLang from "../../i18n/en.json";
 import ruLang from "../../i18n/ru.json";
 import localeService from '../../components/localization/locale.service';
+import WithLocaleHOC from '../../components/localization/WithLocaleHOC';
 
 function mapStateToProps(state) {
     const {loginReducer, dashboardReducer} = state;
@@ -116,8 +117,8 @@ export class DashboardPage extends React.Component {
         if (skipAction === true) {
         } else {
             this.props.actions.changeLanguage(language);
+            localeService.fire();
         }
-        localeService.fire();
     };
 
     //https://www.youtube.com/watch?v=lxq938kqIss
@@ -181,6 +182,10 @@ export class DashboardPage extends React.Component {
         )
     }
 }
+
+//export default WithLocaleHOC(true)(DashboardPage);
+//const connected = connect(mapStateToProps, mapDispatchToProps)(WithLocaleHOC(true)(DashboardPage));
+//export {connected as DashboardPage};
 
 
 //const connected = connect(mapStateToProps)(DashboardPage);

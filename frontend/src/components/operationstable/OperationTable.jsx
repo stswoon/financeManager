@@ -91,4 +91,4 @@ class OperationTable extends React.Component {
     }
 }
 
-export default WithLocaleHOC(OperationTable);
+export default WithLocaleHOC()(OperationTable);

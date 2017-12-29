@@ -51,11 +51,31 @@
 		try with resources
 Фронтенд
 	technologies
-		react + redux + antd + routes + react-animation + babel + i18next
-		SSR + express + service-worker + caches + 
-		babel + polifils + highcharts + jquery
-	
-	SSR grate impovements + express
+		react + redux + antd + routes + react-animation + babel
+			typescripts не очень
+		highcharts
+	show
+		login\registration
+		dashboard
+		new project\remove
+		diagram
+		add\edit\remove operation
+		paging
+		localization		
+	react
+		high ordered components (loader)
+		functional
+		pure		
+		contaiter vs components 
+	es6
+	localization
+		hoc
+		context
+		i18next
+	service-worker + caches
+	polifils
+	SSR grate impovements 
+		express
 	service-worker impovements
 	16 ms in frame
 	loading
@@ -63,12 +83,17 @@
 	fetch via jquery as service
 	localiztion sync
 	webpach vendor chanks
-	webpack js optimization (lodash, moment, antd) and css a bit + minimization
-	
+	webpack js optimization (lodash, moment, antd) and css a bit + minimization	
 	global params for gateway
 	server login
 	server logs (without concatination)
 	performanse - shouldUpdate
+	test
+		junit
+		ajax
+		react
+		screnshots
+		
 	
 	
 Что еще

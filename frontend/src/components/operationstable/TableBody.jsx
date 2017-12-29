@@ -62,7 +62,8 @@ class TableBody extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return !(lodash.isEqual(nextProps, this.props) && lodash.isEqual(nextState, this.state));
+        //return !(lodash.isEqual(nextProps, this.props) && lodash.isEqual(nextState, this.state));
+        return true;
     }
 
     render() {
@@ -82,4 +83,4 @@ class TableBody extends React.Component {
     }
 }
 
-export default WithLocaleHOC(TableBody);
+export default WithLocaleHOC()(TableBody);

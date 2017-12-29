@@ -108,8 +108,9 @@
 		global params for gateway
 	build
 		serve
+			local json server
+			опиции сборки в виде флагов - не сделано
 		production
-		local json server
 		test
 			junit
 			ajax

@@ -1,54 +1,54 @@
-Показ
+Демонстрация (см. Фронтенд - show)
 Подготовка
-  требования
-  планирование
-  дизаин
-    в ентерпрайз лучше инструменты
+	требования
+	планирование
+	диаграмы
+		в ентерпрайз лучше инструменты
+		свагер
+	маркап
 Архитектура
-  микросервисы
-    общая база
+	микросервисы
+	общая база
 	heroku
-	maven плагин	
+	maven плагин
 		публикация внутри гита
-  логирование
-  в будущем
-    zipkin, мониторинг, perf, discovery
-Бекенд
-  gateway
-	zuul
-	cors
-  авторизация
-    oauth
-	hash
-	filter-order: 3 в бекенде
-	хак пока в памяти
-  бекенд
-    спринг-бут
-	профайлы
-	junit
-		простые
-		с поднятием сервера
-	heroku база
-	lombok
 	логирование
+	в будущем (zipkin, мониторинг, perf, discovery)
+Бекенд
+	gateway
+		zuul
+		cors
 	авторизация
-		aspectj
-		паттерн визитор
-		запрос за юзеров (OAuth2RestTemplate)
-		dto и entity	
-	DI
-		автовайринг в конструктор
-		ApplicationProperties как сервис для нормального автовайринга в конструктор
-	health ckeck - не сделан
-	controllers
-		CRUD
-		repository
-		stream api
-		lambda
-	test data
-		sql вырублен но могу немного его писать
-			например мой блог со сложным sql
-		try with resources
+		oauth
+		filter-order: 3 в бекенде
+		хак пока в памяти
+	бекенд
+		спринг-бут
+		профайлы
+		junit
+			простые
+			с поднятием сервера
+		heroku база
+		lombok
+		логирование
+		авторизация
+			aspectj
+			паттерн визитор
+			запрос за юзеров (OAuth2RestTemplate)
+		dto и entity
+		DI
+			автовайринг в конструктор
+			ApplicationProperties как сервис для нормального автовайринга в конструктор
+		health ckeck - не сделан
+		controllers
+			CRUD
+			repository
+			stream api
+			lambda
+		test data
+			sql вырублен но могу немного его писать
+				например мой блог со сложным sql
+			try with resources
 Фронтенд
 	technologies
 		react + redux + antd + routes + babel
@@ -65,11 +65,11 @@
 			loading
 		paging
 			не успел - только клиентский
-		localization		
+		localization
 	react
 		high ordered components (loader)
 		functional
-		pure		
+		pure
 		contaiter vs components
 		redux
 			actions, redusers, service
@@ -86,7 +86,7 @@
 			refs
 			forceUpdate
 		context
-		i18next	
+		i18next
 		only sync today
 	request service
 		logs
@@ -126,13 +126,13 @@
 			will transform
 			problem with dialog in throtling (cause by antd)
 		webpach vendor chanks
-		webpack js optimization 
-			(lodash, moment, antd) 
-			css a bit + minimization (css nano)	
+		webpack js optimization
+			(lodash, moment, antd)
+			css a bit + minimization (css nano)
 		performanse - shouldUpdate
 			pure
 			lodash but maybe bad (why did apdate)
-	SSR grate impovements 
+	SSR grate impovements
 		express
 		server login (hide password)
 Сборка
@@ -140,12 +140,15 @@
 Что еще
 	android
 		rutor
-    zipkin, мониторинг, perf, discovery
-	async, webworkets, websockets
+	микросервисы
+		zipkin, мониторинг, perf, discovery
+	фронт
+		async, webworkets, websockets
+		css normalizers
+		react 16
 	uptime, advanced CI
-	react 16
-	notification center on butstrapt.css
-	statistics as different service
+	Другой фронт и бек
+		notification center on butstrapt.css
+		statistics as different service
 	log to server
 	docs and paper on blog
-	css normalizers

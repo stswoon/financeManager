@@ -1,4 +1,9 @@
 # financeManager
+https://stswoon-fm-frontend-ssr.herokuapp.com/
+* alex / 123456
+
+
+
 Pet project to test skils in ReactJs and Microservices
 ssh-keygen -t rsa -b 4096 -C "stswoon@yandex.ru"
 

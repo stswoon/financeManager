@@ -51,51 +51,92 @@
 		try with resources
 Фронтенд
 	technologies
-		react + redux + antd + routes + react-animation + babel
+		react + redux + antd + routes + babel
 			typescripts не очень
-		highcharts
 	show
 		login\registration
+			validation on register
+			зарегистрироваться не под своим пользовательем
 		dashboard
 		new project\remove
 		diagram
+			highcharts
 		add\edit\remove operation
+			loading
 		paging
+			не успел - только клиентский
 		localization		
 	react
 		high ordered components (loader)
 		functional
 		pure		
-		contaiter vs components 
-	es6
+		contaiter vs components
+		redux
+			actions, redusers, service
+			@connect
+		routes
+			private routes	
+		HMR
+		ReactCSSTransitionGroup
+	less
+		flex
+		bem
 	localization
 		hoc
+			refs
+			forceUpdate
 		context
-		i18next
-	service-worker + caches
-	polifils
+		i18next	
+		only sync today
+	request service
+		logs
+		incapsulate
+		lodash
+		private
+		jsdocs
+		fetch via jquery as service
+	log service
+		send to server
+		no packing, wait for idle, check network connection
+	es6
+		desctuction, arrow finction, map\foreach
+	readme.md
+	index.ejs
+		favicon
+		defer
+		preload
+		global params for gateway
+	build
+		serve
+		production
+		local json server
+		test
+			junit
+			ajax
+			react
+			screnshots
+		polifils
+		docs generation
+		es lint
+		polifils
+	performance
+		caches
+		service-worker
+		16 ms in frame for animations
+			will transform
+			problem with dialog in throtling (cause by antd)
+		webpach vendor chanks
+		webpack js optimization 
+			(lodash, moment, antd) 
+			css a bit + minimization (css nano)	
+		performanse - shouldUpdate
+			pure
+			lodash but maybe bad (why did apdate)
 	SSR grate impovements 
 		express
-	service-worker impovements
-	16 ms in frame
-	loading
-	errors
-	fetch via jquery as service
-	localiztion sync
-	webpach vendor chanks
-	webpack js optimization (lodash, moment, antd) and css a bit + minimization	
-	global params for gateway
-	server login
-	server logs (without concatination)
-	performanse - shouldUpdate
-	test
-		junit
-		ajax
-		react
-		screnshots
-		
-	
-	
+		server login (hide password)
+Сборка
+	travic CI on git push
 Что еще
 	android
 		rutor
@@ -108,9 +149,3 @@
 	log to server
 	docs and paper on blog
 	css normalizers
-	
-	
-	
-	
-   
-  

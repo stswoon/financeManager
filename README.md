@@ -1,3 +1,5 @@
+test CI
+
 # financeManager
 https://stswoon-fm-frontend-ssr.herokuapp.com/
 * alex / 123456

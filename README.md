@@ -1,6 +1,16 @@
 # financeManager
-https://stswoon-fm-frontend-ssr.herokuapp.com/
-* alex / 123456
+Pet project to test skils in ReactJs and Microservices
+* open https://stswoon-fm-frontend-ssr.herokuapp.com/ 
+* login as alex / 123456
+* if failed wait a bit (30-60 sec) and login again because of free account restriction
+* do it twice because first is gateway second is auth service
+* after login wait again because of third service
+
+
+
+
+
+### Etc.
 
 
 

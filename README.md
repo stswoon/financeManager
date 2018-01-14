@@ -14,6 +14,7 @@ List of most interesting things\technologies which I think about
 - requirements and diagrams [link](https://github.com/stswoon/financeManager/wiki/First-Design)
 - microservices on heroku
 - maven plugin
+- travis CI
 ##### Backend
 - spring boot
 - oauth
@@ -39,9 +40,15 @@ List of most interesting things\technologies which I think about
 - local json server
 - junit
 - screenshot tests
+- content security policy
 - performance
-  - caches
-  - service-worker
+  - caches, service-worker
+  - 16 ms per frame, will transform
+  - webpack js optimizations
+  - shouldUpdate
+  
+  
+  
 
 
 ## Etc.

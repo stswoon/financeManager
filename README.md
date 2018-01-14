@@ -1,16 +1,50 @@
-# financeManager
-Pet project to test skils in ReactJs and Microservices
+# Finance Manager
+Pet project to test skils in ReactJs\Redux with server side rendering and Microservices on Heroku with Spring Boot
+
+## How to view
 * open https://stswoon-fm-frontend-ssr.herokuapp.com/ 
 * login as alex / 123456
 * if failed wait a bit (30-60 sec) and login again because of free account restriction
 * do it twice because first is gateway second is auth service
 * after login wait again because of third service
 
+## Feachures
+List of most interesting things\technologies which I think about
+##### Design
+- requirements and diagrams [link](https://github.com/stswoon/financeManager/wiki/First-Design)
+- microservices on heroku
+- maven plugin
+##### Backend
+- spring boot
+- oauth
+- junit
+- aspectj
+- authorithation via visitor
+- ApplicationProperties for normal DI
+- CRUD controllers
+- local development
+##### Frontend
+- react + redux + antd + routes 
+- server side rendering via nodejs
+- highcharts wrapper component
+- localization
+- high ordered components
+- hot module replacement
+- less, BEM
+- mouseless
+- facade for ajax
+- server logs
+- es6, async\await
+- jsdocs
+- local json server
+- junit
+- screenshot tests
+- performance
+  - caches
+  - service-worker
 
 
-
-
-### Etc.
+## Etc.
 
 
 

@@ -9,7 +9,7 @@ Pet project to test skils in ReactJs\Redux with server side rendering and Micros
 * after login wait again because of third service
 
 ## Feachures
-List of most interesting things\technologies which I think about
+List of most interesting things\technologies which I think about in my project (complete list of feachures can be found [here](https://raw.githubusercontent.com/stswoon/financeManager/master/docs/features.txt))
 ##### Design
 - requirements and diagrams [link](https://github.com/stswoon/financeManager/wiki/First-Design)
 - microservices on heroku
